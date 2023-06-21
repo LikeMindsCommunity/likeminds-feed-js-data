@@ -1,4 +1,4 @@
-import httpInst from "src/core/services/base.service";
+import NetworkLibrary from "src/core/services/networklibrary";
 import { API } from "../../shared/constants/api.constant";
 import {
   AddComment,
@@ -15,9 +15,11 @@ import {
 } from "./types";
 
 export class UniversalFeed {
+  public networkLibrary = new NetworkLibrary();
+
   // Get Universal Feed
   getFeed(feed: Feed): Promise<any> {
-    return httpInst.get(
+    return this.networkLibrary.makeAuthenticatedRequest(
       `${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}`
     );
   }
@@ -27,34 +29,55 @@ export class UniversalFeed {
       text: addPost.text,
       attachments: addPost.attachments,
     };
-    return httpInst.post(`${API.FEED_POST}`, params);
+    return this.networkLibrary.makeAuthenticatedRequest(`${API.FEED_POST}`, {
+      method: "POST",
+      data: params,
+    });
   }
 
   savePost(savePost: SavePost, postId: string): Promise<any> {
     const params = savePost;
-    return httpInst.put(`${API.FEED_POST}/${postId}/save`, params);
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/save`,
+      {
+        method: "PUT",
+        data: params,
+      }
+    );
   }
 
   getPost(getPost: GetPost, postId: string): Promise<any> {
-    return httpInst.get(
+    return this.networkLibrary.makeAuthenticatedRequest(
       `${API.FEED_POST}/${postId}?page=${getPost.page}&page_size=${getPost.pageSize}`
     );
   }
 
   getPostLikes(getPost: GetPost, postId: string): Promise<any> {
-    return httpInst.get(
+    return this.networkLibrary.makeAuthenticatedRequest(
       `${API.FEED_POST}/${postId}/like?page=${getPost.page}&page_size=${getPost.pageSize}`
     );
   }
 
   likePost(likePost: LikePost, postId: string): Promise<any> {
     const params = likePost;
-    return httpInst.put(`${API.FEED_POST}/${postId}/like`, params);
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/like`,
+      {
+        method: "PUT",
+        data: params,
+      }
+    );
   }
 
   pinPost(pinPost: PinPost, postId: string): Promise<any> {
     const params = pinPost;
-    return httpInst.put(`${API.FEED_POST}/${postId}/pin`, params);
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/pin`,
+      {
+        method: "PUT",
+        data: params,
+      }
+    );
   }
 
   editPost(editPost: EditPost, postId: string): Promise<any> {
@@ -62,14 +85,26 @@ export class UniversalFeed {
       text: editPost.text,
       attachments: editPost.attachments,
     };
-    return httpInst.put(`${API.FEED_POST}/${postId}`, params);
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}`,
+      {
+        method: "PUT",
+        data: params,
+      }
+    );
   }
 
   addComment(addComment: AddComment, postId: string): Promise<any> {
     const params = {
       text: addComment.text,
     };
-    return httpInst.post(`${API.FEED_POST}/${postId}/comment`, params);
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/comment`,
+      {
+        method: "POST",
+        data: params,
+      }
+    );
   }
 
   getComment(
@@ -77,7 +112,7 @@ export class UniversalFeed {
     postId: string,
     commentId: any
   ): Promise<any> {
-    return httpInst.get(
+    return this.networkLibrary.makeAuthenticatedRequest(
       `${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`
     );
   }
@@ -86,22 +121,31 @@ export class UniversalFeed {
     postId: string,
     commentId: any
   ): Promise<any> {
-    return httpInst.get(
+    return this.networkLibrary.makeAuthenticatedRequest(
       `${API.FEED_POST}/${postId}/comment/${commentId}/like?page=${getComment.page}&page_size=${getComment.pageSize}`
     );
   }
 
   likeComment(postId: string, commentId: any): Promise<any> {
-    return httpInst.put(`${API.FEED_POST}/${postId}/comment/${commentId}/like`);
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/comment/${commentId}/like`,
+      {
+        method: "PUT",
+        data: { params: "" },
+      }
+    );
   }
 
   replyComment(text: string, postId: string, commentId: any): Promise<any> {
     const params = {
       text: text,
     };
-    return httpInst.post(
+    return this.networkLibrary.makeAuthenticatedRequest(
       `${API.FEED_POST}/${postId}/comment/${commentId}/comment`,
-      params
+      {
+        method: "POST",
+        data: params,
+      }
     );
   }
 
@@ -109,9 +153,12 @@ export class UniversalFeed {
     const params = {
       text: text,
     };
-    return httpInst.put(
+    return this.networkLibrary.makeAuthenticatedRequest(
       `${API.FEED_POST}/${postId}/comment/${commentId}`,
-      params
+      {
+        method: "PUT",
+        data: params,
+      }
     );
   }
 
@@ -123,19 +170,31 @@ export class UniversalFeed {
     const params = {
       delete_reason: deleteReason,
     };
-    return httpInst.delete(`${API.FEED_POST}/${postId}/comment/${commentId}`, {
-      data: params,
-    });
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/comment/${commentId}`,
+      {
+        method: "DELETE",
+        data: params,
+      }
+    );
   }
 
   deletePost(deletePost: DeletePost, postId: string): Promise<any> {
     const params = {
       delete_reason: deletePost.deleteReason,
     };
-    return httpInst.delete(`${API.FEED_POST}/${postId}`, { data: params });
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}`,
+      {
+        method: "DELETE",
+        data: params,
+      }
+    );
   }
 
   decodeUrl(decodeUrl: DecodeUrl): Promise<any> {
-    return httpInst.get(`${API.HELPER_URL}?url=${decodeUrl.url}`);
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.HELPER_URL}?url=${decodeUrl.url}`
+    );
   }
 }
