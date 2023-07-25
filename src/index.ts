@@ -1,41 +1,119 @@
-import { Base, SDKBuilder } from "./base";
-import { HomeFeedClient } from "./pages/feed-room";
-import { applyMixins } from "./utils";
-import { UniversalFeed } from "./pages/universal-feed";
-import { Member } from "./pages/user";
+// LMFeedClient.ts
 
-class LMFeedClient extends Base {
-  static xApiKey: string;
-  static xPlatformCode: string;
-  static xVersionCode: number;
-  static xSdkSource: string;
-  static setApiKey(xapikey: string): SDKBuilder {
-    this.xApiKey = xapikey;
-    return this;
+import axios from "axios";
+import { InitiateUserRequest } from "./initiateUser/model/InitiateUserRequest";
+import LMResponse from "./core/services/lmresponse";
+import { InitiateUserResponse } from "./initiateUser/model/InitiateUserResponse";
+import { InitiateUserClient } from "./initiateUser/InitiateUserClient";
+
+export class LMFeedClient {
+  private baseUrl: string;
+  private static instance: LMFeedClient;
+    private InitiateUserClient: InitiateUserClient; // Assuming you have an InitiateUserClient class
+
+  private constructor(baseUrl: string) {
+    this.baseUrl = baseUrl;
   }
 
-  static setPlatformCode(xplatformcode: string): SDKBuilder {
-    this.xPlatformCode = xplatformcode;
-    return this;
+  public static getInstance(baseUrl?: string): LMFeedClient {
+    if (!LMFeedClient.instance) {
+      if (!baseUrl) {
+        throw new Error('Base URL is required.');
+      }
+      LMFeedClient.instance = new LMFeedClient(baseUrl);
+    }
+    return LMFeedClient.instance;
   }
 
-  static setVersionCode(xversioncode: number): SDKBuilder {
-    this.xVersionCode = xversioncode;
-    return this;
+  public async getFeed(): Promise<any> {
+    const url = `${this.baseUrl}/feed`;
+    // Make an HTTP request to fetch the feed data
+    // You can use a library like axios or fetch for making the request
+    // Here's an example using axios
+    const response = await axios.get(url);
+    return response.data;
   }
 
-  static build() {
-    return new LMFeedClient({
-      xApiKey: this.xApiKey,
-      xPlatformCode: this.xPlatformCode,
-      xVersionCode: this.xVersionCode!,
-      xSdkSource: this.xSdkSource,
-    });
+    public async initiateUser(initiateUserRequest: InitiateUserRequest): Promise<LMResponse<InitiateUserResponse>> {
+    return this.InitiateUserClient.initiateUser(initiateUserRequest);
   }
+
+  // public async initiateUser(initiateUserRequest: InitiateUserRequest): Promise<LMResponse<InitiateUserResponse>> {
+  //   const url = `${this.baseUrl}/initiateUser`;
+  //   // Make an HTTP request to initiate the user
+  //   // You can use a library like axios or fetch for making the request
+  //   // Here's an example using axios
+  //   const response = await axios.post(url, initiateUserRequest);
+  //   return response.data;
+  // }
 }
 
-interface LMFeedClient extends HomeFeedClient, UniversalFeed, Member {}
 
-applyMixins(LMFeedClient, [HomeFeedClient, UniversalFeed, Member]);
+// // LMFeedClient.ts
 
-export default LMFeedClient;
+// import axios from "axios";
+// import LMResponse from "./core/services/lmresponse";
+// import { InitiateUserClient } from './initiateUser/InitiateUserClient';
+// import { InitiateUserRequest } from "./initiateUser/model/InitiateUserRequest";
+// import { InitiateUserResponse } from "./initiateUser/model/InitiateUserResponse";
+
+// export class LMFeedClient {
+//   private baseUrl: string;
+//   private InitiateUserClient: InitiateUserClient; // Assuming you have an InitiateUserClient class
+//   private static instance: LMFeedClient;
+
+
+//   constructor(baseUrl: string) {
+//     this.baseUrl = baseUrl;
+//     this.InitiateUserClient = new InitiateUserClient(); // Create an instance of InitiateUserClient
+//   }
+
+//   // public static getInstance(baseUrl?: string): LMFeedClient {
+//   //   if (!LMFeedClient.instance) {
+//   //     if (!baseUrl) {
+//   //       throw new Error('Base URL is required.');
+//   //     }
+//   //     LMFeedClient.instance = new LMFeedClient(baseUrl);
+//   //   }
+//   //   return LMFeedClient.instance;
+//   // }
+
+//   public async getFeed(): Promise<any> {
+//     const url = `${this.baseUrl}/feed`;
+//     // Make an HTTP request to fetch the feed data
+//     // You can use a library like axios or fetch for making the request
+//     // Here's an example using axios
+//     const response = await axios.get(url);
+//     return response.data;
+//   }
+
+//   public async initiateUser(initiateUserRequest: InitiateUserRequest): Promise<LMResponse<InitiateUserResponse>> {
+//     return this.InitiateUserClient.initiateUser(initiateUserRequest);
+//   }
+
+//   public static builder(): LMFeedClientBuilder {
+//     return new LMFeedClientBuilder();
+//   }
+// }
+
+// export class LMFeedClientBuilder {
+//   private baseUrl: string;
+
+//   constructor() {
+//     // Set default values if needed
+//     this.baseUrl = '';
+//   }
+
+//   public withBaseUrl(baseUrl: string): LMFeedClientBuilder {
+//     this.baseUrl = baseUrl;
+//     return this;
+//   }
+
+//   public build(): LMFeedClient {
+//     if (!this.baseUrl) {
+//       throw new Error('Base URL is required.');
+//     }
+//     return new LMFeedClient(this.baseUrl);
+//   }
+// }
+
