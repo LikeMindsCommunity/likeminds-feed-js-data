@@ -39,4 +39,4 @@ class LMFeedClient {
   }
 }
 
-export default LMFeedClient;
+export { LMFeedClient as default, InitiateUserRequest, InitiateUserResponse };

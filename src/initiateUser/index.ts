@@ -1,5 +1,3 @@
-import axios, { AxiosResponse, AxiosError, AxiosInstance } from "axios";
-
 import LMResponse from "src/core/services/lmresponse";
 import { InitiateUserResponse } from "./model/InitiateUserResponse";
 import { environment } from "src/environment";
