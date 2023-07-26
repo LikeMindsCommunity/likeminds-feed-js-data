@@ -1,54 +1,47 @@
-// InitiateUserRequest.ts
+class InitiateUserRequest {
+  // Properties of the request class
+  public username: string;
+  public email: string;
+  // Add other properties as needed
 
-export class InitiateUserRequest {
-  public apiKey: string;
-  public deviceId: string;
-  public uuid: string;
-  public userName: string;
-  public isGuest: boolean;
+  // Public constructor to create the request object
+  constructor(username: string, email: string) {
+    this.username = username;
+    this.email = email;
+  }
 
-  constructor(builder: InitiateUserRequestBuilder) {
-    this.apiKey = builder.apiKey;
-    this.deviceId = builder.deviceId;
-    this.uuid = builder.uuid;
-    this.userName = builder.userName;
-    this.isGuest = builder.isGuest;
+  // Static builder method to create the request object
+  public static builder(): InitiateUserRequestBuilder {
+    return new InitiateUserRequestBuilder();
   }
 }
 
+// Builder class for InitiateUserRequest
 export class InitiateUserRequestBuilder {
-  public apiKey: string;
-  public deviceId: string;
-  public uuid: string;
-  public userName: string;
-  public isGuest: boolean;
+  private username: string | undefined;
+  private email: string | undefined;
+  // Add other properties as needed
 
-  public withApiKey(apiKey: string): InitiateUserRequestBuilder {
-    this.apiKey = apiKey;
+  public withUsername(username: string): InitiateUserRequestBuilder {
+    this.username = username;
     return this;
   }
 
-  public withDeviceId(deviceId: string): InitiateUserRequestBuilder {
-    this.deviceId = deviceId;
+  public withEmail(email: string): InitiateUserRequestBuilder {
+    this.email = email;
     return this;
   }
 
-  public withUuid(uuid: string): InitiateUserRequestBuilder {
-    this.uuid = uuid;
-    return this;
-  }
+  // Add other methods to set other properties as needed
 
-  public withUserName(userName: string): InitiateUserRequestBuilder {
-    this.userName = userName;
-    return this;
-  }
-
-  public withIsGuest(isGuest: boolean): InitiateUserRequestBuilder {
-    this.isGuest = isGuest;
-    return this;
-  }
-
+  // Build method to create the final InitiateUserRequest object
   public build(): InitiateUserRequest {
-    return new InitiateUserRequest(this);
+    if (!this.username || !this.email) {
+      throw new Error("Username and email are required.");
+    }
+
+    return new InitiateUserRequest(this.username, this.email);
   }
 }
+
+export default InitiateUserRequest;

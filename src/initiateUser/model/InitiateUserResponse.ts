@@ -1,7 +1,6 @@
 import LMResponse from "src/core/services/lmresponse";
 import { User } from "src/shared/models/user";
 
-
 interface InitiateUserResponse {
   accessToken?: string | null;
   refreshToken?: string | null;
