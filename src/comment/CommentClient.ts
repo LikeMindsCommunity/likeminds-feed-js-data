@@ -2,10 +2,10 @@ import LMResponse from "src/core/services/lmresponse";
 import { environment } from "src/environment";
 import { API } from "src/shared/constants/api.constant";
 import NetworkLibrary from "src/core/services/networklibrary";
-import InitiateUserRequest from "./model/InitiateUserRequest";
-import { InitiateUserResponse } from "./model/InitiateUserResponse";
+import InitiateUserRequest from "src/initiateUser/model/InitiateUserRequest";
+import { InitiateUserResponse } from "src/initiateUser/model/InitiateUserResponse";
 
-class InitiateUserClient {
+class CommentClient {
   public networkLibrary = new NetworkLibrary();
 
   constructor() {}
@@ -52,4 +52,4 @@ class InitiateUserClient {
   }
 }
 
-export default InitiateUserClient;
+export default CommentClient;

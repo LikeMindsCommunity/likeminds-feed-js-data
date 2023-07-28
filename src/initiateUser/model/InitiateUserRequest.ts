@@ -1,13 +1,15 @@
 class InitiateUserRequest {
   // Properties of the request class
-  public username: string;
-  public email: string;
-  // Add other properties as needed
+  apiKey: string;
+  userName: string;
+  uuid: string;
+  isGuest: boolean;
 
   // Public constructor to create the request object
-  constructor(username: string, email: string) {
-    this.username = username;
-    this.email = email;
+  constructor(userName: string, uuid: string, isGuest: boolean) {
+    this.userName = userName;
+    this.uuid = uuid;
+    this.isGuest = isGuest;
   }
 
   // Static builder method to create the request object
@@ -18,17 +20,23 @@ class InitiateUserRequest {
 
 // Builder class for InitiateUserRequest
 export class InitiateUserRequestBuilder {
-  private username: string | undefined;
-  private email: string | undefined;
+  private userName: string | undefined;
+  private uuid: string | undefined;
+  private isGuest: boolean | undefined;
   // Add other properties as needed
 
-  public withUsername(username: string): InitiateUserRequestBuilder {
-    this.username = username;
+  public setUserName(userName: string): InitiateUserRequestBuilder {
+    this.userName = userName;
     return this;
   }
 
-  public withEmail(email: string): InitiateUserRequestBuilder {
-    this.email = email;
+  public setUUID(uuid: string): InitiateUserRequestBuilder {
+    this.uuid = uuid;
+    return this;
+  }
+
+  public setIsGuest(isGuest: boolean): InitiateUserRequestBuilder {
+    this.isGuest = isGuest;
     return this;
   }
 
@@ -36,11 +44,11 @@ export class InitiateUserRequestBuilder {
 
   // Build method to create the final InitiateUserRequest object
   public build(): InitiateUserRequest {
-    if (!this.username || !this.email) {
-      throw new Error("Username and email are required.");
+    if (!this.uuid) {
+      throw new Error("UUID is required.");
     }
 
-    return new InitiateUserRequest(this.username, this.email);
+    return new InitiateUserRequest(this.userName, this.uuid, this.isGuest);
   }
 }
 

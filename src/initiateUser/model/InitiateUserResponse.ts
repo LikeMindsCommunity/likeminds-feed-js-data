@@ -1,13 +1,12 @@
-import LMResponse from "src/core/services/lmresponse";
-import { User } from "src/shared/models/user";
-
-interface InitiateUserResponse {
-  accessToken?: string | null;
-  refreshToken?: string | null;
-  user?: User | null;
-  community?: any | null;
-  appAccess: boolean | null;
+import LMResponse from "src/LMResponse";
+import { ICommunity } from "src/shared/models/community.model";
+import { IUser } from "src/shared/models/user.model";
+export interface InitiateUserResponse {
+  accessToken: string;
+  appAccess: boolean;
+  community: ICommunity;
+  hasAnswers: boolean;
+  refreshToken: string;
+  user: IUser;
   logoutResponse?: LMResponse<null> | null;
 }
-
-export { InitiateUserResponse };

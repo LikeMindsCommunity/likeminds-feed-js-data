@@ -2,10 +2,10 @@ import LMResponse from "src/core/services/lmresponse";
 import { environment } from "src/environment";
 import { API } from "src/shared/constants/api.constant";
 import NetworkLibrary from "src/core/services/networklibrary";
-import InitiateUserRequest from "./model/InitiateUserRequest";
-import { InitiateUserResponse } from "./model/InitiateUserResponse";
+import InitiateUserRequest from "src/initiateUser/model/InitiateUserRequest";
+import { InitiateUserResponse } from "src/initiateUser/model/InitiateUserResponse";
 
-class InitiateUserClient {
+class NotificationFeedClient {
   public networkLibrary = new NetworkLibrary();
 
   constructor() {}
@@ -13,6 +13,7 @@ class InitiateUserClient {
   public async initiateUser(
     request: InitiateUserRequest
   ): Promise<LMResponse<InitiateUserResponse>> {
+    console.log("DL Request s=> ", request);
     const params = {
       is_guest: request?.isGuest,
       user_unique_id: request?.uuid,
@@ -52,4 +53,4 @@ class InitiateUserClient {
   }
 }
 
-export default InitiateUserClient;
+export default NotificationFeedClient;
