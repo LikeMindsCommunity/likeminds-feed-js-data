@@ -7,9 +7,12 @@ import { InitiateUserResponse } from "./model/InitiateUserResponse";
 import NetworkLibrary from "src/core/services/networklibrary";
 
 class InitiateUserClient {
-  public networkLibrary = new NetworkLibrary();
+  public networkLibrary;
 
-  constructor() {}
+  constructor(networkInstance: NetworkLibrary) {
+    this.networkLibrary = networkInstance;
+    console.log("DL network console: ", this.networkLibrary);
+  }
 
   public async initiateUser(
     request: InitiateUserRequest

@@ -8,9 +8,11 @@ class NetworkLibrary {
   private tokenManager: TokenManager;
 
   private xApiKey: string | null;
-
+  private randomNumber: number;
   constructor() {
     this.tokenManager = new TokenManager();
+    this.randomNumber = Math.random();
+    console.log("Kust for ref check: ", this.randomNumber);
   }
 
   public setAccessToken(accessToken: string) {

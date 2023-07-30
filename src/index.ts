@@ -12,7 +12,7 @@ class LMFeedClient {
 
   constructor() {
     this.networkLibrary = new NetworkLibrary();
-    this.initiateUserClient = new InitiateUserClient();
+    this.initiateUserClient = new InitiateUserClient(this.networkLibrary);
   }
 
   public static Builder(): LMFeedClient {
