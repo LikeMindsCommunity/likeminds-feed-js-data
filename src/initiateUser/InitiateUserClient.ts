@@ -1,9 +1,10 @@
 import LMResponse from "src/core/services/lmresponse";
 import { environment } from "src/environment";
 import { API } from "src/shared/constants/api.constant";
-import NetworkLibrary from "src/core/services/networklibrary";
+
 import InitiateUserRequest from "./model/InitiateUserRequest";
 import { InitiateUserResponse } from "./model/InitiateUserResponse";
+import NetworkLibrary from "src/core/services/networklibrary";
 
 class InitiateUserClient {
   public networkLibrary = new NetworkLibrary();

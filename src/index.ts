@@ -1,58 +1,51 @@
 // feed-sdk/src/LMFeedClient.js
+import NetworkLibrary from "./core/services/networklibrary";
 import InitiateUserClient from "./initiateUser/InitiateUserClient";
-import NetworkLibrary from "src/core/services/networklibrary";
 import InitiateUserRequest from "./initiateUser/model/InitiateUserRequest";
 
 class LMFeedClient {
-  networkLibrary = new NetworkLibrary();
   initiateUserClient: any;
-
-  apiKey: string | null = null;
-  platformCode: number | null = null;
-  versionCode: number | null = null;
+  private networkLibrary: NetworkLibrary;
+  private apiKey: string | null = null;
+  private platformCode: string | null = null;
+  private versionCode: number | null = null;
 
   constructor() {
+    this.networkLibrary = new NetworkLibrary();
     this.initiateUserClient = new InitiateUserClient();
   }
 
-  setApiKey(apiKey: string) {
+  public static Builder(): LMFeedClient {
+    return new LMFeedClient();
+  }
+
+  setApiKey(apiKey: string): LMFeedClient {
     this.apiKey = apiKey;
-    this.saveConfig(); // Save config
     return this;
   }
 
-  setPlatformCode(platformCode: number) {
+  setPlatformCode(platformCode: string) {
     this.platformCode = platformCode;
-    this.saveConfig(); // Save config
     return this;
   }
 
   setVersionCode(versionCode: number) {
     this.versionCode = versionCode;
-    this.saveConfig(); // Save config
     return this;
   }
 
-  build() {
+  public build(): LMFeedClient {
     // Perform any necessary validation or configuration checks
     if (!this.apiKey || !this.platformCode || !this.versionCode) {
       throw new Error(
         "Please provide apiKey, platformCode, and versionCode before building the LMFeedClient."
       );
     }
-
-    const client = new LMFeedClient();
-    client.apiKey = this.apiKey;
-    client.platformCode = this.platformCode;
-    client.versionCode = this.versionCode;
-    return client;
-  }
-
-  saveConfig() {
-    console.log("ld api key= ", this.apiKey);
-    this.networkLibrary.setApiKey(this.apiKey);
+    this.networkLibrary.setApiKey(this.apiKey); // Set the API key in the NetworkLibrary
     this.networkLibrary.setPlatformCode(this.platformCode);
     this.networkLibrary.setVersionCode(this.versionCode);
+    // return new LMFeedClient(this.userName, this.uuid, this.isGuest);
+    return this;
   }
 
   async initiateUser(initiateUserRequest: any) {
