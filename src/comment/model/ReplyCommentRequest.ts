@@ -24,17 +24,17 @@ export class ReplyCommentRequest {
   private text: string | undefined;
   // Add other properties as needed
 
-  public setpostId(postId: string): ReplyCommentRequest {
+  public setPostId(postId: string): ReplyCommentRequest {
     this.postId = postId;
     return this;
   }
 
-  public setcommentId(commentId: string): ReplyCommentRequest {
+  public setCommentId(commentId: string): ReplyCommentRequest {
     this.commentId = commentId;
     return this;
   }
 
-  public settext(text: string): ReplyCommentRequest {
+  public setText(text: string): ReplyCommentRequest {
     this.text = text;
     return this;
   }
