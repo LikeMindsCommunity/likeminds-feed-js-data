@@ -2,9 +2,12 @@
 import NetworkLibrary from "./core/services/networklibrary";
 import InitiateUserClient from "./initiateUser/InitiateUserClient";
 import InitiateUserRequest from "./initiateUser/model/InitiateUserRequest";
+import PostClient from "./post/PostClient";
+import AddPostRequest from "./post/model/AddPostRequest";
 
 class LMFeedClient {
-  initiateUserClient: any;
+  initiateUserClient: InitiateUserClient;
+  postClient: PostClient;
   private networkLibrary: NetworkLibrary;
   private apiKey: string | null = null;
   private platformCode: string | null = null;
@@ -13,6 +16,7 @@ class LMFeedClient {
   constructor() {
     this.networkLibrary = new NetworkLibrary();
     this.initiateUserClient = new InitiateUserClient(this.networkLibrary);
+    this.postClient = new PostClient(this.networkLibrary);
   }
 
   public static Builder(): LMFeedClient {
@@ -48,7 +52,7 @@ class LMFeedClient {
     return this;
   }
 
-  async initiateUser(initiateUserRequest: any) {
+  async initiateUser(initiateUserRequest: InitiateUserRequest) {
     try {
       // Call the initiateUser method from InitiateUserClient
       const initiateUserResponse = await this.initiateUserClient.initiateUser(
@@ -60,7 +64,17 @@ class LMFeedClient {
       throw error;
     }
   }
+
+  async addPost(addPostRequest: AddPostRequest) {
+    try {
+      const addPostResponse = await this.postClient.addPost(addPostRequest);
+      return addPostResponse;
+    } catch (error) {
+      console.log("Error while posting feed :", error);
+      return error;
+    }
+  }
 }
 
 // export default LMFeedClient;
-export { LMFeedClient as default, InitiateUserRequest };
+export { LMFeedClient as default, InitiateUserRequest, AddPostRequest };

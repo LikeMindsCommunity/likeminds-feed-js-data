@@ -4,47 +4,38 @@ import { API } from "src/shared/constants/api.constant";
 import NetworkLibrary from "src/core/services/networklibrary";
 import InitiateUserRequest from "src/initiateUser/model/InitiateUserRequest";
 import { InitiateUserResponse } from "src/initiateUser/model/InitiateUserResponse";
+import AddPostRequest from "./model/AddPostRequest";
+import { ModelConverter } from "src/utils/ModelConverter";
+import { AddPostResponse } from "./model/AddPostResponse";
 
 class PostClient {
-  public networkLibrary = new NetworkLibrary();
+  public networkLibrary: NetworkLibrary;
 
-  constructor() {}
+  constructor(instance: NetworkLibrary) {
+    this.networkLibrary = instance;
+  }
 
-  public async initiateUser(
-    request: InitiateUserRequest
-  ): Promise<LMResponse<InitiateUserResponse>> {
+  public async addPost(
+    request: AddPostRequest
+  ): Promise<LMResponse<AddPostResponse>> {
     console.log("DL Request s=> ", request);
-    const params = {
-      is_guest: request?.isGuest,
-      user_unique_id: request?.uuid,
-      user_name: request?.userName,
-    };
 
+    const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
       .makeAuthenticatedRequest(`${environment.apiUrl}${API.SDK_INITIATE}`, {
         method: "POST",
         data: params,
       })
       .then((resData: any) => {
-        const accessToken = resData?.data?.access_token;
-        this.networkLibrary.setAccessToken(accessToken);
-        const refreshToken = resData?.data?.refresh_token;
-        this.networkLibrary.setRefreshToken(refreshToken);
-
         // Handle the response and return the LMResponse object
-        const responseData: InitiateUserResponse = {
-          accessToken: resData?.data?.accessToken,
-          refreshToken: resData?.data?.refreshToken,
-          user: resData?.data.user,
-          community: resData?.data.community,
-          appAccess: resData?.data.appAccess,
-          hasAnswers: false,
-        };
+        const responseData: AddPostResponse = ModelConverter.responseBodyParser(
+          resData.data
+        );
 
-        return new LMResponse<InitiateUserResponse>(responseData, null, true);
+        return new LMResponse<AddPostResponse>(responseData, null, true);
       })
       .catch((error) => {
-        return new LMResponse<InitiateUserResponse>(
+        return new LMResponse<AddPostResponse>(
           null,
           error.message || "An error occurred",
           false

@@ -29,7 +29,7 @@ export class AttachmentBuilder {
     return this;
   }
 
-  public setattachmentMeta(
+  public setAttachmentMeta(
     attachmentMeta: AttachmentMeta[]
   ): AttachmentBuilder {
     this.attachmentMeta = attachmentMeta;

@@ -5,24 +5,25 @@ import { API } from "src/shared/constants/api.constant";
 import InitiateUserRequest from "./model/InitiateUserRequest";
 import { InitiateUserResponse } from "./model/InitiateUserResponse";
 import NetworkLibrary from "src/core/services/networklibrary";
+import { ModelConverter } from "src/utils/ModelConverter";
 
 class InitiateUserClient {
-  public networkLibrary;
+  public networkLibrary: NetworkLibrary;
 
   constructor(networkInstance: NetworkLibrary) {
     this.networkLibrary = networkInstance;
-    console.log("DL network console: ", this.networkLibrary);
   }
 
   public async initiateUser(
     request: InitiateUserRequest
   ): Promise<LMResponse<InitiateUserResponse>> {
-    const params = {
-      is_guest: request?.isGuest,
-      user_unique_id: request?.uuid,
-      user_name: request?.userName,
-    };
+    // const params = {
+    //   is_guest: request?.isGuest,
+    //   user_unique_id: request?.uuid,
+    //   user_name: request?.userName,
+    // };
 
+    const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
       .makeAuthenticatedRequest(`${environment.apiUrl}${API.SDK_INITIATE}`, {
         method: "POST",
@@ -35,14 +36,8 @@ class InitiateUserClient {
         this.networkLibrary.setRefreshToken(refreshToken);
 
         // Handle the response and return the LMResponse object
-        const responseData: InitiateUserResponse = {
-          accessToken: resData?.data?.accessToken,
-          refreshToken: resData?.data?.refreshToken,
-          user: resData?.data.user,
-          community: resData?.data.community,
-          appAccess: resData?.data.appAccess,
-          hasAnswers: false,
-        };
+        const responseData: InitiateUserResponse =
+          ModelConverter.responseBodyParser(resData.data);
 
         return new LMResponse<InitiateUserResponse>(responseData, null, true);
       })
