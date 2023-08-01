@@ -3,6 +3,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 import LMResponse from "./lmresponse";
 import TokenManager from "./tokenmanager";
+import { environment } from "src/environment";
 
 class NetworkLibrary {
   private tokenManager: TokenManager;
@@ -43,7 +44,9 @@ class NetworkLibrary {
     url: string,
     config?: AxiosRequestConfig
   ): Promise<AxiosResponse<T>> {
-    return axios.request<T>({ url, ...config });
+    const baseUrl: string = environment.apiUrl;
+    const requestUrl = baseUrl + url;
+    return axios.request<T>({ url: requestUrl, ...config });
   }
 
   public async makeAuthenticatedRequest<T>(

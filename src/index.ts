@@ -4,11 +4,13 @@ import InitiateUserClient from "./initiateUser/InitiateUserClient";
 import InitiateUserRequest from "./initiateUser/model/InitiateUserRequest";
 import PostClient from "./post/PostClient";
 import AddPostRequest from "./post/model/AddPostRequest";
+import UniversalFeedClient from "./universalfeed/UniversalFeedClient";
 
 class LMFeedClient {
-  initiateUserClient: InitiateUserClient;
-  postClient: PostClient;
+  private initiateUserClient: InitiateUserClient;
+  private postClient: PostClient;
   private networkLibrary: NetworkLibrary;
+  private feedClient: UniversalFeedClient;
   private apiKey: string | null = null;
   private platformCode: string | null = null;
   private versionCode: number | null = null;
@@ -17,6 +19,7 @@ class LMFeedClient {
     this.networkLibrary = new NetworkLibrary();
     this.initiateUserClient = new InitiateUserClient(this.networkLibrary);
     this.postClient = new PostClient(this.networkLibrary);
+    this.feedClient = new UniversalFeedClient(this.networkLibrary);
   }
 
   public static Builder(): LMFeedClient {

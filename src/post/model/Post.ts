@@ -1,5 +1,5 @@
 import Attachment from "./Attachment";
-import { MenuItem } from "./MenuItem";
+import { IMenuItem } from "./MenuItem";
 
 class Post {
   // Properties of the request class
@@ -14,7 +14,7 @@ class Post {
   likesCount: number;
   commentsCount: number;
   isSaved: Boolean;
-  menuItems: MenuItem[];
+  menuItems: IMenuItem[];
   replies?: any;
   // replies?: List<Comment>?;
   createdAt: number;
@@ -34,7 +34,7 @@ class Post {
     likesCount: number,
     commentsCount: number,
     isSaved: Boolean,
-    menuItems: MenuItem[],
+    menuItems: IMenuItem[],
     replies: any,
     createdAt: number,
     updatedAt: number,
@@ -77,7 +77,7 @@ export class PostBuilder {
   private likesCount: number;
   private commentsCount: number;
   private isSaved: Boolean;
-  private menuItems: MenuItem[];
+  private menuItems: IMenuItem[];
   private replies?: any;
   private createdAt: number;
   private updatedAt: number;
@@ -129,7 +129,7 @@ export class PostBuilder {
     this.isSaved = isSaved;
     return this;
   }
-  public setmenuItems(menuItems: MenuItem[]): PostBuilder {
+  public setmenuItems(menuItems: IMenuItem[]): PostBuilder {
     this.menuItems = menuItems;
     return this;
   }

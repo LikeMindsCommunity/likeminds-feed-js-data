@@ -8,7 +8,7 @@ import NetworkLibrary from "src/core/services/networklibrary";
 import { ModelConverter } from "src/utils/ModelConverter";
 
 class InitiateUserClient {
-  public networkLibrary: NetworkLibrary;
+  private networkLibrary: NetworkLibrary;
 
   constructor(networkInstance: NetworkLibrary) {
     this.networkLibrary = networkInstance;
@@ -17,17 +17,11 @@ class InitiateUserClient {
   public async initiateUser(
     request: InitiateUserRequest
   ): Promise<LMResponse<InitiateUserResponse>> {
-    // const params = {
-    //   is_guest: request?.isGuest,
-    //   user_unique_id: request?.uuid,
-    //   user_name: request?.userName,
-    // };
-
-    const params = ModelConverter.requestBodyGenerator(request);
+    // const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${environment.apiUrl}${API.SDK_INITIATE}`, {
+      .makeAuthenticatedRequest(`${API.SDK_INITIATE}`, {
         method: "POST",
-        data: params,
+        data: request,
       })
       .then((resData: any) => {
         const accessToken = resData?.data?.access_token;

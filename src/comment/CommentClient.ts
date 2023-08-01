@@ -4,6 +4,9 @@ import { API } from "src/shared/constants/api.constant";
 import NetworkLibrary from "src/core/services/networklibrary";
 import InitiateUserRequest from "src/initiateUser/model/InitiateUserRequest";
 import { InitiateUserResponse } from "src/initiateUser/model/InitiateUserResponse";
+import AddCommentRequest from "./model/AddCommentRequest";
+import GetCommentRequest from "./model/GetCommentRequest";
+import GetCommentLikesRequest from "./model/GetCommentLikesRequest";
 
 class CommentClient {
   public networkLibrary = new NetworkLibrary();
@@ -49,6 +52,91 @@ class CommentClient {
           false
         );
       });
+  }
+
+  addComment(addComment: AddCommentRequest, postId: string): Promise<any> {
+    const params = {
+      text: addComment.text,
+    };
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/comment`,
+      {
+        method: "POST",
+        data: params,
+      }
+    );
+  }
+
+  getComment(
+    getComment: GetCommentRequest,
+    postId: string,
+    commentId: any
+  ): Promise<any> {
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`
+    );
+  }
+  getCommentLikes(
+    getComment: GetCommentLikesRequest,
+    postId: string,
+    commentId: any
+  ): Promise<any> {
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/comment/${commentId}/like?page=${getComment.page}&page_size=${getComment.pageSize}`
+    );
+  }
+
+  likeComment(postId: string, commentId: any): Promise<any> {
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/comment/${commentId}/like`,
+      {
+        method: "PUT",
+        data: { params: "" },
+      }
+    );
+  }
+
+  replyComment(text: string, postId: string, commentId: any): Promise<any> {
+    const params = {
+      text: text,
+    };
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/comment/${commentId}/comment`,
+      {
+        method: "POST",
+        data: params,
+      }
+    );
+  }
+
+  editComment(text: string, postId: string, commentId: any): Promise<any> {
+    const params = {
+      text: text,
+    };
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/comment/${commentId}`,
+      {
+        method: "PUT",
+        data: params,
+      }
+    );
+  }
+
+  deleteComment(
+    deleteReason: string,
+    postId: string,
+    commentId: any
+  ): Promise<any> {
+    const params = {
+      delete_reason: deleteReason,
+    };
+    return this.networkLibrary.makeAuthenticatedRequest(
+      `${API.FEED_POST}/${postId}/comment/${commentId}`,
+      {
+        method: "DELETE",
+        data: params,
+      }
+    );
   }
 }
 

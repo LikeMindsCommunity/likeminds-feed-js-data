@@ -1,6 +1,5 @@
 class InitiateUserRequest {
   // Properties of the request class
-  apiKey: string;
   userName: string;
   uuid: string;
   isGuest: boolean;
