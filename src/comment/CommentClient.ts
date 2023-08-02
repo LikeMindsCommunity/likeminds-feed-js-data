@@ -2,64 +2,28 @@ import LMResponse from "src/core/services/lmresponse";
 import { environment } from "src/environment";
 import { API } from "src/shared/constants/api.constant";
 import NetworkLibrary from "src/core/services/networklibrary";
-import InitiateUserRequest from "src/initiateUser/model/InitiateUserRequest";
-import { InitiateUserResponse } from "src/initiateUser/model/InitiateUserResponse";
 import AddCommentRequest from "./model/AddCommentRequest";
 import GetCommentRequest from "./model/GetCommentRequest";
 import GetCommentLikesRequest from "./model/GetCommentLikesRequest";
+import EditCommentRequest from "./model/EditCommentRequest";
+import ReplyCommentRequest from "./model/ReplyCommentRequest";
+import { EditCommentResponse } from "./model/EditCommentResponse";
+import { ReplyCommentResponse } from "./model/ReplyCommentResponse";
+import { ModelConverter } from "src/utils/ModelConverter";
+import LikeCommentRequest from "./model/LikeCommentRequest";
+import DeleteCommentRequest from "./model/DeleteCommentRequest";
 
 class CommentClient {
   public networkLibrary = new NetworkLibrary();
 
   constructor() {}
 
-  public async initiateUser(
-    request: InitiateUserRequest
-  ): Promise<LMResponse<InitiateUserResponse>> {
-    const params = {
-      is_guest: request?.isGuest,
-      user_unique_id: request?.uuid,
-      user_name: request?.userName,
-    };
-
-    return this.networkLibrary
-      .makeAuthenticatedRequest(`${environment.apiUrl}${API.SDK_INITIATE}`, {
-        method: "POST",
-        data: params,
-      })
-      .then((resData: any) => {
-        const accessToken = resData?.data?.access_token;
-        this.networkLibrary.setAccessToken(accessToken);
-        const refreshToken = resData?.data?.refresh_token;
-        this.networkLibrary.setRefreshToken(refreshToken);
-
-        // Handle the response and return the LMResponse object
-        const responseData: InitiateUserResponse = {
-          accessToken: resData?.data?.accessToken,
-          refreshToken: resData?.data?.refreshToken,
-          user: resData?.data.user,
-          community: resData?.data.community,
-          appAccess: resData?.data.appAccess,
-          hasAnswers: false,
-        };
-
-        return new LMResponse<InitiateUserResponse>(responseData, null, true);
-      })
-      .catch((error) => {
-        return new LMResponse<InitiateUserResponse>(
-          null,
-          error.message || "An error occurred",
-          false
-        );
-      });
-  }
-
-  addComment(addComment: AddCommentRequest, postId: string): Promise<any> {
+  addComment(addComment: AddCommentRequest): Promise<any> {
     const params = {
       text: addComment.text,
     };
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${API.FEED_POST}/${postId}/comment`,
+      `${API.FEED_POST}/${addComment.postId}/comment`,
       {
         method: "POST",
         data: params,
@@ -67,28 +31,22 @@ class CommentClient {
     );
   }
 
-  getComment(
-    getComment: GetCommentRequest,
-    postId: string,
-    commentId: any
-  ): Promise<any> {
+  async getComment(
+    request: GetCommentRequest
+  ): Promise<LMResponse<ReplyCommentResponse>> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`
+      `${API.FEED_POST}/${request.postId}/comment/${request.commentId}?page=${request.page}&page_size=${request.pageSize}`
     );
   }
-  getCommentLikes(
-    getComment: GetCommentLikesRequest,
-    postId: string,
-    commentId: any
-  ): Promise<any> {
+  getCommentLikes(request: GetCommentLikesRequest): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${API.FEED_POST}/${postId}/comment/${commentId}/like?page=${getComment.page}&page_size=${getComment.pageSize}`
+      `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/like?page=${request.page}&page_size=${request.pageSize}`
     );
   }
 
-  likeComment(postId: string, commentId: any): Promise<any> {
+  likeComment(request: LikeCommentRequest): Promise<LMResponse<any>> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${API.FEED_POST}/${postId}/comment/${commentId}/like`,
+      `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/like`,
       {
         method: "PUT",
         data: { params: "" },
@@ -96,25 +54,43 @@ class CommentClient {
     );
   }
 
-  replyComment(text: string, postId: string, commentId: any): Promise<any> {
-    const params = {
-      text: text,
-    };
-    return this.networkLibrary.makeAuthenticatedRequest(
-      `${API.FEED_POST}/${postId}/comment/${commentId}/comment`,
-      {
-        method: "POST",
-        data: params,
-      }
-    );
+  async replyComment(
+    request: ReplyCommentRequest
+  ): Promise<LMResponse<ReplyCommentResponse>> {
+    const params = ModelConverter.requestBodyGenerator(request);
+    return this.networkLibrary
+      .makeAuthenticatedRequest(
+        `${API.FEED_POST}/${request.postId}/comment/${request.commentId}`,
+        {
+          method: "POST",
+          data: params,
+        }
+      )
+      .then((resData: any) => {
+        // Handle the response and return the LMResponse object
+        const responseData: any = ModelConverter.responseBodyParser(
+          resData.data
+        );
+
+        return new LMResponse<ReplyCommentResponse>(responseData, null, true);
+      })
+      .catch((error) => {
+        return new LMResponse<ReplyCommentResponse>(
+          null,
+          error.message || "An error occurred",
+          false
+        );
+      });
   }
 
-  editComment(text: string, postId: string, commentId: any): Promise<any> {
+  async editComment(
+    request: EditCommentRequest
+  ): Promise<LMResponse<EditCommentResponse>> {
     const params = {
-      text: text,
+      text: request.text,
     };
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${API.FEED_POST}/${postId}/comment/${commentId}`,
+      `${API.FEED_POST}/${request.postId}/comment/${request.commentId}`,
       {
         method: "PUT",
         data: params,
@@ -122,16 +98,12 @@ class CommentClient {
     );
   }
 
-  deleteComment(
-    deleteReason: string,
-    postId: string,
-    commentId: any
-  ): Promise<any> {
+  deleteComment(request: DeleteCommentRequest): Promise<any> {
     const params = {
-      delete_reason: deleteReason,
+      delete_reason: request.reason,
     };
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${API.FEED_POST}/${postId}/comment/${commentId}`,
+      `${API.FEED_POST}/${request.postId}/comment/${request.commentId}`,
       {
         method: "DELETE",
         data: params,

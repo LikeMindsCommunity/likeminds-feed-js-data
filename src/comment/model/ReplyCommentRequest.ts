@@ -1,4 +1,4 @@
-class EditCommentRequest {
+class ReplyCommentRequest {
   // Properties of the request class
   postId: string;
   commentId: string;
@@ -12,41 +12,41 @@ class EditCommentRequest {
   }
 
   // Static builder method to create the request object
-  public static builder(): ReplyCommentRequest {
-    return new ReplyCommentRequest();
+  public static builder(): ReplyCommentRequestBuilder {
+    return new ReplyCommentRequestBuilder();
   }
 }
 
-// Builder class for EditCommentRequest
-export class ReplyCommentRequest {
+// Builder class for ReplyCommentRequest
+export class ReplyCommentRequestBuilder {
   private postId: string | undefined;
   private commentId: string | undefined;
   private text: string | undefined;
   // Add other properties as needed
 
-  public setPostId(postId: string): ReplyCommentRequest {
+  public setPostId(postId: string): ReplyCommentRequestBuilder {
     this.postId = postId;
     return this;
   }
 
-  public setCommentId(commentId: string): ReplyCommentRequest {
+  public setCommentId(commentId: string): ReplyCommentRequestBuilder {
     this.commentId = commentId;
     return this;
   }
 
-  public setText(text: string): ReplyCommentRequest {
+  public setText(text: string): ReplyCommentRequestBuilder {
     this.text = text;
     return this;
   }
 
-  // Build method to create the final EditCommentRequest object
-  public build(): EditCommentRequest {
+  // Build method to create the final ReplyCommentRequest object
+  public build(): ReplyCommentRequest {
     if (!this.postId || !this.commentId) {
       throw new Error("postId and commentId are required.");
     }
 
-    return new EditCommentRequest(this.postId, this.commentId, this.text);
+    return new ReplyCommentRequest(this.postId, this.commentId, this.text);
   }
 }
 
-export default EditCommentRequest;
+export default ReplyCommentRequest;
