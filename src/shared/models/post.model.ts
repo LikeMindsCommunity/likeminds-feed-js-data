@@ -2,7 +2,7 @@ import Attachment from "src/post/model/Attachment";
 import { IMenuItem } from "src/post/model/MenuItem";
 import { IComment } from "./comment.model";
 
-export interface Post {
+export interface IPost {
   id: string;
   text: string;
   attachments?: Attachment[];
