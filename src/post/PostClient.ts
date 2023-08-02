@@ -26,14 +26,14 @@ class PostClient {
     this.networkLibrary = instance;
   }
 
-  public async addPost(
+  async addPost(
     request: AddPostRequest
   ): Promise<LMResponse<IAddPostResponse>> {
     console.log("DL Request s=> ", request);
 
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.SDK_INITIATE}`, {
+      .makeAuthenticatedRequest(`${API.FEED_POST}`, {
         method: "POST",
         data: params,
       })
