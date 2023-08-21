@@ -1,3 +1,5 @@
+import { IUser } from "src/shared/models/user.model";
+
 // Like interface (you can define this separately if needed)
 interface Like {
   id: string;
@@ -15,5 +17,5 @@ interface User {
 export interface GetCommentLikesResponse {
   likes: Like[];
   totalCount: number;
-  users: { [key: string]: User }; // Map<string, User> equivalent in TypeScript
+  users: { [key: string]: IUser }; // Map<string, User> equivalent in TypeScript
 }

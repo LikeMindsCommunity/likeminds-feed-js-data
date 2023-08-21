@@ -35,7 +35,7 @@ export class AddPostRequestBuilder {
 
   // Build method to create the final AddPostRequest object
   public build(): AddPostRequest {
-    if (!this.text || !this.attachments) {
+    if (!this.text && !this.attachments) {
       throw new Error("text and attachments are required.");
     }
 

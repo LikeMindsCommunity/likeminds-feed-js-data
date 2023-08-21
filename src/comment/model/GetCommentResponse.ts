@@ -1,3 +1,6 @@
+import { IComment } from "src/shared/models/comment.model";
+import { IUser } from "src/shared/models/user.model";
+
 // Comment interface (you can define this separately if needed)
 interface Comment {
   id: string;
@@ -13,6 +16,6 @@ interface User {
 }
 
 export interface GetCommentResponse {
-  comment: Comment;
-  users: { [key: string]: User }; // Map<string, User> equivalent in TypeScript
+  comment: IComment;
+  users: { [key: string]: IUser }; // Map<string, User> equivalent in TypeScript
 }

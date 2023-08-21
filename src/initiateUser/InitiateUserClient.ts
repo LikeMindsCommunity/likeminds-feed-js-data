@@ -6,6 +6,8 @@ import InitiateUserRequest from "./model/InitiateUserRequest";
 import { InitiateUserResponse } from "./model/InitiateUserResponse";
 import NetworkLibrary from "src/core/services/networklibrary";
 import { ModelConverter } from "src/utils/ModelConverter";
+import GetMemberStateRequest from "./model/GetMemberStateRequest";
+import { GetMemberStateResponse } from "./model/GetMemberStateResponse";
 
 class InitiateUserClient {
   private networkLibrary: NetworkLibrary;
@@ -37,6 +39,25 @@ class InitiateUserClient {
       })
       .catch((error) => {
         return new LMResponse<InitiateUserResponse>(
+          null,
+          error.message || "An error occurred",
+          false
+        );
+      });
+  }
+
+  public async getMemberState(): Promise<LMResponse<GetMemberStateResponse>> {
+    return this.networkLibrary
+      .makeAuthenticatedRequest(`${API.COMMUNITY_MEMBER_STATE}`)
+      .then((resData: any) => {
+        // Handle the response and return the LMResponse object
+        const responseData: GetMemberStateResponse =
+          ModelConverter.responseBodyParser(resData.data);
+
+        return new LMResponse<GetMemberStateResponse>(responseData, null, true);
+      })
+      .catch((error) => {
+        return new LMResponse<GetMemberStateResponse>(
           null,
           error.message || "An error occurred",
           false
