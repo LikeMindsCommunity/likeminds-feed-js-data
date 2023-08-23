@@ -2,7 +2,7 @@ import { IUser } from "./user.model";
 
 // Activity interface (you can define this separately if needed)
 export interface IActivity {
-  id: string;
+  Id: string;
   action: number;
   actionBy: string[];
   actionOn: string;

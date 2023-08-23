@@ -42,6 +42,9 @@ import NotificationFeedClient from "./notificationFeed/NotificationFeedClient";
 import GetNotificationFeedRequest from "./notificationFeed/model/GetNotificationFeedRequest";
 import MarkReadNotificationRequest from "./notificationFeed/model/MarkReadNotificationRequest";
 import { IActivities, IActivity } from "./shared/models/activity.model";
+import EditCommentRequest from "./comment/model/EditCommentRequest";
+import GetAllMembersRequest from "./initiateUser/model/GetAllMembersRequest";
+import { IMember } from "./initiateUser/model/GetAllMembersResponse";
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
   private postClient: PostClient;
@@ -286,14 +289,15 @@ class LMFeedClient {
       throw error;
     }
   }
-  // async editComment(request: EditCommentRequest) {
-  //   try {
-  //     return await this.commentClient.editComment(request);
-  //   } catch (error) {
-  //     console.log("Error while editing comment:", error);
-  //     throw error;
-  //   }
-  // }
+  async editComment(request: EditCommentRequest) {
+    try {
+      return await this.commentClient.editComment(request);
+    } catch (error) {
+      console.log("Error while editing comment:", error);
+      throw error;
+    }
+  }
+
   async deleteComment(request: DeleteCommentRequest) {
     try {
       return await this.commentClient.deleteComment(request);
@@ -353,6 +357,14 @@ class LMFeedClient {
       throw error;
     }
   }
+  async getAllMembers(request: GetAllMembersRequest) {
+    try {
+      return await this.initiateUserClient.getAllMembers(request);
+    } catch (error) {
+      console.log("Error while members", error);
+      throw error;
+    }
+  }
 }
 
 // export default LMFeedClient;
@@ -395,4 +407,6 @@ export {
   MarkReadNotificationRequest,
   IActivities,
   IActivity,
+  GetAllMembersRequest,
+  IMember,
 };

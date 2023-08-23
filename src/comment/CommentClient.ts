@@ -16,6 +16,7 @@ import { EditCommentResponse } from "./model/EditCommentResponse";
 import DeleteCommentRequest from "./model/DeleteCommentRequest";
 import LikeCommentRequest from "./model/LikeCommentRequest";
 import { GetCommentLikesResponse } from "./model/GetCommentLikesResponse";
+import EditCommentRequest from "./model/EditCommentRequest";
 
 class CommentClient {
   public networkLibrary: NetworkLibrary;
@@ -141,30 +142,30 @@ class CommentClient {
       });
   }
 
-  // editComment(
-  //   request: EditCommentRequest
-  // ): Promise<LMResponse<EditCommentResponse>> {
-  //   const params = ModelConverter.requestBodyGenerator(request);
-  //   return this.networkLibrary
-  //     .makeAuthenticatedRequest(
-  //       `${API.FEED_POST}/${request.postId}/comment/${request.commentId}`,
-  //       {
-  //         method: "PUT",
-  //         data: params,
-  //       }
-  //     )
-  //     .then((resData: any) => {
-  //       const responseData = ModelConverter.responseBodyParser(resData.data);
-  //       return new LMResponse<EditCommentResponse>(responseData, null, true);
-  //     })
-  //     .catch((error: any) => {
-  //       return new LMResponse<EditCommentResponse>(
-  //         null,
-  //         error.message || "An error occoured",
-  //         false
-  //       );
-  //     });
-  // }
+  editComment(
+    request: EditCommentRequest
+  ): Promise<LMResponse<EditCommentResponse>> {
+    const params = ModelConverter.requestBodyGenerator(request);
+    return this.networkLibrary
+      .makeAuthenticatedRequest(
+        `${API.FEED_POST}/${request.postId}/comment/${request.commentId}`,
+        {
+          method: "PUT",
+          data: params,
+        }
+      )
+      .then((resData: any) => {
+        const responseData = ModelConverter.responseBodyParser(resData.data);
+        return new LMResponse<EditCommentResponse>(responseData, null, true);
+      })
+      .catch((error: any) => {
+        return new LMResponse<EditCommentResponse>(
+          null,
+          error.message || "An error occoured",
+          false
+        );
+      });
+  }
 
   deleteComment(request: DeleteCommentRequest): Promise<LMResponse<any>> {
     const params = ModelConverter.requestBodyGenerator(request);
