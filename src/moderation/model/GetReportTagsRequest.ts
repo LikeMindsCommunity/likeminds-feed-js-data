@@ -25,10 +25,6 @@ export class GetReportTagsBuilder {
 
   // Build method to create the final GetReportTagsRequest object
   public build(): GetReportTagsRequest {
-    if (!this.type) {
-      throw new Error("UUID and DeviceI are required.");
-    }
-
     return new GetReportTagsRequest(this.type);
   }
 }
