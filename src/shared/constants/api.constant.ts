@@ -2,13 +2,16 @@ export const API = {
   SDK_INITIATE: "/sdk/initiate",
   USER_LOGOUT: "/user/logout",
   COMMUNITY_MEMBER_STATE: "/community/member/state",
-  FEED_UNIVERSAL: "feed/universal",
-  FEED_POST: "feed/post",
-  HELPER_URL: "helper/url",
-  FEEDROOM: "feedroom",
-  FEED_GROUP: "feed/group",
+  FEED_UNIVERSAL: "/feed/universal",
+  FEED_POST: "/feed/post",
+  HELPER_URL: "/helper/url",
+  FEEDROOM: "/feedroom",
+  FEED_GROUP: "/feed/group",
   REFRESH_TOKEN_API: "/user/refresh",
-  CHATROOM_GET_TAGGINNG_LIST: "/chatroom/tag", //(GET)
+  CHATROOM_GET_TAGGINNG_LIST: "/community/tag", //(GET)
+  GET_REPORT_TAGS: "/community/report/tag",
+  POST_REPORT: "/community/report",
+  NOTIFICATION_FEED: "/feed/user/activity",
 
   CHATROOM_SECRET_LEAVE: "/chatroom/secret/leave", //(Post)
   DM_ALL_MEMBERS: "/community/member", //(GET)

@@ -1,17 +1,18 @@
+// NetworkLibrary
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-import TokenManager from "./tokenmanager";
 import LMResponse from "./lmresponse";
+import TokenManager from "./tokenmanager";
+import { environment } from "src/environment";
 
 class NetworkLibrary {
   private tokenManager: TokenManager;
 
   private xApiKey: string | null;
-  private xVersionCode: any | null;
-  private xPlatformCode: string | null;
-
+  private randomNumber: number;
   constructor() {
     this.tokenManager = new TokenManager();
+    this.randomNumber = Math.random();
   }
 
   public setAccessToken(accessToken: string) {
@@ -19,6 +20,14 @@ class NetworkLibrary {
   }
   public setRefreshToken(refreshToken: string) {
     this.tokenManager.setRefreshToken(refreshToken);
+  }
+
+  public setPlatformCode(platFormCode: string) {
+    this.tokenManager.setPlatformCode(platFormCode);
+  }
+
+  public setVersionCode(versionCode: any) {
+    this.tokenManager.setVersionCode(versionCode);
   }
 
   // Api Key
@@ -29,54 +38,41 @@ class NetworkLibrary {
     return this.xApiKey;
   }
 
-  // Platform Code
-  public setPlatformCode(xPlatformCode: string) {
-    this.xPlatformCode = xPlatformCode;
-  }
-  public getPlatformCode() {
-    return this.xPlatformCode;
-  }
-
-  // Version Code
-  public setVersionCode(xVersionCode: number) {
-    this.xVersionCode = xVersionCode;
-  }
-
-  public getVersionCode() {
-    return this.xVersionCode;
-  }
-
   private async makeRequest<T>(
     url: string,
     config?: AxiosRequestConfig
   ): Promise<AxiosResponse<T>> {
-    return axios.request<T>({ url, ...config });
+    const baseUrl: string = environment.apiUrl;
+    const requestUrl = baseUrl + url;
+    return axios.request<T>({ url: requestUrl, ...config });
   }
 
   public async makeAuthenticatedRequest<T>(
     url: string,
     config?: AxiosRequestConfig
   ): Promise<LMResponse<T>> {
-    // if (!this.tokenManager.getAccessToken()) {
-    //     throw new Error('Access token is not set.');
-    // }
-
     const requestConfig: AxiosRequestConfig = {
       ...config,
       headers: {
         ...config?.headers,
-        "x-sdk-source": "chat",
+        "x-sdk-source": "feed",
       },
     };
-
     const initApi = url.includes("initiate");
     const isRefreshRequest = url.includes("refresh");
     requestConfig.headers["Content-Type"] = "application/json";
-    requestConfig.headers["x-platform-code"] = this.xPlatformCode;
-    requestConfig.headers["x-version-code"] = this.xVersionCode;
+    // requestConfig.headers['x-platform-code'] = this.tokenManager.getPlatformCode();
+    requestConfig.headers["x-version-code"] =
+      this.tokenManager.getVersionCode();
+
+    const device = url.includes("user/device/push");
+    if (!device)
+      requestConfig.headers["x-platform-code"] =
+        this.tokenManager.getPlatformCode();
 
     const cFeed = url.includes("community/feed");
     if (cFeed) requestConfig.headers["x-accept-version"] = "v2";
+
     const isMarkRead = url.includes("mark_read");
     if (isMarkRead)
       requestConfig.headers["Content-Type"] =
@@ -94,29 +90,33 @@ class NetworkLibrary {
 
     try {
       const response = await this.makeRequest<{ data: T }>(url, requestConfig);
-
-      if (response.status === 401) {
-        // Access token failed, refresh it
+      return new LMResponse<T>(response?.data?.data, null, true);
+    } catch (error) {
+      if (error?.response && error?.response?.status === 401) {
+        // Access token expired, refresh the token and retry the request
         await this.tokenManager.refreshAccessToken();
-        // Retry the request with the updated access token
-        // requestConfig.headers['Authorization'] = `Bearer ${this.tokenManager.getRefreshToken()}`;
-        requestConfig.headers[
+
+        // Update the Authorization header with the new access token
+        const updatedConfig = { ...requestConfig };
+        updatedConfig.headers[
           "Authorization"
-        ] = `Bearer ${this.tokenManager.refreshAccessToken()}`;
-        return this.makeRequest<{ data: T }>(url, requestConfig)
+        ] = `Bearer ${this.tokenManager.getAccessToken()}`;
+
+        // Retry the request
+        return this.makeRequest<{ data: T }>(url, updatedConfig)
           .then((refreshedResponse) => {
             return new LMResponse<T>(refreshedResponse.data.data, null, true);
           })
           .catch((error) => {
-            console.error("Failed to make authenticated request:", error);
-            return new LMResponse<T>(null, error.message, false);
+            if (error?.response && error?.response?.status >= 500) {
+              return new LMResponse<T>(null, error.message, false);
+            }
           });
       }
 
-      return new LMResponse<T>(response?.data?.data, null, true);
-    } catch (error) {
-      console.error("Failed to make authenticated request:", error);
-      return new LMResponse<T>(null, error.message, false);
+      if (error?.response && error?.response?.status >= 500) {
+        return new LMResponse<T>(null, error.message, false);
+      }
     }
   }
 }
