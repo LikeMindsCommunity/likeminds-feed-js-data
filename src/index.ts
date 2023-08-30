@@ -97,7 +97,7 @@ class LMFeedClient {
     this.networkLibrary.setApiKey(this.apiKey); // Set the API key in the NetworkLibrary
     this.networkLibrary.setPlatformCode(this.platformCode);
     this.networkLibrary.setVersionCode(this.versionCode);
-    // return new LMFeedClient(this.userName, this.uuid, this.isGuest);
+
     return this;
   }
 
@@ -155,7 +155,6 @@ class LMFeedClient {
     }
   }
 
-  // Function for GetPostLikesRequest
   async getPostLikes(request: GetPostLikesRequest) {
     try {
       const getPostLikesResponse = await this.postClient.getPostLikes(request);
@@ -367,7 +366,6 @@ class LMFeedClient {
   }
 }
 
-// export default LMFeedClient;
 export {
   LMFeedClient as default,
   InitiateUserRequest,

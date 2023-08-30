@@ -41,7 +41,7 @@ export class GetTaggingListRequestBuilder {
 
   // Build method to create the final Attachment object
   public build(): GetTaggingListRequest {
-    if (!this.searchName || !this.page || !this.pageSize) {
+    if (!this.page || !this.pageSize) {
       throw new Error("searchName, page and pageSize are required.");
     }
 
