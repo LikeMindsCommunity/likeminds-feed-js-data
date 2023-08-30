@@ -3,11 +3,11 @@ import AttachmentMeta from "./AttachmentMeta";
 class Attachment {
   // Properties of the request class
   attachmentType: number;
-  attachmentMeta: AttachmentMeta[];
+  attachmentMeta: AttachmentMeta;
   //   attachmentMeta: List<Attachment>;
 
   // Public constructor to create the request object
-  constructor(attachmentType: number, attachmentMeta: AttachmentMeta[]) {
+  constructor(attachmentType: number, attachmentMeta: AttachmentMeta) {
     this.attachmentType = attachmentType;
     this.attachmentMeta = attachmentMeta;
   }
@@ -21,7 +21,7 @@ class Attachment {
 // Builder class for Attachment
 export class AttachmentBuilder {
   private attachmentType: number | undefined;
-  private attachmentMeta: AttachmentMeta[] | undefined;
+  private attachmentMeta: AttachmentMeta | undefined;
   // Add other properties as needed
 
   public setAttachmentType(attachmentType: number): AttachmentBuilder {
@@ -29,9 +29,7 @@ export class AttachmentBuilder {
     return this;
   }
 
-  public setAttachmentMeta(
-    attachmentMeta: AttachmentMeta[]
-  ): AttachmentBuilder {
+  public setAttachmentMeta(attachmentMeta: AttachmentMeta): AttachmentBuilder {
     this.attachmentMeta = attachmentMeta;
     return this;
   }

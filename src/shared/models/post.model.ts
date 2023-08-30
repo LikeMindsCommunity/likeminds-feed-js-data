@@ -3,7 +3,7 @@ import { IMenuItem } from "src/post/model/MenuItem";
 import { IComment } from "./comment.model";
 
 export interface IPost {
-  id: string;
+  Id: string;
   text: string;
   attachments?: Attachment[];
   communityId: number;

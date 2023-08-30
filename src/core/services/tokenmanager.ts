@@ -8,7 +8,7 @@ class TokenManager {
   private refreshToken: string | null;
   private xVersionCode: any | null;
   private xPlatformCode: string | null;
-
+  private xSDKSource: string = "feed";
   constructor() {
     this.accessToken = null;
     this.refreshToken = null;

@@ -13,7 +13,6 @@ class NetworkLibrary {
   constructor() {
     this.tokenManager = new TokenManager();
     this.randomNumber = Math.random();
-    console.log("Kust for ref check: ", this.randomNumber);
   }
 
   public setAccessToken(accessToken: string) {
@@ -34,7 +33,6 @@ class NetworkLibrary {
   // Api Key
   public setApiKey(xApiKey: string) {
     this.xApiKey = xApiKey;
-    console.log("DL xapikey=> ", this.xApiKey);
   }
   public getApiKey() {
     return this.xApiKey;
@@ -60,7 +58,6 @@ class NetworkLibrary {
         "x-sdk-source": "feed",
       },
     };
-    console.log("DL getApikey=> ", this.getApiKey());
     const initApi = url.includes("initiate");
     const isRefreshRequest = url.includes("refresh");
     requestConfig.headers["Content-Type"] = "application/json";

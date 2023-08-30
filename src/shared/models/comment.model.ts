@@ -1,7 +1,7 @@
 import { IMenuItem } from "src/post/model/MenuItem";
 
 export interface IComment {
-  id: string;
+  Id: string;
   isLiked: boolean;
   isEdited: boolean;
   userId: string;

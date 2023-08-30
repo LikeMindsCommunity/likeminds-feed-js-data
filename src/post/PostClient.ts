@@ -1,9 +1,6 @@
 import LMResponse from "src/core/services/lmresponse";
-import { environment } from "src/environment";
 import { API } from "src/shared/constants/api.constant";
 import NetworkLibrary from "src/core/services/networklibrary";
-import InitiateUserRequest from "src/initiateUser/model/InitiateUserRequest";
-import { InitiateUserResponse } from "src/initiateUser/model/InitiateUserResponse";
 import AddPostRequest from "./model/AddPostRequest";
 import { ModelConverter } from "src/utils/ModelConverter";
 import { IAddPostResponse } from "./model/AddPostResponse";
@@ -18,6 +15,7 @@ import PinPostRequest from "./model/PinPostRequest";
 import EditPostRequest from "./model/EditPostRequest";
 import { EditPostResponse } from "./model/EditPostResponse";
 import DecodeURLRequest from "./model/DecodeUrlRequest";
+import GetTaggingListRequest from "./model/GetTaggingListRequest";
 
 class PostClient {
   private networkLibrary: NetworkLibrary;
@@ -197,6 +195,40 @@ class PostClient {
     return this.networkLibrary.makeAuthenticatedRequest(
       `${API.HELPER_URL}?url=${decodeUrl.url}`
     );
+  }
+  getTaggingList(taggingList: GetTaggingListRequest): Promise<any> {
+    return this.networkLibrary
+      .makeAuthenticatedRequest(
+        `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
+      )
+      .then((resData: any) => {
+        const responseData = ModelConverter.responseBodyParser(resData.data);
+        return new LMResponse<any>(responseData, null, true);
+      })
+      .catch((error: any) => {
+        return new LMResponse<any>(
+          null,
+          error.message || "An error occoured",
+          false
+        );
+      });
+  }
+  getPostComments(taggingList: GetTaggingListRequest): Promise<any> {
+    return this.networkLibrary
+      .makeAuthenticatedRequest(
+        `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
+      )
+      .then((resData: any) => {
+        const responseData = ModelConverter.responseBodyParser(resData.data);
+        return new LMResponse<any>(responseData, null, true);
+      })
+      .catch((error: any) => {
+        return new LMResponse<any>(
+          null,
+          error.message || "An error occoured",
+          false
+        );
+      });
   }
 }
 

@@ -83,9 +83,9 @@ export class AttachmentMetaBuilder {
 
   // Build method to create the final Attachment object
   public build(): AttachmentMeta {
-    if (!this.ogTags) {
-      throw new Error("attachmentType and attachmentMeta are required.");
-    }
+    // if (!this.ogTags) {
+    //   throw new Error("attachmentType and attachmentMeta are required.");
+    // }
 
     return new AttachmentMeta(
       this.name,

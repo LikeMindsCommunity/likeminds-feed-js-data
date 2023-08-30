@@ -1,18 +1,11 @@
 // Post interface (you can define this separately if needed)
-interface Post {
-  id: string;
-  // Add other properties for Post as needed
-  // ...
-}
+
+import { IPost } from "src/shared/models/post.model";
+import { IUser } from "src/shared/models/user.model";
 
 // User interface (you can define this separately if needed)
-interface User {
-  id: string;
-  // Add other properties for User as needed
-  // ...
-}
 
 export interface GetFeedResponse {
-  posts: Post[];
-  users: { [key: string]: User }; // Map<string, User> equivalent in TypeScript
+  posts: IPost[];
+  users: { [key: string]: IUser }; // Map<string, User> equivalent in TypeScript
 }

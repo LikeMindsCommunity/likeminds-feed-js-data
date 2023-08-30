@@ -17,11 +17,11 @@ class ReplyCommentRequest {
   }
 }
 
-// Builder class for ReplyCommentRequest
+// Builder class for EditCommentRequest
 export class ReplyCommentRequestBuilder {
-  private postId: string | undefined;
-  private commentId: string | undefined;
-  private text: string | undefined;
+  postId: string | undefined;
+  commentId: string | undefined;
+  text: string | undefined;
   // Add other properties as needed
 
   public setPostId(postId: string): ReplyCommentRequestBuilder {
@@ -39,7 +39,7 @@ export class ReplyCommentRequestBuilder {
     return this;
   }
 
-  // Build method to create the final ReplyCommentRequest object
+  // Build method to create the final EditCommentRequest object
   public build(): ReplyCommentRequest {
     if (!this.postId || !this.commentId) {
       throw new Error("postId and commentId are required.");

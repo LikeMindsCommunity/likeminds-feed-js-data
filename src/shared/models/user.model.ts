@@ -1,4 +1,5 @@
 export interface IUser {
+  customTitle: string;
   id: number;
   imageUrl: string;
   isGuest: boolean;
