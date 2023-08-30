@@ -36,8 +36,6 @@ export class AttachmentBuilder {
 
   // Build method to create the final Attachment object
   public build(): Attachment {
-    console.log("The attachment type is ", this.attachmentType);
-    console.log("The attachment meta is ", this.attachmentMeta);
     if (!this.attachmentType || !this.attachmentMeta) {
       throw new Error("attachmentType and attachmentMeta are required.");
     }

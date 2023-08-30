@@ -1,9 +1,6 @@
 import LMResponse from "src/core/services/lmresponse";
-import { environment } from "src/environment";
 import { API } from "src/shared/constants/api.constant";
 import NetworkLibrary from "src/core/services/networklibrary";
-import InitiateUserRequest from "src/initiateUser/model/InitiateUserRequest";
-import { InitiateUserResponse } from "src/initiateUser/model/InitiateUserResponse";
 import AddPostRequest from "./model/AddPostRequest";
 import { ModelConverter } from "src/utils/ModelConverter";
 import { IAddPostResponse } from "./model/AddPostResponse";
@@ -30,8 +27,6 @@ class PostClient {
   async addPost(
     request: AddPostRequest
   ): Promise<LMResponse<IAddPostResponse>> {
-    console.log("DL Request s=> ", request);
-
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.FEED_POST}`, {

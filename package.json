@@ -1,6 +1,6 @@
 {
-  "name": "likeminds-sdk",
-  "version": "1.0.1",
+  "name": "@likeminds.community/feed-js-beta",
+  "version": "1.7.0",
   "description": "LikeMinds Javascript SDK for chat APIs",
   "main": "dist/index.js",
   "module": "dist/index.m.js",
@@ -38,10 +38,6 @@
     "axios": "^0.22.0",
     "firebase": "^9.15.0",
     "form-data": "^4.0.0",
-    "isomorphic-unfetch": "^3.1.0",
-    "isomorphic-ws": "^4.0.1",
-    "jsonwebtoken": "~9.0.0",
-    "rxjs": "^7.8.1",
     "ws": "^7.4.4"
   },
   "repository": {
