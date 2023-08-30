@@ -28,31 +28,41 @@ import PostReportRequest from "./moderation/model/PostReportRequest";
 import CommentClient from "./comment/CommentClient";
 import AddCommentRequest from "./comment/model/AddCommentRequest";
 import { AddCommentResponse } from "./comment/model/AddCommentResponse";
-import GetCommentRequest from "./comment/model/GetCommentRequest";
+
 import { GetCommentResponse } from "./comment/model/GetCommentResponse";
 import { IComment } from "./shared/models/comment.model";
-import ReplyCommentRequest from "./comment/model/ReplyCommentRequest";
-import DeleteCommentRequest from "./comment/model/DeleteCommentRequest";
-import LikeCommentRequest from "./comment/model/LikeCommentRequest";
-import GetCommentLikesRequest from "./comment/model/GetCommentLikesRequest";
+
 import { EditCommentResponse } from "./comment/model/EditCommentResponse";
 import GetMemberStateRequest from "./initiateUser/model/GetMemberStateRequest";
 import { IMemberRight, IMemberState } from "./shared/models/memberRights.model";
+
+import { IActivities, IActivity } from "./shared/models/activity.model";
+
+import GetAllMembersRequest from "./initiateUser/model/GetAllMembersRequest";
+import { IMember } from "./initiateUser/model/GetAllMembersResponse";
+
+import ReplyCommentRequest from "./comment/model/ReplyCommentRequest";
+import GetCommentRequest from "./comment/model/GetCommentRequest";
+import GetCommentLikesRequest from "./comment/model/GetCommentLikesRequest";
+import LikeCommentRequest from "./comment/model/LikeCommentRequest";
+import DeleteCommentRequest from "./comment/model/DeleteCommentRequest";
+import DecodeUrlRequest from "./helper/model/DecodeUrlRequest";
+import HelperClient from "./helper/HelperClient";
+
 import NotificationFeedClient from "./notificationFeed/NotificationFeedClient";
 import GetNotificationFeedRequest from "./notificationFeed/model/GetNotificationFeedRequest";
 import MarkReadNotificationRequest from "./notificationFeed/model/MarkReadNotificationRequest";
-import { IActivities, IActivity } from "./shared/models/activity.model";
 import EditCommentRequest from "./comment/model/EditCommentRequest";
-import GetAllMembersRequest from "./initiateUser/model/GetAllMembersRequest";
-import { IMember } from "./initiateUser/model/GetAllMembersResponse";
+
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
   private postClient: PostClient;
-  private networkLibrary: NetworkLibrary;
-  private feedClient: UniversalFeedClient;
   private moderationClient: ModerationClient;
   private commentClient: CommentClient;
+  private helperClient: HelperClient;
+  private networkLibrary: NetworkLibrary;
   private notificationFeedClient: NotificationFeedClient;
+  private feedClient: UniversalFeedClient;
   private apiKey: string | null = null;
   private platformCode: string | null = null;
   private versionCode: number | null = null;
@@ -60,6 +70,7 @@ class LMFeedClient {
     this.networkLibrary = new NetworkLibrary();
     this.initiateUserClient = new InitiateUserClient(this.networkLibrary);
     this.postClient = new PostClient(this.networkLibrary);
+    this.moderationClient = new ModerationClient(this.networkLibrary);
     this.feedClient = new UniversalFeedClient(this.networkLibrary);
     this.moderationClient = new ModerationClient(this.networkLibrary);
     this.commentClient = new CommentClient(this.networkLibrary);
@@ -101,11 +112,11 @@ class LMFeedClient {
     return this;
   }
 
-  async initiateUser(request: InitiateUserRequest) {
+  async initiateUser(initiateUserRequest: InitiateUserRequest) {
     try {
       // Call the initiateUser method from InitiateUserClient
       const initiateUserResponse = await this.initiateUserClient.initiateUser(
-        request
+        initiateUserRequest
       );
 
       return initiateUserResponse;
@@ -115,9 +126,9 @@ class LMFeedClient {
     }
   }
 
-  async addPost(request: AddPostRequest) {
+  async addPost(addPostRequest: AddPostRequest) {
     try {
-      const addPostResponse = await this.postClient.addPost(request);
+      const addPostResponse = await this.postClient.addPost(addPostRequest);
       return addPostResponse;
     } catch (error) {
       console.log("Error while posting feed :", error);
@@ -125,9 +136,9 @@ class LMFeedClient {
     }
   }
 
-  async decodeURL(request: DecodeURLRequest) {
+  async decodeURL(decodeURLRequest: DecodeURLRequest) {
     try {
-      const addPostResponse = await this.postClient.decodeUrl(request);
+      const addPostResponse = await this.postClient.decodeUrl(decodeURLRequest);
       return addPostResponse;
     } catch (error) {
       console.log("Error while posting feed :", error);
@@ -135,9 +146,11 @@ class LMFeedClient {
     }
   }
 
-  async deletePost(request: DeletePostRequest) {
+  async deletePost(deletePostRequest: DeletePostRequest) {
     try {
-      const deletePostResponse = await this.postClient.deletePost(request);
+      const deletePostResponse = await this.postClient.deletePost(
+        deletePostRequest
+      );
       return deletePostResponse;
     } catch (error) {
       console.log("Error while deleting post:", error);
@@ -145,9 +158,9 @@ class LMFeedClient {
     }
   }
 
-  async editPost(request: EditPostRequest) {
+  async editPost(editPostRequest: EditPostRequest) {
     try {
-      const editPostResponse = await this.postClient.editPost(request);
+      const editPostResponse = await this.postClient.editPost(editPostRequest);
       return editPostResponse;
     } catch (error) {
       console.log("Error while editing post:", error);
@@ -155,9 +168,12 @@ class LMFeedClient {
     }
   }
 
-  async getPostLikes(request: GetPostLikesRequest) {
+  // Function for GetPostLikesRequest
+  async getPostLikes(getPostLikesRequest: GetPostLikesRequest) {
     try {
-      const getPostLikesResponse = await this.postClient.getPostLikes(request);
+      const getPostLikesResponse = await this.postClient.getPostLikes(
+        getPostLikesRequest
+      );
       return getPostLikesResponse;
     } catch (error) {
       console.log("Error while getting post likes:", error);
@@ -165,9 +181,9 @@ class LMFeedClient {
     }
   }
 
-  async getPost(request: GetPostRequest) {
+  async getPost(getPostRequest: GetPostRequest) {
     try {
-      const getPostResponse = await this.postClient.getPost(request);
+      const getPostResponse = await this.postClient.getPost(getPostRequest);
       return getPostResponse;
     } catch (error) {
       console.log("Error while getting post:", error);
@@ -175,9 +191,9 @@ class LMFeedClient {
     }
   }
 
-  async likePost(request: LikePostRequest) {
+  async likePost(likePostRequest: LikePostRequest) {
     try {
-      const likePostResponse = await this.postClient.likePost(request);
+      const likePostResponse = await this.postClient.likePost(likePostRequest);
       return likePostResponse;
     } catch (error) {
       console.log("Error while liking post:", error);

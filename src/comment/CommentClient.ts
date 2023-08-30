@@ -2,8 +2,6 @@ import LMResponse from "src/core/services/lmresponse";
 import { environment } from "src/environment";
 import { API } from "src/shared/constants/api.constant";
 import NetworkLibrary from "src/core/services/networklibrary";
-import InitiateUserRequest from "src/initiateUser/model/InitiateUserRequest";
-import { InitiateUserResponse } from "src/initiateUser/model/InitiateUserResponse";
 import AddCommentRequest from "./model/AddCommentRequest";
 import GetCommentRequest from "./model/GetCommentRequest";
 import GetCommentLikesRequest from "./model/GetCommentLikesRequest";
