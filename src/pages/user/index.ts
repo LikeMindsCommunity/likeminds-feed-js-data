@@ -41,7 +41,7 @@ export class Member {
         return new LMResponse<InitiateUserResponse>(
           null,
           error.message || "An error occurred",
-          false
+          false,
         );
       });
   }
@@ -57,13 +57,13 @@ export class Member {
       {
         method: "POST",
         data: params,
-      }
+      },
     );
   }
 
   getMemberState(memberState: MemberState): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.COMMUNITY_MEMBER_STATE}?member_id=${memberState.memberId}`
+      `${environment.apiUrl}${API.COMMUNITY_MEMBER_STATE}?member_id=${memberState.memberId}`,
     );
   }
 }

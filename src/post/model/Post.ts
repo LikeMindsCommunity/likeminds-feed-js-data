@@ -38,7 +38,7 @@ class Post {
     replies: any,
     createdAt: number,
     updatedAt: number,
-    uuid: string
+    uuid: string,
   ) {
     this.id = id;
     this.text = text;
@@ -172,7 +172,7 @@ export class PostBuilder {
       this.replies,
       this.createdAt,
       this.updatedAt,
-      this.uuid
+      this.uuid,
     );
   }
 }

@@ -21,7 +21,7 @@ export class UniversalFeed {
   // Get Universal Feed
   getFeed(feed: Feed): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}`
+      `${environment.apiUrl}${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}`,
     );
   }
   //   FEED_POST
@@ -35,7 +35,7 @@ export class UniversalFeed {
       {
         method: "POST",
         data: params,
-      }
+      },
     );
   }
 
@@ -46,19 +46,19 @@ export class UniversalFeed {
       {
         method: "PUT",
         data: params,
-      }
+      },
     );
   }
 
   getPost(getPost: GetPost, postId: string): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.FEED_POST}/${postId}?page=${getPost.page}&page_size=${getPost.pageSize}`
+      `${environment.apiUrl}${API.FEED_POST}/${postId}?page=${getPost.page}&page_size=${getPost.pageSize}`,
     );
   }
 
   getPostLikes(getPost: GetPost, postId: string): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.FEED_POST}/${postId}/like?page=${getPost.page}&page_size=${getPost.pageSize}`
+      `${environment.apiUrl}${API.FEED_POST}/${postId}/like?page=${getPost.page}&page_size=${getPost.pageSize}`,
     );
   }
 
@@ -69,7 +69,7 @@ export class UniversalFeed {
       {
         method: "PUT",
         data: params,
-      }
+      },
     );
   }
 
@@ -80,7 +80,7 @@ export class UniversalFeed {
       {
         method: "PUT",
         data: params,
-      }
+      },
     );
   }
 
@@ -94,7 +94,7 @@ export class UniversalFeed {
       {
         method: "PUT",
         data: params,
-      }
+      },
     );
   }
 
@@ -107,26 +107,26 @@ export class UniversalFeed {
       {
         method: "POST",
         data: params,
-      }
+      },
     );
   }
 
   getComment(
     getComment: GetComment,
     postId: string,
-    commentId: any
+    commentId: any,
   ): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`
+      `${environment.apiUrl}${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`,
     );
   }
   getCommentLikes(
     getComment: GetComment,
     postId: string,
-    commentId: any
+    commentId: any,
   ): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${API.FEED_POST}/${postId}/comment/${commentId}/like?page=${getComment.page}&page_size=${getComment.pageSize}`
+      `${API.FEED_POST}/${postId}/comment/${commentId}/like?page=${getComment.page}&page_size=${getComment.pageSize}`,
     );
   }
 
@@ -136,7 +136,7 @@ export class UniversalFeed {
       {
         method: "PUT",
         data: { params: "" },
-      }
+      },
     );
   }
 
@@ -149,7 +149,7 @@ export class UniversalFeed {
       {
         method: "POST",
         data: params,
-      }
+      },
     );
   }
 
@@ -162,14 +162,14 @@ export class UniversalFeed {
       {
         method: "PUT",
         data: params,
-      }
+      },
     );
   }
 
   deleteComment(
     deleteReason: string,
     postId: string,
-    commentId: any
+    commentId: any,
   ): Promise<any> {
     const params = {
       delete_reason: deleteReason,
@@ -179,7 +179,7 @@ export class UniversalFeed {
       {
         method: "DELETE",
         data: params,
-      }
+      },
     );
   }
 
@@ -192,13 +192,13 @@ export class UniversalFeed {
       {
         method: "DELETE",
         data: params,
-      }
+      },
     );
   }
 
   decodeUrl(decodeUrl: DecodeUrl): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.HELPER_URL}?url=${decodeUrl.url}`
+      `${environment.apiUrl}${API.HELPER_URL}?url=${decodeUrl.url}`,
     );
   }
 }

@@ -19,7 +19,7 @@ class UniversalFeedClient {
   getFeed(feed: GetFeedRequest): Promise<LMResponse<GetFeedResponse>> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
-        `${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}`
+        `${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}`,
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData.data);
@@ -29,7 +29,7 @@ class UniversalFeedClient {
         return new LMResponse<GetFeedResponse>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }

@@ -18,7 +18,7 @@ class AttachmentMeta {
     size: number,
     duration: number,
     pageCount: number,
-    ogTags: any
+    ogTags: any,
   ) {
     this.name = name;
     this.url = url;
@@ -94,7 +94,7 @@ export class AttachmentMetaBuilder {
       this.size,
       this.duration,
       this.pageCount,
-      this.ogTags
+      this.ogTags,
     );
   }
 }

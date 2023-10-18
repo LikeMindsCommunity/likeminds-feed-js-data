@@ -33,7 +33,7 @@ class AddCommentRequest {
     replies: any,
     menuItems: any,
     parentComment: any,
-    uuid: string
+    uuid: string,
   ) {
     this.id = id;
     this.isLiked = isLiked;
@@ -174,7 +174,7 @@ export class AddCommentRequestBuilder {
       this.replies,
       this.menuItems,
       this.parentComment,
-      this.uuid
+      this.uuid,
     );
   }
 }

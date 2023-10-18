@@ -12,7 +12,7 @@ class PostReportRequest {
     uuid: string,
     entityType: number,
     tagId: number,
-    reason?: string
+    reason?: string,
   ) {
     this.entityId = entityId;
     this.uuid = uuid;
@@ -69,7 +69,7 @@ export class PostReportBuilder {
       this.uuid,
       this.entityType,
       this.tagId,
-      this.reason
+      this.reason,
     );
   }
 }

@@ -16,7 +16,7 @@ class ModerationClient {
   }
 
   getReportTags(
-    request: GetReportTagsRequest
+    request: GetReportTagsRequest,
   ): Promise<LMResponse<GetReportTagsResponse>> {
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.GET_REPORT_TAGS}?type=${request.type}`)
@@ -28,7 +28,7 @@ class ModerationClient {
         return new LMResponse<GetReportTagsResponse>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
@@ -47,7 +47,7 @@ class ModerationClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }

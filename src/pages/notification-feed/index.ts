@@ -8,17 +8,17 @@ export class HomeFeedClient {
 
   getNotificationFeed(homeFeed: HomeFeed): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.FEEDROOM}?page=${homeFeed.page}`
+      `${environment.apiUrl}${API.FEEDROOM}?page=${homeFeed.page}`,
     );
   }
   markReadNotification(homeFeed: HomeFeed): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.FEEDROOM}?page=${homeFeed.page}`
+      `${environment.apiUrl}${API.FEEDROOM}?page=${homeFeed.page}`,
     );
   }
   getUnreadNotificationCount(homeFeed: HomeFeed): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.FEEDROOM}?page=${homeFeed.page}`
+      `${environment.apiUrl}${API.FEEDROOM}?page=${homeFeed.page}`,
     );
   }
 }
