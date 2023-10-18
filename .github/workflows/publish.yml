@@ -14,23 +14,23 @@ jobs:
         with:
           fetch-depth: 0
         
-      # - name: Check for version changes
-      #   run: |
-      #     # Fetch all tags from the remote repository
-      #     git fetch --tags
+      - name: Check for version changes
+        run: |
+          # Fetch all tags from the remote repository
+          git fetch --tags
           
-      #     # Get the previous version from the last release tag
-      #     export previous_version=$(git describe --tags --abbrev=0)
+          # Get the previous version from the last release tag
+          export previous_version=$(git describe --tags --abbrev=0)
           
-      #     # Get the current version from pubspec.yaml
-      #     export current_version=$(cat package.json | grep '"version":' | awk -F'"' '{print $4}')
+          # Get the current version from pubspec.yaml
+          export current_version=$(cat package.json | grep '"version":' | awk -F'"' '{print $4}')
           
-      #     if [[ "$previous_version" != "v$current_version" ]]; then
-      #       echo "Version has changed from $previous_version to v$current_version."
-      #     else
-      #       echo "Version has not changed."
-      #       exit 1
-      #     fi
+          if [[ "$previous_version" != "v$current_version" ]]; then
+            echo "Version has changed from $previous_version to v$current_version."
+          else
+            echo "Version has not changed."
+            exit 1
+          fi
 
       - uses: actions/setup-node@v3
         with:
