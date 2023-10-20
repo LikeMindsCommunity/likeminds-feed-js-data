@@ -1,7 +1,7 @@
-import LMResponse from "src/core/services/lmresponse";
-import { API } from "src/shared/constants/api.constant";
-import NetworkLibrary from "src/core/services/networklibrary";
-import { ModelConverter } from "src/utils/ModelConverter";
+import LMResponse from "../core/services/lmresponse";
+import { API } from "../../src/shared/constants/api.constant";
+import NetworkLibrary from "../../src/core/services/networklibrary";
+import { ModelConverter } from "../../src/utils/ModelConverter";
 import DecodeUrlRequest from "./model/DecodeUrlRequest";
 import { DecodeUrlResponse } from "./model/DecodeUrlResponse";
 import GetTaggingListRequest from "./model/GetTaggingListRequest";

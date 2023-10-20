@@ -7,6 +7,11 @@ class AttachmentMeta {
   duration?: number;
   pageCount?: number;
   ogTags: any;
+  coverImageUrl?: string;
+  title?: string;
+  body?: string;
+  thumbnailUrl?: string;
+
   // ogTags: LinkOGTags
   //   attachmentMeta: List<Attachment>;
 
@@ -18,7 +23,11 @@ class AttachmentMeta {
     size: number,
     duration: number,
     pageCount: number,
-    ogTags: any
+    ogTags: any,
+    coverImageUrl: string,
+    title: string,
+    body?: string,
+    thumbnailUrl?: string
   ) {
     this.name = name;
     this.url = url;
@@ -27,6 +36,10 @@ class AttachmentMeta {
     this.duration = duration;
     this.pageCount = pageCount;
     this.ogTags = ogTags;
+    this.coverImageUrl = coverImageUrl;
+    this.title = title;
+    this.body = body;
+    this.thumbnailUrl = thumbnailUrl;
   }
 
   // Static builder method to create the request object
@@ -44,10 +57,18 @@ export class AttachmentMetaBuilder {
   private duration?: number | undefined;
   private pageCount?: number | undefined;
   private ogTags: any | undefined;
+  coverImageUrl?: string | undefined;
+  title?: string | undefined;
+  body?: string | undefined;
+  thumbnailUrl?: string | undefined;
   // Add other properties as needed
 
   public setname(name: string): AttachmentMetaBuilder {
     this.name = name;
+    return this;
+  }
+  public setThumbnailUrl(url: string) {
+    this.thumbnailUrl = url;
     return this;
   }
 
@@ -80,6 +101,18 @@ export class AttachmentMetaBuilder {
     this.ogTags = ogTags;
     return this;
   }
+  public setTitle(title: string): AttachmentMetaBuilder {
+    this.title = title;
+    return this;
+  }
+  public setBody(body: string): AttachmentMetaBuilder {
+    this.body = body;
+    return this;
+  }
+  public setCoverImageUrl(coverImageUrl: string): AttachmentMetaBuilder {
+    this.coverImageUrl = coverImageUrl;
+    return this;
+  }
 
   // Build method to create the final Attachment object
   public build(): AttachmentMeta {
@@ -94,7 +127,11 @@ export class AttachmentMetaBuilder {
       this.size,
       this.duration,
       this.pageCount,
-      this.ogTags
+      this.ogTags,
+      this.coverImageUrl,
+      this.title,
+      this.body,
+      this.thumbnailUrl
     );
   }
 }

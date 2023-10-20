@@ -1,5 +1,5 @@
-import { IPost } from "src/shared/models/post.model";
-import { IUser } from "src/shared/models/user.model";
+import { IPost } from "../../shared/models/post";
+import { IUser } from "../../shared/models/user";
 
 export interface EditPostResponse {
   post: IPost;

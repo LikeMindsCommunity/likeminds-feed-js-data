@@ -1,4 +1,4 @@
-import { IUser } from "src/shared/models/user.model";
+import { IUser } from "../../shared/models/user";
 
 export interface GetTaggingListResponse {
   members: IUser;

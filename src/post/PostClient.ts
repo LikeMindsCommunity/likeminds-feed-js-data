@@ -1,8 +1,8 @@
-import LMResponse from "src/core/services/lmresponse";
-import { API } from "src/shared/constants/api.constant";
-import NetworkLibrary from "src/core/services/networklibrary";
+import LMResponse from "../core/services/lmresponse";
+import { API } from "../shared/constants/api.constant";
+import NetworkLibrary from "../core/services/networklibrary";
 import AddPostRequest from "./model/AddPostRequest";
-import { ModelConverter } from "src/utils/ModelConverter";
+import { ModelConverter } from "../utils/ModelConverter";
 import { IAddPostResponse } from "./model/AddPostResponse";
 import DeletePostRequest from "./model/DeletePostRequest";
 import GetPostRequest from "./model/GetPostRequest";

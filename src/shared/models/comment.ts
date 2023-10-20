@@ -1,4 +1,4 @@
-import { IMenuItem } from "src/post/model/MenuItem";
+import { IMenuItem } from "../../post/model/MenuItem";
 
 export interface IComment {
   Id: string;

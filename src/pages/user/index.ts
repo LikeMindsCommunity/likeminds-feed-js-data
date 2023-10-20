@@ -1,8 +1,8 @@
-import NetworkLibrary from "src/core/services/networklibrary";
+import NetworkLibrary from "../../core/services/networklibrary";
 import { API } from "../../shared/constants/api.constant";
 import { InitUser, Logout, MemberState } from "./types";
-import { environment } from "src/environment";
-import LMResponse from "src/core/services/lmresponse";
+import { environment } from "../../environment";
+import LMResponse from "../../core/services/lmresponse";
 import { InitiateUserResponse } from "./model/InitiateUserResponse";
 
 export class Member {

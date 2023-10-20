@@ -1,12 +1,12 @@
-import LMResponse from "src/core/services/lmresponse";
-import { environment } from "src/environment";
-import { API } from "src/shared/constants/api.constant";
-import NetworkLibrary from "src/core/services/networklibrary";
-import InitiateUserRequest from "src/initiateUser/model/InitiateUserRequest";
-import { InitiateUserResponse } from "src/initiateUser/model/InitiateUserResponse";
+import LMResponse from "../core/services/lmresponse";
+import { environment } from "../environment";
+import { API } from "../shared/constants/api.constant";
+import NetworkLibrary from "../core/services/networklibrary";
+import InitiateUserRequest from "../initiateUser/model/InitiateUserRequest";
+import { InitiateUserResponse } from "../initiateUser/model/InitiateUserResponse";
 import GetNotificationFeedRequest from "./model/GetNotificationFeedRequest";
 import { GetNotificationFeedResponse } from "./model/GetNotificationFeedResponse";
-import { ModelConverter } from "src/utils/ModelConverter";
+import { ModelConverter } from "../utils/ModelConverter";
 import MarkReadNotificationRequest from "./model/MarkReadNotificationRequest";
 import { GetUnreadNotificationCountResponse } from "./model/GetUnreadNotificationCountResponse";
 
