@@ -1,11 +1,11 @@
-import LMResponse from "src/core/services/lmresponse";
-import { API } from "src/shared/constants/api.constant";
-import NetworkLibrary from "src/core/services/networklibrary";
-import InitiateUserRequest from "src/initiateUser/model/InitiateUserRequest";
-import { InitiateUserResponse } from "src/initiateUser/model/InitiateUserResponse";
+import LMResponse from "../core/services/lmresponse";
+import { API } from "../shared/constants/api.constant";
+import NetworkLibrary from "../core/services/networklibrary";
+import InitiateUserRequest from "../initiateUser/model/InitiateUserRequest";
+import { InitiateUserResponse } from "../initiateUser/model/InitiateUserResponse";
 import GetReportTagsRequest from "./model/GetReportTagsRequest";
 import { GetReportTagsResponse } from "./model/GetReportTagsResponse";
-import { ModelConverter } from "src/utils/ModelConverter";
+import { ModelConverter } from "../utils/ModelConverter";
 import PostReportRequest from "./model/PostReportRequest";
 
 class ModerationClient {

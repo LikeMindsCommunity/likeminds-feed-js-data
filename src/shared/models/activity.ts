@@ -1,4 +1,4 @@
-import { IUser } from "./user.model";
+import { IUser } from "./user";
 
 // Activity interface (you can define this separately if needed)
 export interface IActivity {

@@ -1,6 +1,6 @@
-import LMResponse from "src/LMResponse";
-import { ICommunity } from "src/shared/models/community.model";
-import { IUser } from "src/shared/models/user.model";
+import LMResponse from "../../LMResponse";
+import { ICommunity } from "../../shared/models/community";
+import { IUser } from "../../shared/models/user";
 export interface InitiateUserResponse {
   accessToken: string;
   appAccess: boolean;

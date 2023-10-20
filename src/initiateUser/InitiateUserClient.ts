@@ -1,12 +1,14 @@
-import LMResponse from "src/core/services/lmresponse";
-import { environment } from "src/environment";
-import { API } from "src/shared/constants/api.constant";
+import LMResponse from "../core/services/lmresponse";
+// import { environment } from "../environment";
+import { environment } from "../environment";
+// import { API } from "../shared/constants/api.constant";
+import { API } from "../shared/constants/api.constant";
 
 import InitiateUserRequest from "./model/InitiateUserRequest";
 import { InitiateUserResponse } from "./model/InitiateUserResponse";
-import NetworkLibrary from "src/core/services/networklibrary";
-import { ModelConverter } from "src/utils/ModelConverter";
-import GetMemberStateRequest from "./model/GetMemberStateRequest";
+import NetworkLibrary from "../core/services/networklibrary";
+import { ModelConverter } from "../utils/ModelConverter";
+
 import { GetMemberStateResponse } from "./model/GetMemberStateResponse";
 import { IMember } from "./model/GetAllMembersResponse";
 import GetAllMembersRequest from "./model/GetAllMembersRequest";

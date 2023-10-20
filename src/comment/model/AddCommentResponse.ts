@@ -1,5 +1,6 @@
-import { IComment } from "src/shared/models/comment.model";
-import { IUser } from "src/shared/models/user.model";
+// import { IComment } from "../../shared/models/comment";
+import { IComment } from "../../shared/models/comment";
+import { IUser } from "../../shared/models/user";
 
 // Comment interface (you can define this separately if needed)
 interface Comment {

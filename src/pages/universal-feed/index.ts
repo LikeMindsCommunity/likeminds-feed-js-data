@@ -1,4 +1,4 @@
-import NetworkLibrary from "src/core/services/networklibrary";
+import NetworkLibrary from "../../core/services/networklibrary";
 import { API } from "../../shared/constants/api.constant";
 import {
   AddComment,
@@ -13,7 +13,7 @@ import {
   PinPost,
   SavePost,
 } from "./types";
-import { environment } from "src/environment";
+import { environment } from "../../environment";
 
 export class UniversalFeed {
   public networkLibrary = new NetworkLibrary();

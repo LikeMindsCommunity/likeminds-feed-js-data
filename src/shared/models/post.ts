@@ -1,6 +1,6 @@
-import Attachment from "src/post/model/Attachment";
-import { IMenuItem } from "src/post/model/MenuItem";
-import { IComment } from "./comment.model";
+import Attachment from "../../post/model/Attachment";
+import { IMenuItem } from "../../post/model/MenuItem";
+import { IComment } from "./comment";
 
 export interface IPost {
   Id: string;
