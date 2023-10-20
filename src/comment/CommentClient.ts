@@ -1,11 +1,11 @@
-import LMResponse from "src/core/services/lmresponse";
-import { environment } from "src/environment";
-import { API } from "src/shared/constants/api.constant";
-import NetworkLibrary from "src/core/services/networklibrary";
+import LMResponse from "../../src/core/services/lmresponse";
+import { environment } from "../../src/environment";
+import { API } from "../../src/shared/constants/api.constant";
+import NetworkLibrary from "../../src/core/services/networklibrary";
 import AddCommentRequest from "./model/AddCommentRequest";
 import GetCommentRequest from "./model/GetCommentRequest";
 import GetCommentLikesRequest from "./model/GetCommentLikesRequest";
-import { ModelConverter } from "src/utils/ModelConverter";
+import { ModelConverter } from "../../src/utils/ModelConverter";
 import { GetCommentResponse } from "./model/GetCommentResponse";
 import { AddCommentResponse } from "./model/AddCommentResponse";
 import ReplyCommentRequest from "./model/ReplyCommentRequest";

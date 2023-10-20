@@ -1,4 +1,4 @@
-import { User } from "src/shared/models/user.model";
+import { User } from "../../shared/models/user";
 
 export declare type InitiateUserResponse = {
   accessToken: string;

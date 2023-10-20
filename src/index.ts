@@ -18,10 +18,10 @@ import SavePostRequest from "./post/model/SavePostRequest";
 import GetTaggingListRequest from "./post/model/GetTaggingListRequest";
 import GetFeedRequest from "./universalfeed/model/GetFeedRequest";
 import { GetFeedResponse } from "./universalfeed/model/GetFeedResponse";
-import { IPost } from "./shared/models/post.model";
-import { IOgTag } from "./shared/models/ogTags.model";
-import { IUser } from "./shared/models/user.model";
-import { IMenuItem } from "./shared/models/menuItem.models";
+import { IPost } from "./shared/models/post";
+import { IOgTag } from "./shared/models/ogTags";
+import { IUser } from "./shared/models/user";
+import { IMenuItem } from "./shared/models/menuItem";
 import ModerationClient from "./moderation/ModerationClient";
 import GetReportTagsRequest from "./moderation/model/GetReportTagsRequest";
 import PostReportRequest from "./moderation/model/PostReportRequest";
@@ -30,13 +30,13 @@ import AddCommentRequest from "./comment/model/AddCommentRequest";
 import { AddCommentResponse } from "./comment/model/AddCommentResponse";
 
 import { GetCommentResponse } from "./comment/model/GetCommentResponse";
-import { IComment } from "./shared/models/comment.model";
+import { IComment } from "./shared/models/comment";
 
 import { EditCommentResponse } from "./comment/model/EditCommentResponse";
 import GetMemberStateRequest from "./initiateUser/model/GetMemberStateRequest";
-import { IMemberRight, IMemberState } from "./shared/models/memberRights.model";
+import { IMemberRight, IMemberState } from "./shared/models/memberRights";
 
-import { IActivities, IActivity } from "./shared/models/activity.model";
+import { IActivities, IActivity } from "./shared/models/activity";
 
 import GetAllMembersRequest from "./initiateUser/model/GetAllMembersRequest";
 import { IMember } from "./initiateUser/model/GetAllMembersResponse";
@@ -423,4 +423,5 @@ export {
   IActivity,
   GetAllMembersRequest,
   IMember,
+  EditCommentRequest,
 };
