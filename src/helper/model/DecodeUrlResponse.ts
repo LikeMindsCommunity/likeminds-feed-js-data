@@ -1,4 +1,4 @@
-import LinkOGTags from "src/post/model/LinkOGTags";
+import LinkOGTags from "../../post/model/LinkOGTags";
 
 export interface DecodeUrlResponse {
   ogTags: LinkOGTags;

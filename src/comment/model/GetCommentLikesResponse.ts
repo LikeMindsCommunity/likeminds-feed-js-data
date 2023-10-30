@@ -1,4 +1,4 @@
-import { IUser } from "src/shared/models/user.model";
+import { IUser } from "../../shared/models/user";
 
 // Like interface (you can define this separately if needed)
 interface Like {
