@@ -383,7 +383,7 @@ class LMFeedClient {
 }
 
 export {
-  LMFeedClient as default,
+  LMFeedClient,
   InitiateUserRequest,
   AddPostRequest,
   Attachment,
