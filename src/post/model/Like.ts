@@ -12,7 +12,7 @@ class Like {
     createdAt: number,
     updatedAt: number,
     userId: string,
-    uuid: string
+    uuid: string,
   ) {
     this.id = id;
     this.createdAt = createdAt;
@@ -78,7 +78,7 @@ export class LikeBuilder {
       this.createdAt,
       this.updatedAt,
       this.userId,
-      this.uuid
+      this.uuid,
     );
   }
 }

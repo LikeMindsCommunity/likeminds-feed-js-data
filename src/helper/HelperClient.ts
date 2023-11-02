@@ -27,7 +27,7 @@ class HelperClient {
         return new LMResponse<DecodeUrlResponse>(
           null,
           error.message || "An error occurred",
-          false
+          false,
         );
       });
   }
@@ -43,7 +43,7 @@ class HelperClient {
         return new LMResponse<GetTaggingListResponse>(
           null,
           error.message || "An error occurred",
-          false
+          false,
         );
       });
   }
@@ -53,7 +53,7 @@ class HelperClient {
       .makeAuthenticatedRequest(`${API.USER_DEVICE_PUSH}`)
       .then((resData: any) => {
         const responseData: any = ModelConverter.responseBodyParser(
-          resData.data
+          resData.data,
         );
         return new LMResponse<any>(responseData, null, true);
       })
@@ -61,13 +61,13 @@ class HelperClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occurred",
-          false
+          false,
         );
       });
   }
 
   async validateRegisterDeviceRequest(
-    request: RegisterDeviceRequest
+    request: RegisterDeviceRequest,
   ): Promise<LMResponse<any>> {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
@@ -78,7 +78,7 @@ class HelperClient {
       .then((resData: any) => {
         // Handle the response and return the LMResponse object
         const responseData: any = ModelConverter.responseBodyParser(
-          resData.data
+          resData.data,
         );
 
         return new LMResponse<any>(responseData, null, true);
@@ -87,7 +87,7 @@ class HelperClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occurred",
-          false
+          false,
         );
       });
   }

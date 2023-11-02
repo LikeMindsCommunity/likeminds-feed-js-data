@@ -30,7 +30,7 @@ class Activity {
     isRead: boolean,
     updatedAt: number,
     activityEntityData: any,
-    uuid: string
+    uuid: string,
   ) {
     this.id = id;
     this.action = action;
@@ -163,7 +163,7 @@ export class ActivityBuilder {
       this.isRead,
       this.updatedAt,
       this.activityEntityData,
-      this.uuid
+      this.uuid,
     );
   }
 }

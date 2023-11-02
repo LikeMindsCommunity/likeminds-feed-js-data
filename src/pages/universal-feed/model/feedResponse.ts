@@ -1,17 +1,14 @@
- 
-
-
 interface Attachment {
   file_type: number;
   file_url: string;
   file_format?: string;
   file_size?: string;
 }
-  
+
 interface MenuItem {
   title: string;
 }
-  
+
 interface Post {
   _id: string;
   attachments: Attachment[];
@@ -26,14 +23,13 @@ interface Post {
   updated_at: number;
   user_id: string;
 }
-  
+
 //   interface PostsData {
 //     success: boolean;
 //     data: {
 //       posts: Post[];
 //     };
 //   }
-  
 
 export declare type FeedResponse = {
   success: boolean;

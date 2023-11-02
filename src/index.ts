@@ -75,7 +75,7 @@ class LMFeedClient {
     this.moderationClient = new ModerationClient(this.networkLibrary);
     this.commentClient = new CommentClient(this.networkLibrary);
     this.notificationFeedClient = new NotificationFeedClient(
-      this.networkLibrary
+      this.networkLibrary,
     );
   }
 
@@ -102,7 +102,7 @@ class LMFeedClient {
     // Perform any necessary validation or configuration checks
     if (!this.apiKey || !this.platformCode || !this.versionCode) {
       throw new Error(
-        "Please provide apiKey, platformCode, and versionCode before building the LMFeedClient."
+        "Please provide apiKey, platformCode, and versionCode before building the LMFeedClient.",
       );
     }
     this.networkLibrary.setApiKey(this.apiKey); // Set the API key in the NetworkLibrary
@@ -260,7 +260,7 @@ class LMFeedClient {
     postId: string,
     comment: GetCommentRequest,
     commentId: string,
-    pageNo: number
+    pageNo: number,
   ) {
     try {
       const getCommentResponse = await this.commentClient.getComment(
@@ -271,7 +271,7 @@ class LMFeedClient {
           .setpostId(postId)
           .build(),
         postId,
-        commentId
+        commentId,
       );
       return getCommentResponse;
     } catch (error) {

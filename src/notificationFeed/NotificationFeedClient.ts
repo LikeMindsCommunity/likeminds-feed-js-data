@@ -18,31 +18,31 @@ class NotificationFeedClient {
   }
 
   getNotificationFeed(
-    request: GetNotificationFeedRequest
+    request: GetNotificationFeedRequest,
   ): Promise<LMResponse<GetNotificationFeedResponse>> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
-        `${API.NOTIFICATION_FEED}?page=${request.page}&page_size=${request.pageSize}`
+        `${API.NOTIFICATION_FEED}?page=${request.page}&page_size=${request.pageSize}`,
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData?.data);
         return new LMResponse<GetNotificationFeedResponse>(
           responseData,
           null,
-          true
+          true,
         );
       })
       .catch((error: any) => {
         return new LMResponse<GetNotificationFeedResponse>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
 
   markReadNotification(
-    request: MarkReadNotificationRequest
+    request: MarkReadNotificationRequest,
   ): Promise<LMResponse<any>> {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
@@ -51,7 +51,7 @@ class NotificationFeedClient {
         {
           method: "POST",
           data: params,
-        }
+        },
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData?.data);
@@ -61,7 +61,7 @@ class NotificationFeedClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
@@ -76,14 +76,14 @@ class NotificationFeedClient {
         return new LMResponse<GetUnreadNotificationCountResponse>(
           responseData,
           null,
-          true
+          true,
         );
       })
       .catch((error: any) => {
         return new LMResponse<GetUnreadNotificationCountResponse>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
