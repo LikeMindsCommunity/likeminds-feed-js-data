@@ -17,18 +17,18 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-        
+
       - name: Check for version changes
         run: |
           # Fetch all tags from the remote repository
           git fetch --tags
-          
+
           # Get the previous version from the last release tag
           export previous_version=$(git describe --tags --abbrev=0)
-          
+
           # Get the current version from package.json
           export current_version=$(cat package.json | grep '"version":' | awk -F'"' '{print $4}')
-          
+
           if [[ "$previous_version" != "v$current_version" ]]; then
             echo "Version has changed from $previous_version to v$current_version."
           else
@@ -38,8 +38,8 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "18"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Publish package to npm
         run: |
@@ -54,23 +54,23 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
           fetch-depth: 0
 
-    - name: Push Git Tag
-      run: |
-        # Git login
-        git config --global user.name "$(git log -n 1 --pretty=format:%an)"
-        git config --global user.email "$(git log -n 1 --pretty=format:%ae)"
+      - name: Push Git Tag
+        run: |
+          # Git login
+          git config --global user.name "$(git log -n 1 --pretty=format:%an)"
+          git config --global user.email "$(git log -n 1 --pretty=format:%ae)"
 
-        # Push a Git tag with the new version
-        export current_version=$(cat package.json | grep '"version":' | awk -F'"' '{print $4}')
-        git tag -a "v$current_version" -m "Version $current_version"
-        git push origin "v$current_version"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Push a Git tag with the new version
+          export current_version=$(cat package.json | grep '"version":' | awk -F'"' '{print $4}')
+          git tag -a "v$current_version" -m "Version $current_version"
+          git push origin "v$current_version"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   create-github-release:
     name: Create GitHub Release

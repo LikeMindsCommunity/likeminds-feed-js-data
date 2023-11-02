@@ -10,7 +10,7 @@ class GetCommentRequest {
     postId: string,
     commentId: string,
     page: number,
-    pageSize: number
+    pageSize: number,
   ) {
     this.postId = postId;
     this.commentId = commentId;
@@ -62,7 +62,7 @@ export class GetCommentRequestBuilder {
       this.postId,
       this.commentId,
       this.page,
-      this.pageSize
+      this.pageSize,
     );
   }
 }

@@ -1,5 +1,4 @@
 import LMResponse from "../../src/core/services/lmresponse";
-import { environment } from "../../src/environment";
 import { API } from "../../src/shared/constants/api.constant";
 import NetworkLibrary from "../../src/core/services/networklibrary";
 import AddCommentRequest from "./model/AddCommentRequest";
@@ -24,7 +23,7 @@ class CommentClient {
   }
 
   addComment(
-    addComment: AddCommentRequest
+    addComment: AddCommentRequest,
   ): Promise<LMResponse<AddCommentResponse>> {
     const params = ModelConverter.requestBodyGenerator(addComment);
     return this.networkLibrary
@@ -33,7 +32,7 @@ class CommentClient {
         {
           method: "POST",
           data: params,
-        }
+        },
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData.data);
@@ -43,7 +42,7 @@ class CommentClient {
         return new LMResponse<AddCommentResponse>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
@@ -51,11 +50,11 @@ class CommentClient {
   getComment(
     getComment: GetCommentRequest,
     postId: string,
-    commentId: any
+    commentId: any,
   ): Promise<LMResponse<GetCommentResponse>> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
-        `${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`
+        `${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`,
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData.data);
@@ -65,30 +64,30 @@ class CommentClient {
         return new LMResponse<GetCommentResponse>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
   getCommentLikes(
-    request: GetCommentLikesRequest
+    request: GetCommentLikesRequest,
   ): Promise<LMResponse<GetCommentLikesResponse>> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
-        `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/like?page=${request.page}&page_size=${request.pageSize}`
+        `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/like?page=${request.page}&page_size=${request.pageSize}`,
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData?.data);
         return new LMResponse<GetCommentLikesResponse>(
           responseData,
           null,
-          true
+          true,
         );
       })
       .catch((error: any) => {
         return new LMResponse<GetCommentLikesResponse>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
@@ -100,7 +99,7 @@ class CommentClient {
         {
           method: "PUT",
           data: ModelConverter.requestBodyGenerator(request),
-        }
+        },
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData?.data);
@@ -110,13 +109,13 @@ class CommentClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
 
   replyComment(
-    request: ReplyCommentRequest
+    request: ReplyCommentRequest,
   ): Promise<LMResponse<ReplyCommentResponse>> {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
@@ -125,7 +124,7 @@ class CommentClient {
         {
           method: "POST",
           data: params,
-        }
+        },
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData?.data);
@@ -135,13 +134,13 @@ class CommentClient {
         return new LMResponse<ReplyCommentResponse>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
 
   editComment(
-    request: EditCommentRequest
+    request: EditCommentRequest,
   ): Promise<LMResponse<EditCommentResponse>> {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
@@ -150,7 +149,7 @@ class CommentClient {
         {
           method: "PUT",
           data: params,
-        }
+        },
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData.data);
@@ -160,7 +159,7 @@ class CommentClient {
         return new LMResponse<EditCommentResponse>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
@@ -173,7 +172,7 @@ class CommentClient {
         {
           method: "DELETE",
           data: params,
-        }
+        },
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData?.data);
@@ -183,7 +182,7 @@ class CommentClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }

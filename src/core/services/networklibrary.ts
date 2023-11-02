@@ -40,7 +40,7 @@ class NetworkLibrary {
 
   private async makeRequest<T>(
     url: string,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse<T>> {
     const baseUrl: string = environment.apiUrl;
     const requestUrl = baseUrl + url;
@@ -49,7 +49,7 @@ class NetworkLibrary {
 
   public async makeAuthenticatedRequest<T>(
     url: string,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<LMResponse<T>> {
     const requestConfig: AxiosRequestConfig = {
       ...config,
@@ -59,7 +59,6 @@ class NetworkLibrary {
       },
     };
     const initApi = url.includes("initiate");
-    const isRefreshRequest = url.includes("refresh");
     requestConfig.headers["Content-Type"] = "application/json";
     // requestConfig.headers['x-platform-code'] = this.tokenManager.getPlatformCode();
     requestConfig.headers["x-version-code"] =

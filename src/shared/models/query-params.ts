@@ -1,3 +1,3 @@
 export class IQueryParams {
-    [key: string]: any;
+  [key: string]: any;
 }

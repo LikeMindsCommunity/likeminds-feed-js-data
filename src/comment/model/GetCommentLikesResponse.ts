@@ -8,11 +8,6 @@ interface Like {
 }
 
 // User interface (you can define this separately if needed)
-interface User {
-  id: string;
-  // Add other properties for User as needed
-  // ...
-}
 
 export interface GetCommentLikesResponse {
   likes: Like[];

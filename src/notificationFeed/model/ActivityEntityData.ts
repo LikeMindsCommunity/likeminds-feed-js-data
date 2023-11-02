@@ -10,7 +10,7 @@ class ActivityEntityData {
   entityId: string;
   entityOwnerId: string;
   entityType: number;
-  isRead: Boolean;
+  isRead: boolean;
   updatedAt: number;
   activityEntityData?: any;
   uuid: string;
@@ -27,10 +27,10 @@ class ActivityEntityData {
     entityId: string,
     entityOwnerId: string,
     entityType: number,
-    isRead: Boolean,
+    isRead: boolean,
     updatedAt: number,
     activityEntityData: any,
-    uuid: string
+    uuid: string,
   ) {
     this.id = id;
     this.action = action;
@@ -133,7 +133,7 @@ export class ActivityEntityDataBuilder {
   }
 
   public setActivityEntityData(
-    activityEntityData: any
+    activityEntityData: any,
   ): ActivityEntityDataBuilder {
     this.activityEntityData = activityEntityData;
     return this;
@@ -165,7 +165,7 @@ export class ActivityEntityDataBuilder {
       this.isRead,
       this.updatedAt,
       this.activityEntityData,
-      this.uuid
+      this.uuid,
     );
   }
 }

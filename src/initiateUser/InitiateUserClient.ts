@@ -1,6 +1,5 @@
 import LMResponse from "../core/services/lmresponse";
 // import { environment } from "../environment";
-import { environment } from "../environment";
 // import { API } from "../shared/constants/api.constant";
 import { API } from "../shared/constants/api.constant";
 
@@ -10,7 +9,6 @@ import NetworkLibrary from "../core/services/networklibrary";
 import { ModelConverter } from "../utils/ModelConverter";
 
 import { GetMemberStateResponse } from "./model/GetMemberStateResponse";
-import { IMember } from "./model/GetAllMembersResponse";
 import GetAllMembersRequest from "./model/GetAllMembersRequest";
 
 class InitiateUserClient {
@@ -21,7 +19,7 @@ class InitiateUserClient {
   }
 
   public async initiateUser(
-    request: InitiateUserRequest
+    request: InitiateUserRequest,
   ): Promise<LMResponse<InitiateUserResponse>> {
     // const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
@@ -45,7 +43,7 @@ class InitiateUserClient {
         return new LMResponse<InitiateUserResponse>(
           null,
           error.message || "An error occurred",
-          false
+          false,
         );
       });
   }
@@ -64,20 +62,20 @@ class InitiateUserClient {
         return new LMResponse<GetMemberStateResponse>(
           null,
           error.message || "An error occurred",
-          false
+          false,
         );
       });
   }
 
   public async getAllMembers(
-    request: GetAllMembersRequest
+    request: GetAllMembersRequest,
   ): Promise<LMResponse<any>> {
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.DM_ALL_MEMBERS}?page=${request.page}`)
       .then((resData: any) => {
         // Handle the response and return the LMResponse object
         const responseData: any = ModelConverter.responseBodyParser(
-          resData.data
+          resData.data,
         );
 
         return new LMResponse<any>(responseData, null, true);
@@ -86,7 +84,7 @@ class InitiateUserClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occurred",
-          false
+          false,
         );
       });
   }

@@ -1,9 +1,9 @@
 import LMResponse from "../core/services/lmresponse";
-import { environment } from "../environment";
+// import { environment } from "../environment";
 import { API } from "../shared/constants/api.constant";
 import NetworkLibrary from "../core/services/networklibrary";
-import InitiateUserRequest from "../initiateUser/model/InitiateUserRequest";
-import { InitiateUserResponse } from "../initiateUser/model/InitiateUserResponse";
+// import InitiateUserRequest from "../initiateUser/model/InitiateUserRequest";
+// import { InitiateUserResponse } from "../initiateUser/model/InitiateUserResponse";
 import GetFeedRequest from "./model/GetFeedRequest";
 import { ModelConverter } from "../utils/ModelConverter";
 import { GetFeedResponse } from "./model/GetFeedResponse";
@@ -19,7 +19,7 @@ class UniversalFeedClient {
   getFeed(feed: GetFeedRequest): Promise<LMResponse<GetFeedResponse>> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
-        `${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}`
+        `${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}`,
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData.data);
@@ -29,7 +29,7 @@ class UniversalFeedClient {
         return new LMResponse<GetFeedResponse>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }

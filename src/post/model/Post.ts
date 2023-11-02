@@ -7,13 +7,13 @@ class Post {
   text: string;
   attachments?: Attachment[];
   communityId: number;
-  isLiked: Boolean;
-  isEdited: Boolean;
-  isPinned: Boolean;
+  isLiked: boolean;
+  isEdited: boolean;
+  isPinned: boolean;
   userId: string;
   likesCount: number;
   commentsCount: number;
-  isSaved: Boolean;
+  isSaved: boolean;
   menuItems: IMenuItem[];
   replies?: any;
   // replies?: List<Comment>?;
@@ -27,18 +27,18 @@ class Post {
     text: string,
     attachments: Attachment[],
     communityId: number,
-    isLiked: Boolean,
-    isEdited: Boolean,
-    isPinned: Boolean,
+    isLiked: boolean,
+    isEdited: boolean,
+    isPinned: boolean,
     userId: string,
     likesCount: number,
     commentsCount: number,
-    isSaved: Boolean,
+    isSaved: boolean,
     menuItems: IMenuItem[],
     replies: any,
     createdAt: number,
     updatedAt: number,
-    uuid: string
+    uuid: string,
   ) {
     this.id = id;
     this.text = text;
@@ -70,13 +70,13 @@ export class PostBuilder {
   private text: string;
   private attachments?: Attachment[];
   private communityId: number;
-  private isLiked: Boolean;
-  private isEdited: Boolean;
-  private isPinned: Boolean;
+  private isLiked: boolean;
+  private isEdited: boolean;
+  private isPinned: boolean;
   private userId: string;
   private likesCount: number;
   private commentsCount: number;
-  private isSaved: Boolean;
+  private isSaved: boolean;
   private menuItems: IMenuItem[];
   private replies?: any;
   private createdAt: number;
@@ -172,7 +172,7 @@ export class PostBuilder {
       this.replies,
       this.createdAt,
       this.updatedAt,
-      this.uuid
+      this.uuid,
     );
   }
 }

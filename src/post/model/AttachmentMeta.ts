@@ -27,7 +27,7 @@ class AttachmentMeta {
     coverImageUrl: string,
     title: string,
     body?: string,
-    thumbnailUrl?: string
+    thumbnailUrl?: string,
   ) {
     this.name = name;
     this.url = url;
@@ -131,7 +131,7 @@ export class AttachmentMetaBuilder {
       this.coverImageUrl,
       this.title,
       this.body,
-      this.thumbnailUrl
+      this.thumbnailUrl,
     );
   }
 }

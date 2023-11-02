@@ -25,7 +25,7 @@ class PostClient {
   }
 
   async addPost(
-    request: AddPostRequest
+    request: AddPostRequest,
   ): Promise<LMResponse<IAddPostResponse>> {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
@@ -44,21 +44,21 @@ class PostClient {
         return new LMResponse<IAddPostResponse>(
           null,
           error.message || "An error occurred",
-          false
+          false,
         );
       });
   }
 
   public async getPost(
-    getPost: GetPostRequest
+    getPost: GetPostRequest,
   ): Promise<LMResponse<GetPostResponse>> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
-        `${API.FEED_POST}/${getPost.postId}?page=${getPost.page}&page_size=${getPost.pageSize}`
+        `${API.FEED_POST}/${getPost.postId}?page=${getPost.page}&page_size=${getPost.pageSize}`,
       )
       .then((resData: any) => {
         const responseData: GetPostResponse = ModelConverter.responseBodyParser(
-          resData.data
+          resData.data,
         );
         return new LMResponse<GetPostResponse>(responseData, null, true);
       })
@@ -66,7 +66,7 @@ class PostClient {
         return new LMResponse<GetPostResponse>(
           null,
           error.message || "An error occurred",
-          false
+          false,
         );
       });
   }
@@ -87,17 +87,17 @@ class PostClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
 
   public async getPostLikes(
-    request: GetPostLikesRequest
+    request: GetPostLikesRequest,
   ): Promise<LMResponse<GetPostLikesResponse>> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
-        `${API.FEED_POST}/${request.postId}/like?page=${request.page}&page_size=${request.pageSize}`
+        `${API.FEED_POST}/${request.postId}/like?page=${request.page}&page_size=${request.pageSize}`,
       )
       .then((resData: any) => {
         const responseData: GetPostLikesResponse =
@@ -108,7 +108,7 @@ class PostClient {
         return new LMResponse<GetPostLikesResponse>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
@@ -127,7 +127,7 @@ class PostClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
@@ -146,7 +146,7 @@ class PostClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
@@ -167,7 +167,7 @@ class PostClient {
         return new LMResponse<EditPostResponse>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
@@ -186,20 +186,20 @@ class PostClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
 
   decodeUrl(decodeUrl: DecodeURLRequest): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${API.HELPER_URL}?url=${decodeUrl.url}`
+      `${API.HELPER_URL}?url=${decodeUrl.url}`,
     );
   }
   getTaggingList(taggingList: GetTaggingListRequest): Promise<any> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
-        `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
+        `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`,
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData.data);
@@ -209,14 +209,14 @@ class PostClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }
   getPostComments(taggingList: GetTaggingListRequest): Promise<any> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
-        `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
+        `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`,
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData.data);
@@ -226,7 +226,7 @@ class PostClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occoured",
-          false
+          false,
         );
       });
   }

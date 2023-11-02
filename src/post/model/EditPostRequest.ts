@@ -12,7 +12,7 @@ class EditPostRequest {
     postId: string,
     text: string,
     attachments: Attachment[],
-    heading: string
+    heading: string,
   ) {
     this.postId = postId;
     this.text = text;
@@ -63,7 +63,7 @@ export class EditPostRequestBuilder {
       this.postId,
       this.text,
       this.attachments,
-      this.heading
+      this.heading,
     );
   }
 }
