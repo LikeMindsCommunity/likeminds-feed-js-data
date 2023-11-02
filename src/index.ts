@@ -33,7 +33,7 @@ import { GetCommentResponse } from "./comment/model/GetCommentResponse";
 import { IComment } from "./shared/models/comment";
 
 import { EditCommentResponse } from "./comment/model/EditCommentResponse";
-import GetMemberStateRequest from "./initiateUser/model/GetMemberStateRequest";
+
 import { IMemberRight, IMemberState } from "./shared/models/memberRights";
 
 import { IActivities, IActivity } from "./shared/models/activity";
@@ -46,7 +46,7 @@ import GetCommentRequest from "./comment/model/GetCommentRequest";
 import GetCommentLikesRequest from "./comment/model/GetCommentLikesRequest";
 import LikeCommentRequest from "./comment/model/LikeCommentRequest";
 import DeleteCommentRequest from "./comment/model/DeleteCommentRequest";
-import DecodeUrlRequest from "./helper/model/DecodeUrlRequest";
+
 import HelperClient from "./helper/HelperClient";
 
 import NotificationFeedClient from "./notificationFeed/NotificationFeedClient";
@@ -115,9 +115,8 @@ class LMFeedClient {
   async initiateUser(initiateUserRequest: InitiateUserRequest) {
     try {
       // Call the initiateUser method from InitiateUserClient
-      const initiateUserResponse = await this.initiateUserClient.initiateUser(
-        initiateUserRequest
-      );
+      const initiateUserResponse =
+        await this.initiateUserClient.initiateUser(initiateUserRequest);
 
       return initiateUserResponse;
     } catch (error) {
@@ -148,9 +147,8 @@ class LMFeedClient {
 
   async deletePost(deletePostRequest: DeletePostRequest) {
     try {
-      const deletePostResponse = await this.postClient.deletePost(
-        deletePostRequest
-      );
+      const deletePostResponse =
+        await this.postClient.deletePost(deletePostRequest);
       return deletePostResponse;
     } catch (error) {
       console.log("Error while deleting post:", error);
@@ -171,9 +169,8 @@ class LMFeedClient {
   // Function for GetPostLikesRequest
   async getPostLikes(getPostLikesRequest: GetPostLikesRequest) {
     try {
-      const getPostLikesResponse = await this.postClient.getPostLikes(
-        getPostLikesRequest
-      );
+      const getPostLikesResponse =
+        await this.postClient.getPostLikes(getPostLikesRequest);
       return getPostLikesResponse;
     } catch (error) {
       console.log("Error while getting post likes:", error);
@@ -222,9 +219,8 @@ class LMFeedClient {
   }
   async getTaggingList(request: GetTaggingListRequest) {
     try {
-      const gettaggingListResponse = await this.postClient.getTaggingList(
-        request
-      );
+      const gettaggingListResponse =
+        await this.postClient.getTaggingList(request);
       return gettaggingListResponse;
     } catch (error) {
       console.log("Error while getting tagging list:", error);
@@ -242,9 +238,8 @@ class LMFeedClient {
   }
   async getReportTags(request: GetReportTagsRequest) {
     try {
-      const getReportTagsResponse = await this.moderationClient.getReportTags(
-        request
-      );
+      const getReportTagsResponse =
+        await this.moderationClient.getReportTags(request);
       return getReportTagsResponse;
     } catch (error) {
       console.log("Error while getting tagging list:", error);
@@ -253,9 +248,8 @@ class LMFeedClient {
   }
   async postReport(request: PostReportRequest) {
     try {
-      const postReportResponse = await this.moderationClient.postReport(
-        request
-      );
+      const postReportResponse =
+        await this.moderationClient.postReport(request);
       return postReportResponse;
     } catch (error) {
       console.log("Error while getting tagging list:", error);

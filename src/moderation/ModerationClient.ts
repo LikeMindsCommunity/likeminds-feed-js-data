@@ -1,8 +1,6 @@
 import LMResponse from "../core/services/lmresponse";
 import { API } from "../shared/constants/api.constant";
 import NetworkLibrary from "../core/services/networklibrary";
-import InitiateUserRequest from "../initiateUser/model/InitiateUserRequest";
-import { InitiateUserResponse } from "../initiateUser/model/InitiateUserResponse";
 import GetReportTagsRequest from "./model/GetReportTagsRequest";
 import { GetReportTagsResponse } from "./model/GetReportTagsResponse";
 import { ModelConverter } from "../utils/ModelConverter";
@@ -39,8 +37,7 @@ class ModerationClient {
         data: ModelConverter.requestBodyGenerator(request),
         method: "POST",
       })
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData.data);
+      .then(() => {
         return new LMResponse<any>({}, null, true);
       })
       .catch((error: any) => {

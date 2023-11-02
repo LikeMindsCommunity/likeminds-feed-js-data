@@ -1,6 +1,5 @@
 import LMResponse from "../core/services/lmresponse";
 // import { environment } from "../environment";
-import { environment } from "../environment";
 // import { API } from "../shared/constants/api.constant";
 import { API } from "../shared/constants/api.constant";
 
@@ -10,7 +9,6 @@ import NetworkLibrary from "../core/services/networklibrary";
 import { ModelConverter } from "../utils/ModelConverter";
 
 import { GetMemberStateResponse } from "./model/GetMemberStateResponse";
-import { IMember } from "./model/GetAllMembersResponse";
 import GetAllMembersRequest from "./model/GetAllMembersRequest";
 
 class InitiateUserClient {

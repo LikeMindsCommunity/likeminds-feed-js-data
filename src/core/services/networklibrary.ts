@@ -59,7 +59,6 @@ class NetworkLibrary {
       },
     };
     const initApi = url.includes("initiate");
-    const isRefreshRequest = url.includes("refresh");
     requestConfig.headers["Content-Type"] = "application/json";
     // requestConfig.headers['x-platform-code'] = this.tokenManager.getPlatformCode();
     requestConfig.headers["x-version-code"] =

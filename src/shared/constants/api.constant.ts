@@ -9,6 +9,7 @@ export const API = {
   FEED_GROUP: "/feed/group",
   REFRESH_TOKEN_API: "/user/refresh",
   CHATROOM_GET_TAGGINNG_LIST: "/community/tag", //(GET)
+  COMMUNITY_TAG: "/community/tag",
   GET_REPORT_TAGS: "/community/report/tag",
   POST_REPORT: "/community/report",
   NOTIFICATION_FEED: "/feed/user/activity",

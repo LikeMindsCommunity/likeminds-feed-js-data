@@ -1,6 +1,6 @@
-export class ModelConverter<S, C> {
+export class ModelConverter<S> {
   convertedModel: S | null;
-  constructor(objectInSnakeCase: C) {
+  constructor() {
     // this.convertedModel = this.camelToSnake(objectInSnakeCase);
   }
 

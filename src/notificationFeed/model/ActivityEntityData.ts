@@ -10,7 +10,7 @@ class ActivityEntityData {
   entityId: string;
   entityOwnerId: string;
   entityType: number;
-  isRead: Boolean;
+  isRead: boolean;
   updatedAt: number;
   activityEntityData?: any;
   uuid: string;
@@ -27,7 +27,7 @@ class ActivityEntityData {
     entityId: string,
     entityOwnerId: string,
     entityType: number,
-    isRead: Boolean,
+    isRead: boolean,
     updatedAt: number,
     activityEntityData: any,
     uuid: string

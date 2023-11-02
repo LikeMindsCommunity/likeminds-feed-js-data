@@ -2,9 +2,9 @@ import LMResponse from "../core/services/lmresponse";
 import { API } from "../../src/shared/constants/api.constant";
 import NetworkLibrary from "../../src/core/services/networklibrary";
 import { ModelConverter } from "../../src/utils/ModelConverter";
-import DecodeUrlRequest from "./model/DecodeUrlRequest";
+
 import { DecodeUrlResponse } from "./model/DecodeUrlResponse";
-import GetTaggingListRequest from "./model/GetTaggingListRequest";
+
 import { GetTaggingListResponse } from "./model/GetTaggingListResponse";
 import RegisterDeviceRequest from "./model/RegisterDeviceRequest";
 
@@ -15,9 +15,7 @@ class HelperClient {
     this.networkLibrary = instance;
   }
 
-  public async decodeUrl(
-    decodeUrlRequest: DecodeUrlRequest
-  ): Promise<LMResponse<DecodeUrlResponse>> {
+  public async decodeUrl(): Promise<LMResponse<DecodeUrlResponse>> {
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.HELPER_URL}`)
       .then((resData: any) => {
@@ -33,9 +31,7 @@ class HelperClient {
         );
       });
   }
-  public async getTaggingList(
-    getTaggingListRequest: GetTaggingListRequest
-  ): Promise<LMResponse<GetTaggingListResponse>> {
+  public async getTaggingList(): Promise<LMResponse<GetTaggingListResponse>> {
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.COMMUNITY_TAG}`)
       .then((resData: any) => {
