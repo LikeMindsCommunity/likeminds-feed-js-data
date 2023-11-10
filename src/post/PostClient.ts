@@ -16,6 +16,7 @@ import EditPostRequest from "./model/EditPostRequest";
 import { EditPostResponse } from "./model/EditPostResponse";
 import DecodeURLRequest from "./model/DecodeUrlRequest";
 import GetTaggingListRequest from "./model/GetTaggingListRequest";
+import GetTopicsRequest from "./model/GetTopicsRequest";
 
 class PostClient {
   private networkLibrary: NetworkLibrary;
@@ -217,6 +218,24 @@ class PostClient {
     return this.networkLibrary
       .makeAuthenticatedRequest(
         `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`,
+      )
+      .then((resData: any) => {
+        const responseData = ModelConverter.responseBodyParser(resData.data);
+        return new LMResponse<any>(responseData, null, true);
+      })
+      .catch((error: any) => {
+        return new LMResponse<any>(
+          null,
+          error.message || "An error occoured",
+          false,
+        );
+      });
+  }
+
+  getTopics(request: GetTopicsRequest): Promise<any> {
+    return this.networkLibrary
+      .makeAuthenticatedRequest(
+        `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}&is_enabled=${request.isEnabled}`,
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData.data);
