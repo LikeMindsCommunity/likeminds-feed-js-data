@@ -53,6 +53,8 @@ import NotificationFeedClient from "./notificationFeed/NotificationFeedClient";
 import GetNotificationFeedRequest from "./notificationFeed/model/GetNotificationFeedRequest";
 import MarkReadNotificationRequest from "./notificationFeed/model/MarkReadNotificationRequest";
 import EditCommentRequest from "./comment/model/EditCommentRequest";
+import GetTopicsRequest from "./post/model/GetTopicsRequest";
+import { LMFeedTopics } from "./post/model/GetTopicsResponse";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -181,6 +183,16 @@ class LMFeedClient {
   async getPost(getPostRequest: GetPostRequest) {
     try {
       const getPostResponse = await this.postClient.getPost(getPostRequest);
+      return getPostResponse;
+    } catch (error) {
+      console.log("Error while getting post:", error);
+      throw error;
+    }
+  }
+
+  async getTopics(request: GetTopicsRequest) {
+    try {
+      const getPostResponse = await this.postClient.getTopics(request);
       return getPostResponse;
     } catch (error) {
       console.log("Error while getting post:", error);
@@ -418,4 +430,6 @@ export {
   GetAllMembersRequest,
   IMember,
   EditCommentRequest,
+  GetTopicsRequest,
+  LMFeedTopics
 };
