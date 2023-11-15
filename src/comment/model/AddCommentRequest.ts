@@ -2,10 +2,10 @@ class AddCommentRequest {
   // Properties of the request class
   postId: string;
   text: string;
-  tempId?: number;
+  tempId?: string;
 
   // Public constructor to create the request object
-  constructor(postId: string, text: string, tempId: number) {
+  constructor(postId: string, text: string, tempId: string) {
     this.postId = postId;
     this.text = text;
     this.tempId = tempId;
@@ -21,7 +21,7 @@ class AddCommentRequest {
 export class AddCommentRequestBuilder {
   private postId: string | undefined;
   private text: string | undefined;
-  private tempId: number;
+  private tempId: string;
   // Add other properties as needed
 
   public setpostId(postId: string): AddCommentRequestBuilder {
@@ -34,7 +34,7 @@ export class AddCommentRequestBuilder {
     return this;
   }
 
-  public setTempId(tempId: number): AddCommentRequestBuilder {
+  public setTempId(tempId: string): AddCommentRequestBuilder {
     this.tempId = tempId;
     return this;
   }

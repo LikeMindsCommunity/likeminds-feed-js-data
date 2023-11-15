@@ -17,4 +17,5 @@ export interface IComment {
   // menuItems: List<MenuItem>; // If 'menuItems' is a list of MenuItem objects using a custom 'List' type
   parentComment?: Comment; // If 'parentComment' is an object of Comment type
   uuid: string;
+  tempId: string;
 }

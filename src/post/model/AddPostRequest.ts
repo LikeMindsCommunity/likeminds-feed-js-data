@@ -5,14 +5,14 @@ class AddPostRequest {
   text?: string;
   attachments: Attachment[];
   heading?: string;
-  tempId?: number;
+  tempId?: string;
 
   // Public constructor to create the request object
   constructor(
     text: string,
     attachments: Attachment[],
     heading: string,
-    tempId: number
+    tempId: string
   ) {
     this.text = text;
     this.attachments = attachments;
@@ -31,7 +31,7 @@ export class AddPostRequestBuilder {
   private text: string | undefined;
   private attachments: Attachment[] | undefined;
   private heading: string | undefined;
-  private tempId: number;
+  private tempId: string;
   // Add other properties as needed
 
   public setText(text: string): AddPostRequestBuilder {
@@ -47,7 +47,7 @@ export class AddPostRequestBuilder {
     return this;
   }
 
-  public setTempId(tempId: number): AddPostRequestBuilder {
+  public setTempId(tempId: string): AddPostRequestBuilder {
     this.tempId = tempId;
     return this;
   }
