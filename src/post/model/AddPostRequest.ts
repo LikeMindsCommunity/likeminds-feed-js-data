@@ -5,12 +5,19 @@ class AddPostRequest {
   text?: string;
   attachments: Attachment[];
   heading?: string;
+  tempId?: number;
 
   // Public constructor to create the request object
-  constructor(text: string, attachments: Attachment[], heading: string) {
+  constructor(
+    text: string,
+    attachments: Attachment[],
+    heading: string,
+    tempId: number
+  ) {
     this.text = text;
     this.attachments = attachments;
     this.heading = heading;
+    this.tempId = tempId;
   }
 
   // Static builder method to create the request object
@@ -24,18 +31,24 @@ export class AddPostRequestBuilder {
   private text: string | undefined;
   private attachments: Attachment[] | undefined;
   private heading: string | undefined;
+  private tempId: number;
   // Add other properties as needed
 
   public setText(text: string): AddPostRequestBuilder {
     this.text = text;
     return this;
   }
-  public setHeading(heading: string) {
+  public setHeading(heading: string): AddPostRequestBuilder {
     this.heading = heading;
     return this;
   }
   public setAttachments(attachments: Attachment[]): AddPostRequestBuilder {
     this.attachments = attachments;
+    return this;
+  }
+
+  public setTempId(tempId: number): AddPostRequestBuilder {
+    this.tempId = tempId;
     return this;
   }
 
@@ -45,7 +58,12 @@ export class AddPostRequestBuilder {
       throw new Error("text and attachments are required.");
     }
 
-    return new AddPostRequest(this.text, this.attachments, this.heading);
+    return new AddPostRequest(
+      this.text,
+      this.attachments,
+      this.heading,
+      this.tempId
+    );
   }
 }
 
