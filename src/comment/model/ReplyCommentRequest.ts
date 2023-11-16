@@ -3,10 +3,10 @@ class ReplyCommentRequest {
   postId: string;
   commentId: string;
   text: string;
-  tempId?: number;
+  tempId?: string;
 
   // Public constructor to create the request object
-  constructor(postId: string, commentId: string, text: string, tempId: number) {
+  constructor(postId: string, commentId: string, text: string, tempId: string) {
     this.postId = postId;
     this.commentId = commentId;
     this.text = text;
@@ -24,7 +24,7 @@ export class ReplyCommentRequestBuilder {
   postId: string | undefined;
   commentId: string | undefined;
   text: string | undefined;
-  private tempId: number;
+  private tempId: string;
   // Add other properties as needed
 
   public setPostId(postId: string): ReplyCommentRequestBuilder {
@@ -42,7 +42,7 @@ export class ReplyCommentRequestBuilder {
     return this;
   }
 
-  public setTempId(tempId: number): ReplyCommentRequestBuilder {
+  public setTempId(tempId: string): ReplyCommentRequestBuilder {
     this.tempId = tempId;
     return this;
   }
