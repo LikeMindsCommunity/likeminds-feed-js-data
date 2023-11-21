@@ -21,4 +21,5 @@ export interface IPost {
   updatedAt: number;
   uuid: string;
   topics: string[];
+  tempId: string;
 }

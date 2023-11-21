@@ -6,18 +6,21 @@ class AddPostRequest {
   attachments: Attachment[];
   heading?: string;
   topic_ids: string[] | null;
+  tempId?: string;
 
   // Public constructor to create the request object
   constructor(
     text: string,
     attachments: Attachment[],
     heading: string,
-    topic_ids: string[]
+    topic_ids: string[],
+    tempId: string
   ) {
     this.text = text;
     this.attachments = attachments;
     this.heading = heading;
     this.topic_ids = topic_ids;
+    this.tempId = tempId;
   }
 
   // Static builder method to create the request object
@@ -32,13 +35,14 @@ export class AddPostRequestBuilder {
   private attachments: Attachment[] | undefined;
   private heading: string | undefined;
   private topic_ids: string[] | null;
+  private tempId: string;
   // Add other properties as needed
 
   public setText(text: string): AddPostRequestBuilder {
     this.text = text;
     return this;
   }
-  public setHeading(heading: string) {
+  public setHeading(heading: string): AddPostRequestBuilder {
     this.heading = heading;
     return this;
   }
@@ -48,6 +52,11 @@ export class AddPostRequestBuilder {
   }
   public setTopicIds(topicIds: string[] | null) {
     this.topic_ids = topicIds;
+    return this;
+  }
+
+  public setTempId(tempId: string): AddPostRequestBuilder {
+    this.tempId = tempId;
     return this;
   }
 
@@ -61,7 +70,8 @@ export class AddPostRequestBuilder {
       this.text,
       this.attachments,
       this.heading,
-      this.topic_ids
+      this.topic_ids,
+      this.tempId
     );
   }
 }
