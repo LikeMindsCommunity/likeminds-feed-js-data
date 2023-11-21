@@ -235,7 +235,9 @@ class PostClient {
   getTopics(request: GetTopicsRequest): Promise<any> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
-        `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}&is_enabled=${request.isEnabled}`
+        request.isEnabled === null
+          ? `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}`
+          : `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}&is_enabled=${request.isEnabled}`
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData.data);

@@ -1,7 +1,7 @@
 {
-  "name": "@likeminds.community/feed-js-beta",
-  "version": "1.11.15",
-  "description": "LikeMinds Javascript SDK for chat APIs",
+  "name": "@likeminds.community/feed-js",
+  "version": "102.0.00",
+  "description": "Beta LikeMinds Javascript SDK for chat APIs",
   "main": "dist/index.js",
   "module": "dist/index.m.js",
   "unpkg": "dist/index.umd.js",

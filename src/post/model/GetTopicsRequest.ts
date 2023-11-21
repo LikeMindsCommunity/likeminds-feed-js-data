@@ -1,6 +1,6 @@
 class GetTopicsRequest {
   // Properties of the request class
-  isEnabled: boolean | undefined;
+  isEnabled: boolean | null;
   search: string | undefined;
   searchType: string | undefined;
   page: number | undefined;
@@ -8,7 +8,7 @@ class GetTopicsRequest {
 
   // Public constructor to create the request object
   constructor(
-    isEnabled: boolean,
+    isEnabled: boolean | null,
     search: string,
     searchType: string,
     page: number,
@@ -29,14 +29,14 @@ class GetTopicsRequest {
 
 // Builder class for GetTopicsRequest
 export class GetTopicsRequestBuilder {
-  isEnabled: boolean | undefined;
+  isEnabled: boolean | null;
   search: string | undefined;
   searchType: string | undefined;
   page: number | undefined;
   pageSize: number | undefined;
   // Add other properties as needed
 
-  public setIsEnabled(isEnabled: boolean): GetTopicsRequestBuilder {
+  public setIsEnabled(isEnabled: boolean | null): GetTopicsRequestBuilder {
     this.isEnabled = isEnabled;
     return this;
   }
