@@ -4,6 +4,7 @@ export const API = {
   COMMUNITY_MEMBER_STATE: "/community/member/state",
   FEED_UNIVERSAL: "/feed/universal",
   FEED_POST: "/feed/post",
+  FEED_TOPIC: "/feed/topic",
   HELPER_URL: "/helper/url",
   FEEDROOM: "/feedroom",
   FEED_GROUP: "/feed/group",
