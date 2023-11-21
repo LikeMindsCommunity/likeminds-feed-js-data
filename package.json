@@ -1,6 +1,6 @@
 {
-  "name": "@likeminds.community/feed-js",
-  "version": "102.0.00",
+  "name": "@likeminds.community/feed-js-beta",
+  "version": "1.11.20",
   "description": "Beta LikeMinds Javascript SDK for chat APIs",
   "main": "dist/index.js",
   "module": "dist/index.m.js",
