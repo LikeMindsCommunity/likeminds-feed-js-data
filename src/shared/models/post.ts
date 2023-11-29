@@ -20,4 +20,6 @@ export interface IPost {
   createdAt: number;
   updatedAt: number;
   uuid: string;
+  topics: string[];
+  tempId: string;
 }

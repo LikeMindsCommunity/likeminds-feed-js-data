@@ -3,12 +3,14 @@ class ReplyCommentRequest {
   postId: string;
   commentId: string;
   text: string;
+  tempId?: string;
 
   // Public constructor to create the request object
-  constructor(postId: string, commentId: string, text: string) {
+  constructor(postId: string, commentId: string, text: string, tempId: string) {
     this.postId = postId;
     this.commentId = commentId;
     this.text = text;
+    this.tempId = tempId;
   }
 
   // Static builder method to create the request object
@@ -22,6 +24,7 @@ export class ReplyCommentRequestBuilder {
   postId: string | undefined;
   commentId: string | undefined;
   text: string | undefined;
+  private tempId: string;
   // Add other properties as needed
 
   public setPostId(postId: string): ReplyCommentRequestBuilder {
@@ -39,13 +42,23 @@ export class ReplyCommentRequestBuilder {
     return this;
   }
 
+  public setTempId(tempId: string): ReplyCommentRequestBuilder {
+    this.tempId = tempId;
+    return this;
+  }
+
   // Build method to create the final EditCommentRequest object
   public build(): ReplyCommentRequest {
     if (!this.postId || !this.commentId) {
       throw new Error("postId and commentId are required.");
     }
 
-    return new ReplyCommentRequest(this.postId, this.commentId, this.text);
+    return new ReplyCommentRequest(
+      this.postId,
+      this.commentId,
+      this.text,
+      this.tempId
+    );
   }
 }
 
