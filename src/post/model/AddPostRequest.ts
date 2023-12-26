@@ -7,6 +7,7 @@ class AddPostRequest {
   heading?: string;
   topic_ids: string[] | null;
   tempId?: string;
+  onBehalfOfUuid?: string;
 
   // Public constructor to create the request object
   constructor(
@@ -14,13 +15,15 @@ class AddPostRequest {
     attachments: Attachment[],
     heading: string,
     topic_ids: string[],
-    tempId: string
+    tempId: string,
+    onBehalfOfUUID?: string
   ) {
     this.text = text;
     this.attachments = attachments;
     this.heading = heading;
     this.topic_ids = topic_ids;
     this.tempId = tempId;
+    this.onBehalfOfUuid = onBehalfOfUUID;
   }
 
   // Static builder method to create the request object
@@ -36,6 +39,7 @@ export class AddPostRequestBuilder {
   private heading: string | undefined;
   private topic_ids: string[] | null;
   private tempId: string;
+  private onBehalfOfUUID?: string | undefined;
   // Add other properties as needed
 
   public setText(text: string): AddPostRequestBuilder {
@@ -55,6 +59,11 @@ export class AddPostRequestBuilder {
     return this;
   }
 
+  public setOnBehalfOfUUID(uuid: string) {
+    this.onBehalfOfUUID = uuid;
+    return this;
+  }
+
   public setTempId(tempId: string): AddPostRequestBuilder {
     this.tempId = tempId;
     return this;
@@ -71,7 +80,8 @@ export class AddPostRequestBuilder {
       this.attachments,
       this.heading,
       this.topic_ids,
-      this.tempId
+      this.tempId,
+      this.onBehalfOfUUID
     );
   }
 }
