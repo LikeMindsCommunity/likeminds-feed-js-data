@@ -1,11 +1,11 @@
 class InitiateUserRequest {
   // Properties of the request class
-  userName: string;
-  uuid: string;
+  userName?: string;
+  uuid?: string;
   isGuest: boolean;
 
   // Public constructor to create the request object
-  constructor(userName: string, uuid: string, isGuest: boolean) {
+  constructor(userName: string | undefined, uuid: string | undefined, isGuest: boolean) {
     this.userName = userName;
     this.uuid = uuid;
     this.isGuest = isGuest;
@@ -43,11 +43,11 @@ export class InitiateUserRequestBuilder {
 
   // Build method to create the final InitiateUserRequest object
   public build(): InitiateUserRequest {
-    if (!this.uuid) {
-      throw new Error("UUID is required.");
-    }
+    // if (!this.uuid) {
+    //   throw new Error("UUID is required.");
+    // }
 
-    return new InitiateUserRequest(this.userName, this.uuid, this.isGuest);
+    return new InitiateUserRequest(this.userName, this.uuid, this.isGuest || false);
   }
 }
 

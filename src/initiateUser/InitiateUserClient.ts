@@ -22,6 +22,7 @@ class InitiateUserClient {
     request: InitiateUserRequest
   ): Promise<LMResponse<InitiateUserResponse>> {
     const params = ModelConverter.requestBodyGenerator(request);
+    console.log('SDK =>', params)
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.SDK_INITIATE}`, {
         method: "POST",

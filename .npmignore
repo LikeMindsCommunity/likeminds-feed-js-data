@@ -11,3 +11,15 @@ src/**/*
 # override above and include ts files
 
 !src/**/*.ts
+
+.git
+.gitignore
+.DS_Store
+.vscode/
+.idea/
+npm-debug.log
+yarn-error.log
+coverage/
+dist/
+build/
+*.log
