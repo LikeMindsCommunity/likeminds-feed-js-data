@@ -21,7 +21,8 @@ class InitiateUserClient {
   public async initiateUser(
     request: InitiateUserRequest
   ): Promise<LMResponse<InitiateUserResponse>> {
-    const params = ModelConverter.requestBodyGenerator(request);
+    const params = ModelConverter.requestBodyGenerator(request); 
+    
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.SDK_INITIATE}`, {
         method: "POST",
