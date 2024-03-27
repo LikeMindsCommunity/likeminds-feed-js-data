@@ -23,17 +23,13 @@ class InitiateUserClient {
   ): Promise<LMResponse<ValidateUserResponse>> {
     const params = ModelConverter.requestBodyGenerator(request);
 
-    return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.SDK_INITIATE}`, {
-        method: "POST",
-        data: params,
-      })
-      .then((resData: any) => {
-        const accessToken = resData?.data?.access_token;
-        this.networkLibrary.setAccessToken(accessToken);
-        const refreshToken = resData?.data?.refresh_token;
-        this.networkLibrary.setRefreshToken(refreshToken);
+    // const accessToken = resData?.data?.access_token;
+    this.networkLibrary.setAccessToken(request.accessToken); 
+    this.networkLibrary.setRefreshToken(request.refreshToken);
 
+    return this.networkLibrary
+      .makeAuthenticatedRequest(`${API.SDK_INITIATE}`)
+      .then((resData: any) => {
         // Handle the response and return the LMResponse object
         const responseData: ValidateUserResponse =
           ModelConverter.responseBodyParser(resData.data);

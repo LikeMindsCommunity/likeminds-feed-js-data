@@ -55,6 +55,7 @@ import MarkReadNotificationRequest from "./notificationFeed/model/MarkReadNotifi
 import EditCommentRequest from "./comment/model/EditCommentRequest";
 import GetTopicsRequest from "./post/model/GetTopicsRequest";
 import { LMFeedTopics } from "./post/model/GetTopicsResponse";
+import ValidateUserRequest from "./initiateUser/model/ValidateUserRequest";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -85,10 +86,10 @@ class LMFeedClient {
     return new LMFeedClient();
   }
 
-  setApiKey(apiKey: string): LMFeedClient {
-    this.apiKey = apiKey;
-    return this;
-  }
+  // setApiKey(apiKey: string): LMFeedClient {
+  //   this.apiKey = apiKey;
+  //   return this;
+  // }
 
   setPlatformCode(platformCode: string) {
     this.platformCode = platformCode;
@@ -102,18 +103,32 @@ class LMFeedClient {
 
   public build(): LMFeedClient {
     // Perform any necessary validation or configuration checks
-    if (!this.apiKey || !this.platformCode || !this.versionCode) {
+    // if (!this.apiKey || !this.platformCode || !this.versionCode) {
+    if (!this.platformCode || !this.versionCode) {
       throw new Error(
         "Please provide apiKey, platformCode, and versionCode before building the LMFeedClient.",
       );
     }
-    this.networkLibrary.setApiKey(this.apiKey); // Set the API key in the NetworkLibrary
+    // this.networkLibrary.setApiKey(this.apiKey); // Set the API key in the NetworkLibrary
     this.networkLibrary.setPlatformCode(this.platformCode);
     this.networkLibrary.setVersionCode(this.versionCode);
 
     return this;
   }
 
+  async validateUser(validateUserRequest: ValidateUserRequest) {
+    try {
+      // Call the initiateUser method from InitiateUserClient
+      const initiateUserResponse =
+        await this.initiateUserClient.validateUser(validateUserRequest);
+
+      return initiateUserResponse;
+    } catch (error) {
+      console.error("Error while initiating the user:", error);
+      throw error;
+    }
+  }
+  
   async initiateUser(initiateUserRequest: InitiateUserRequest) {
     try {
       // Call the initiateUser method from InitiateUserClient
