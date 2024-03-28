@@ -1,4 +1,3 @@
-// feed-sdk/src/LMFeedClient.js
 import NetworkLibrary from "./core/services/networklibrary";
 import InitiateUserClient from "./initiateUser/InitiateUserClient";
 import InitiateUserRequest from "./initiateUser/model/InitiateUserRequest";
@@ -17,56 +16,45 @@ import PinPostRequest from "./post/model/PinPostRequest";
 import SavePostRequest from "./post/model/SavePostRequest";
 import GetTaggingListRequest from "./post/model/GetTaggingListRequest";
 import GetFeedRequest from "./universalfeed/model/GetFeedRequest";
-import { GetFeedResponse } from "./universalfeed/model/GetFeedResponse";
-import { IPost } from "./shared/models/post";
-import { IOgTag } from "./shared/models/ogTags";
-import { IUser } from "./shared/models/user";
-import { IMenuItem } from "./shared/models/menuItem";
 import ModerationClient from "./moderation/ModerationClient";
 import GetReportTagsRequest from "./moderation/model/GetReportTagsRequest";
 import PostReportRequest from "./moderation/model/PostReportRequest";
 import CommentClient from "./comment/CommentClient";
 import AddCommentRequest from "./comment/model/AddCommentRequest";
-import { AddCommentResponse } from "./comment/model/AddCommentResponse";
-
-import { GetCommentResponse } from "./comment/model/GetCommentResponse";
-import { IComment } from "./shared/models/comment";
-
-import { EditCommentResponse } from "./comment/model/EditCommentResponse";
-
-import { IMemberRight, IMemberState } from "./shared/models/memberRights";
-
-import { IActivities, IActivity } from "./shared/models/activity";
-
 import GetAllMembersRequest from "./initiateUser/model/GetAllMembersRequest";
-import { IMember } from "./initiateUser/model/GetAllMembersResponse";
-
 import ReplyCommentRequest from "./comment/model/ReplyCommentRequest";
 import GetCommentRequest from "./comment/model/GetCommentRequest";
 import GetCommentLikesRequest from "./comment/model/GetCommentLikesRequest";
 import LikeCommentRequest from "./comment/model/LikeCommentRequest";
 import DeleteCommentRequest from "./comment/model/DeleteCommentRequest";
-
-import HelperClient from "./helper/HelperClient";
-
 import NotificationFeedClient from "./notificationFeed/NotificationFeedClient";
 import GetNotificationFeedRequest from "./notificationFeed/model/GetNotificationFeedRequest";
 import MarkReadNotificationRequest from "./notificationFeed/model/MarkReadNotificationRequest";
 import EditCommentRequest from "./comment/model/EditCommentRequest";
 import GetTopicsRequest from "./post/model/GetTopicsRequest";
-import { LMFeedTopics } from "./post/model/GetTopicsResponse";
 import ValidateUserRequest from "./initiateUser/model/ValidateUserRequest";
+import { GetFeedResponse } from "./universalfeed/model/GetFeedResponse";
+import { IPost } from "./shared/models/post";
+import { IOgTag } from "./shared/models/ogTags";
+import { IUser } from "./shared/models/user";
+import { IMenuItem } from "./shared/models/menuItem";
+import { AddCommentResponse } from "./comment/model/AddCommentResponse";
+import { GetCommentResponse } from "./comment/model/GetCommentResponse";
+import { IComment } from "./shared/models/comment";
+import { EditCommentResponse } from "./comment/model/EditCommentResponse";
+import { IMemberRight, IMemberState } from "./shared/models/memberRights";
+import { IActivities, IActivity } from "./shared/models/activity";
+import { IMember } from "./initiateUser/model/GetAllMembersResponse";
+import { LMFeedTopics } from "./post/model/GetTopicsResponse";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
   private postClient: PostClient;
   private moderationClient: ModerationClient;
   private commentClient: CommentClient;
-  private helperClient: HelperClient;
   private networkLibrary: NetworkLibrary;
   private notificationFeedClient: NotificationFeedClient;
   private feedClient: UniversalFeedClient;
-  private apiKey: string | null = null;
   private platformCode: string | null = null;
   private versionCode: number | null = null;
   constructor() {
@@ -78,18 +66,13 @@ class LMFeedClient {
     this.moderationClient = new ModerationClient(this.networkLibrary);
     this.commentClient = new CommentClient(this.networkLibrary);
     this.notificationFeedClient = new NotificationFeedClient(
-      this.networkLibrary,
+      this.networkLibrary
     );
   }
 
   public static Builder(): LMFeedClient {
     return new LMFeedClient();
   }
-
-  // setApiKey(apiKey: string): LMFeedClient {
-  //   this.apiKey = apiKey;
-  //   return this;
-  // }
 
   setPlatformCode(platformCode: string) {
     this.platformCode = platformCode;
@@ -102,14 +85,12 @@ class LMFeedClient {
   }
 
   public build(): LMFeedClient {
-    // Perform any necessary validation or configuration checks
-    // if (!this.apiKey || !this.platformCode || !this.versionCode) {
     if (!this.platformCode || !this.versionCode) {
       throw new Error(
-        "Please provide apiKey, platformCode, and versionCode before building the LMFeedClient.",
+        "Please provide apiKey, platformCode, and versionCode before building the LMFeedClient."
       );
     }
-    // this.networkLibrary.setApiKey(this.apiKey); // Set the API key in the NetworkLibrary
+
     this.networkLibrary.setPlatformCode(this.platformCode);
     this.networkLibrary.setVersionCode(this.versionCode);
 
@@ -118,20 +99,18 @@ class LMFeedClient {
 
   async validateUser(validateUserRequest: ValidateUserRequest) {
     try {
-      // Call the initiateUser method from InitiateUserClient
       const initiateUserResponse =
         await this.initiateUserClient.validateUser(validateUserRequest);
 
       return initiateUserResponse;
     } catch (error) {
-      console.error("Error while initiating the user:", error);
+      console.error("Error while validating the user:", error);
       throw error;
     }
   }
-  
+
   async initiateUser(initiateUserRequest: InitiateUserRequest) {
     try {
-      // Call the initiateUser method from InitiateUserClient
       const initiateUserResponse =
         await this.initiateUserClient.initiateUser(initiateUserRequest);
 
@@ -287,7 +266,7 @@ class LMFeedClient {
     postId: string,
     comment: GetCommentRequest,
     commentId: string,
-    pageNo: number,
+    pageNo: number
   ) {
     try {
       const getCommentResponse = await this.commentClient.getComment(
@@ -298,7 +277,7 @@ class LMFeedClient {
           .setpostId(postId)
           .build(),
         postId,
-        commentId,
+        commentId
       );
       return getCommentResponse;
     } catch (error) {
@@ -446,5 +425,5 @@ export {
   IMember,
   EditCommentRequest,
   GetTopicsRequest,
-  LMFeedTopics
+  LMFeedTopics,
 };

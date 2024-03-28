@@ -3,7 +3,7 @@ class Like {
   id: string;
   createdAt: number;
   updatedAt: number;
-  userId: string;
+  // userId: string;
   uuid: string;
 
   // Public constructor to create the request object
@@ -11,13 +11,13 @@ class Like {
     id: string,
     createdAt: number,
     updatedAt: number,
-    userId: string,
-    uuid: string,
+    // userId: string,
+    uuid: string
   ) {
     this.id = id;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.userId = userId;
+    // this.userId = userId;
     this.uuid = uuid;
   }
 
@@ -32,7 +32,7 @@ export class LikeBuilder {
   private id: string;
   private createdAt: number;
   private updatedAt: number;
-  private userId: string;
+  // private userId: string;
   private uuid: string;
   // Add other properties as needed
 
@@ -51,10 +51,10 @@ export class LikeBuilder {
     return this;
   }
 
-  public setuserId(userId: string): LikeBuilder {
-    this.userId = userId;
-    return this;
-  }
+  // public setuserId(userId: string): LikeBuilder {
+  //   this.userId = userId;
+  //   return this;
+  // }
 
   public setuuid(uuid: string): LikeBuilder {
     this.uuid = uuid;
@@ -67,7 +67,7 @@ export class LikeBuilder {
       !this.id ||
       !this.createdAt ||
       !this.updatedAt ||
-      !this.userId ||
+      // !this.userId ||
       !this.uuid
     ) {
       throw new Error("id, page and pageSize are required.");
@@ -77,8 +77,8 @@ export class LikeBuilder {
       this.id,
       this.createdAt,
       this.updatedAt,
-      this.userId,
-      this.uuid,
+      // this.userId,
+      this.uuid
     );
   }
 }

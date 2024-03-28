@@ -5,14 +5,14 @@ export declare type InitUser = {
 };
 
 export declare type Logout = {
-  refreshToken: any;
+  refreshToken: string;
 };
 
 export declare type GetProfile = {
-  userId: any;
+  uuid: string;
 };
 export declare type GetMemberChatroom = {
-  userId: any;
+  uuid: string;
   state: any;
   page: number;
 };

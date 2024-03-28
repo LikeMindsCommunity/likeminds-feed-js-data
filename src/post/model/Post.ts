@@ -10,7 +10,7 @@ class Post {
   isLiked: boolean;
   isEdited: boolean;
   isPinned: boolean;
-  userId: string;
+  // userId: string;
   likesCount: number;
   commentsCount: number;
   isSaved: boolean;
@@ -30,7 +30,7 @@ class Post {
     isLiked: boolean,
     isEdited: boolean,
     isPinned: boolean,
-    userId: string,
+    // userId: string,
     likesCount: number,
     commentsCount: number,
     isSaved: boolean,
@@ -38,7 +38,7 @@ class Post {
     replies: any,
     createdAt: number,
     updatedAt: number,
-    uuid: string,
+    uuid: string
   ) {
     this.id = id;
     this.text = text;
@@ -47,7 +47,7 @@ class Post {
     this.isLiked = isLiked;
     this.isEdited = isEdited;
     this.isPinned = isPinned;
-    this.userId = userId;
+    // this.userId = userId;
     this.likesCount = likesCount;
     this.commentsCount = commentsCount;
     this.isSaved = isSaved;
@@ -73,7 +73,7 @@ export class PostBuilder {
   private isLiked: boolean;
   private isEdited: boolean;
   private isPinned: boolean;
-  private userId: string;
+  // private userId: string;
   private likesCount: number;
   private commentsCount: number;
   private isSaved: boolean;
@@ -113,10 +113,10 @@ export class PostBuilder {
     this.isPinned = isPinned;
     return this;
   }
-  public setuserId(userId: string): PostBuilder {
-    this.userId = userId;
-    return this;
-  }
+  // public setuserId(userId: string): PostBuilder {
+  //   this.userId = userId;
+  //   return this;
+  // }
   public setlikesCount(likesCount: number): PostBuilder {
     this.likesCount = likesCount;
     return this;
@@ -164,7 +164,7 @@ export class PostBuilder {
       this.isLiked,
       this.isEdited,
       this.isPinned,
-      this.userId,
+      // this.userId,
       this.likesCount,
       this.commentsCount,
       this.isSaved,
@@ -172,7 +172,7 @@ export class PostBuilder {
       this.replies,
       this.createdAt,
       this.updatedAt,
-      this.uuid,
+      this.uuid
     );
   }
 }

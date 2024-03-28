@@ -21,10 +21,7 @@ class InitiateUserClient {
   public async validateUser(
     request: ValidateUserRequest
   ): Promise<LMResponse<ValidateUserResponse>> {
-    const params = ModelConverter.requestBodyGenerator(request);
-
-    // const accessToken = resData?.data?.access_token;
-    this.networkLibrary.setAccessToken(request.accessToken); 
+    this.networkLibrary.setAccessToken(request.accessToken);
     this.networkLibrary.setRefreshToken(request.refreshToken);
 
     return this.networkLibrary
