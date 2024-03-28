@@ -10,7 +10,7 @@ export interface IPost {
   isLiked: boolean;
   isEdited: boolean;
   isPinned: boolean;
-  userId: string;
+  // userId: string;
   likesCount: number;
   commentsCount: number;
   isSaved: boolean;

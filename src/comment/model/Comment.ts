@@ -3,7 +3,7 @@ class AddCommentRequest {
   id: string;
   isLiked: boolean;
   isEdited: boolean;
-  userId: string;
+  // userId: string;
   text: string;
   level: number;
   likesCount: number;
@@ -23,7 +23,7 @@ class AddCommentRequest {
     id: string,
     isLiked: boolean,
     isEdited: boolean,
-    userId: string,
+    // userId: string,
     text: string,
     level: number,
     likesCount: number,
@@ -33,12 +33,12 @@ class AddCommentRequest {
     replies: any,
     menuItems: any,
     parentComment: any,
-    uuid: string,
+    uuid: string
   ) {
     this.id = id;
     this.isLiked = isLiked;
     this.isEdited = isEdited;
-    this.userId = userId;
+    // this.userId = userId;
     this.text = text;
     this.level = level;
     this.likesCount = likesCount;
@@ -62,7 +62,7 @@ export class AddCommentRequestBuilder {
   private id: string | undefined;
   private isLiked: boolean | undefined;
   private isEdited: boolean | undefined;
-  private userId: string | undefined;
+  // private userId: string | undefined;
   private text: string | undefined;
   private level: number | undefined;
   private likesCount: number | undefined;
@@ -90,10 +90,10 @@ export class AddCommentRequestBuilder {
     return this;
   }
 
-  public setuserId(userId: string): AddCommentRequestBuilder {
-    this.userId = userId;
-    return this;
-  }
+  // public setuserId(userId: string): AddCommentRequestBuilder {
+  //   this.userId = userId;
+  //   return this;
+  // }
 
   public settext(text: string): AddCommentRequestBuilder {
     this.text = text;
@@ -147,7 +147,7 @@ export class AddCommentRequestBuilder {
       !this.id ||
       !this.isLiked ||
       !this.isEdited ||
-      !this.userId ||
+      // !this.userId ||
       !this.text ||
       !this.level ||
       !this.likesCount ||
@@ -164,7 +164,7 @@ export class AddCommentRequestBuilder {
       this.id,
       this.isLiked,
       this.isEdited,
-      this.userId,
+      // this.userId,
       this.text,
       this.level,
       this.likesCount,
@@ -174,7 +174,7 @@ export class AddCommentRequestBuilder {
       this.replies,
       this.menuItems,
       this.parentComment,
-      this.uuid,
+      this.uuid
     );
   }
 }

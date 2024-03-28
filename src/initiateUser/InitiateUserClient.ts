@@ -1,6 +1,4 @@
 import LMResponse from "../core/services/lmresponse";
-// import { environment } from "../environment";
-// import { API } from "../shared/constants/api.constant";
 import { API } from "../shared/constants/api.constant";
 
 import InitiateUserRequest from "./model/InitiateUserRequest";
@@ -10,6 +8,8 @@ import { ModelConverter } from "../utils/ModelConverter";
 
 import { GetMemberStateResponse } from "./model/GetMemberStateResponse";
 import GetAllMembersRequest from "./model/GetAllMembersRequest";
+import ValidateUserRequest from "./model/ValidateUserRequest";
+import { ValidateUserResponse } from "./model/ValidateUserResponse";
 
 class InitiateUserClient {
   private networkLibrary: NetworkLibrary;
@@ -18,11 +18,35 @@ class InitiateUserClient {
     this.networkLibrary = networkInstance;
   }
 
+  public async validateUser(
+    request: ValidateUserRequest
+  ): Promise<LMResponse<ValidateUserResponse>> {
+    this.networkLibrary.setAccessToken(request.accessToken);
+    this.networkLibrary.setRefreshToken(request.refreshToken);
+
+    return this.networkLibrary
+      .makeAuthenticatedRequest(`${API.SDK_INITIATE}`)
+      .then((resData: any) => {
+        // Handle the response and return the LMResponse object
+        const responseData: ValidateUserResponse =
+          ModelConverter.responseBodyParser(resData.data);
+
+        return new LMResponse<ValidateUserResponse>(responseData, null, true);
+      })
+      .catch((error) => {
+        return new LMResponse<ValidateUserResponse>(
+          null,
+          error.message || "An error occurred",
+          false
+        );
+      });
+  }
+
   public async initiateUser(
     request: InitiateUserRequest
   ): Promise<LMResponse<InitiateUserResponse>> {
-    const params = ModelConverter.requestBodyGenerator(request); 
-    
+    const params = ModelConverter.requestBodyGenerator(request);
+
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.SDK_INITIATE}`, {
         method: "POST",
