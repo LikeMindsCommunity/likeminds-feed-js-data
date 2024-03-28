@@ -109,17 +109,17 @@ class LMFeedClient {
     }
   }
 
-  async initiateUser(initiateUserRequest: InitiateUserRequest) {
-    try {
-      const initiateUserResponse =
-        await this.initiateUserClient.initiateUser(initiateUserRequest);
+  // async initiateUser(initiateUserRequest: InitiateUserRequest) {
+  //   try {
+  //     const initiateUserResponse =
+  //       await this.initiateUserClient.initiateUser(initiateUserRequest);
 
-      return initiateUserResponse;
-    } catch (error) {
-      console.error("Error while initiating the user:", error);
-      throw error;
-    }
-  }
+  //     return initiateUserResponse;
+  //   } catch (error) {
+  //     console.error("Error while initiating the user:", error);
+  //     throw error;
+  //   }
+  // }
 
   async addPost(addPostRequest: AddPostRequest) {
     try {
