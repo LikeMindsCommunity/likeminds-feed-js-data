@@ -4,7 +4,7 @@ export interface IComment {
   Id: string;
   isLiked: boolean;
   isEdited: boolean;
-  userId: string;
+  // userId: string;
   text: string;
   level: number;
   likesCount: number;

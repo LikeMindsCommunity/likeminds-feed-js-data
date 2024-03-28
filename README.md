@@ -10,7 +10,7 @@
 
 > LikeMinds is a simple plug and play, highly customisable community infra platform that helps brands build in-app communities in 15 mins. Brands can leverage the platform to build community features like group chats, 1-1 chats, activity feed, event management, resource library quickly without any engineering effort.
 
-## Chats
+## Likeminds Feed
 
 ### Enable real-time interactions with the following features:
 

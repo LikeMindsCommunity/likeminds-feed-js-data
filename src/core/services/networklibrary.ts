@@ -59,8 +59,7 @@ class NetworkLibrary {
       },
     };
     const initApi = url.includes("initiate");
-    requestConfig.headers["Content-Type"] = "application/json";
-    // requestConfig.headers['x-platform-code'] = this.tokenManager.getPlatformCode();
+    requestConfig.headers["Content-Type"] = "application/json"; 
     requestConfig.headers["x-version-code"] =
       this.tokenManager.getVersionCode();
 
@@ -78,14 +77,15 @@ class NetworkLibrary {
         "application/x-www-form-urlencoded";
 
     // Add the access token to the request headers
-    if (this.tokenManager.getAccessToken && !initApi) {
+    // if (this.tokenManager.getAccessToken && !initApi) {
+    if (this.tokenManager.getAccessToken) {
       requestConfig.headers[
         "Authorization"
       ] = `Bearer ${this.tokenManager.getAccessToken()}`;
     }
 
     // Add the apiKey in initiate api to the request headers
-    if (initApi) requestConfig.headers["x-api-key"] = this.xApiKey;
+    // if (initApi) requestConfig.headers["x-api-key"] = this.xApiKey;
 
     try {
       const response = await this.makeRequest<{ data: T }>(url, requestConfig);
