@@ -46,6 +46,8 @@ import { IMemberRight, IMemberState } from "./shared/models/memberRights";
 import { IActivities, IActivity } from "./shared/models/activity";
 import { IMember } from "./initiateUser/model/GetAllMembersResponse";
 import { LMFeedTopics } from "./post/model/GetTopicsResponse";
+import HelperClient from "./helper/HelperClient";
+import RegisterDeviceRequest from "./helper/model/RegisterDeviceRequest";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -57,6 +59,7 @@ class LMFeedClient {
   private feedClient: UniversalFeedClient;
   private platformCode: string | null = null;
   private versionCode: number | null = null;
+  private helperClient: HelperClient;
   constructor() {
     this.networkLibrary = new NetworkLibrary();
     this.initiateUserClient = new InitiateUserClient(this.networkLibrary);
@@ -66,6 +69,9 @@ class LMFeedClient {
     this.moderationClient = new ModerationClient(this.networkLibrary);
     this.commentClient = new CommentClient(this.networkLibrary);
     this.notificationFeedClient = new NotificationFeedClient(
+      this.networkLibrary
+    );
+    this.helperClient = new HelperClient(
       this.networkLibrary
     );
   }
@@ -380,6 +386,22 @@ class LMFeedClient {
       throw error;
     }
   }
+  async validateRegisterDeviceRequest(request: RegisterDeviceRequest) {
+    try {
+      return await this.helperClient.validateRegisterDeviceRequest(request);
+    } catch (error) {
+      console.log("Error while validate register device", error);
+      throw error;
+    }
+  }
+  async registerDevice() {
+    try {
+      return await this.helperClient.registerDevice();
+    } catch (error) {
+      console.log("Error while register device", error);
+      throw error;
+    }
+  }
 }
 
 export {
@@ -426,5 +448,6 @@ export {
   EditCommentRequest,
   GetTopicsRequest,
   LMFeedTopics,
-  ValidateUserRequest
+  ValidateUserRequest,
+  RegisterDeviceRequest
 };
