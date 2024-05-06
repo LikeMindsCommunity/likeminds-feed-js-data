@@ -71,9 +71,7 @@ class LMFeedClient {
     this.notificationFeedClient = new NotificationFeedClient(
       this.networkLibrary
     );
-    this.helperClient = new HelperClient(
-      this.networkLibrary
-    );
+    this.helperClient = new HelperClient(this.networkLibrary);
   }
 
   public static Builder(): LMFeedClient {
@@ -378,6 +376,16 @@ class LMFeedClient {
       throw error;
     }
   }
+
+  async getCommunityConfigurations() {
+    try {
+      return await this.initiateUserClient.getCommunityConfigurations();
+    } catch (error) {
+      console.log("Error while getting configuration", error);
+      throw error;
+    }
+  }
+
   async getAllMembers(request: GetAllMembersRequest) {
     try {
       return await this.initiateUserClient.getAllMembers(request);
@@ -386,6 +394,7 @@ class LMFeedClient {
       throw error;
     }
   }
+
   async validateRegisterDeviceRequest(request: RegisterDeviceRequest) {
     try {
       return await this.helperClient.validateRegisterDeviceRequest(request);
@@ -449,5 +458,5 @@ export {
   GetTopicsRequest,
   LMFeedTopics,
   ValidateUserRequest,
-  RegisterDeviceRequest
+  RegisterDeviceRequest,
 };
