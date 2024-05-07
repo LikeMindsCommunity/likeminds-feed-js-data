@@ -11,7 +11,7 @@ export const API = {
   REFRESH_TOKEN_API: "/user/refresh",
   CHATROOM_GET_TAGGINNG_LIST: "/community/tag", //(GET)
   COMMUNITY_TAG: "/community/tag",
-  COMMUNITY_CONFIGURATIONS: 'community/configurations', //(GET)
+  COMMUNITY_CONFIGURATIONS: "/community/configurations", //(GET)
   GET_REPORT_TAGS: "/community/report/tag",
   POST_REPORT: "/community/report",
   NOTIFICATION_FEED: "/feed/user/activity",
