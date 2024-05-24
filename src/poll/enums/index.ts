@@ -1,4 +1,4 @@
-export enum PollMultiSelectState {
+export enum PollMultipleSelectState {
   EXACTLY = "exactly",
   AT_MAX = "at_max",
   AT_LEAST = "at_least",

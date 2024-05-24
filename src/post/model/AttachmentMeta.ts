@@ -1,4 +1,4 @@
-import { PollMultiSelectState, PollType } from "src/poll/enums";
+import { PollMultipleSelectState, PollType } from "src/poll/enums";
 
 class AttachmentMeta {
   // Properties of the request class
@@ -15,12 +15,13 @@ class AttachmentMeta {
   thumbnailUrl?: string;
   pollQuestion?: string;
   expiryTime?: number;
-  pollOptions?: string[];
-  multiSelectState?: PollMultiSelectState;
+  options?: string[];
+  multipleSelectState?: PollMultipleSelectState;
   pollType?: PollType;
-  multiSelectNo?: number;
+  multipleSelectNumber?: number;
   isAnonymous?: boolean;
   allowAddOption?: boolean;
+  entityId?: string;
 
   // ogTags: LinkOGTags
   // attachmentMeta: List<Attachment>;
@@ -38,14 +39,15 @@ class AttachmentMeta {
     title: string,
     pollQuestion: string,
     expiryTime: number,
-    pollOptions: string[],
-    multiSelectState: PollMultiSelectState,
+    options: string[],
+    multipleSelectState: PollMultipleSelectState,
     pollType: PollType,
-    multiSelectNo: number = 1,
+    multipleSelectNumber: number = 1,
     isAnonymous: boolean = false,
     allowAddOption: boolean = false,
     body?: string,
-    thumbnailUrl?: string
+    thumbnailUrl?: string,
+    entityId?: string
   ) {
     this.name = name;
     this.url = url;
@@ -58,14 +60,15 @@ class AttachmentMeta {
     this.title = title;
     this.pollQuestion = pollQuestion;
     this.expiryTime = expiryTime;
-    this.pollOptions = pollOptions;
-    this.multiSelectState = multiSelectState;
+    this.options = options;
+    this.multipleSelectState = multipleSelectState;
     this.pollType = pollType;
-    this.multiSelectNo = multiSelectNo;
+    this.multipleSelectNumber = multipleSelectNumber;
     this.isAnonymous = isAnonymous;
     this.allowAddOption = allowAddOption;
     this.body = body;
     this.thumbnailUrl = thumbnailUrl;
+    this.entityId = entityId;
   }
 
   // Static builder method to create the request object
@@ -89,12 +92,13 @@ export class AttachmentMetaBuilder {
   thumbnailUrl?: string | undefined;
   pollQuestion?: string | undefined;
   expiryTime?: number | undefined;
-  pollOptions?: string[] | undefined;
-  multiSelectState?: PollMultiSelectState | undefined;
+  options?: string[] | undefined;
+  multipleSelectState?: PollMultipleSelectState | undefined;
   pollType?: PollType | undefined;
-  multiSelectNo?: number | undefined;
+  multipleSelectNumber?: number | undefined;
   isAnonymous?: boolean | undefined;
   allowAddOption?: boolean | undefined;
+  entityId?: string | undefined;
   // Add other properties as needed
 
   public setname(name: string): AttachmentMetaBuilder {
@@ -162,15 +166,15 @@ export class AttachmentMetaBuilder {
     return this;
   }
 
-  public setPollOptions(pollOptions: string[]): AttachmentMetaBuilder {
-    this.pollOptions = pollOptions;
+  public setOptions(options: string[]): AttachmentMetaBuilder {
+    this.options = options;
     return this;
   }
 
-  public setMultiSelectState(
-    multiSelectState: PollMultiSelectState
+  public setMultipleSelectState(
+    multipleSelectState: PollMultipleSelectState
   ): AttachmentMetaBuilder {
-    this.multiSelectState = multiSelectState;
+    this.multipleSelectState = multipleSelectState;
     return this;
   }
 
@@ -179,8 +183,10 @@ export class AttachmentMetaBuilder {
     return this;
   }
 
-  public setMultiSelectNo(multiSelectNo: number): AttachmentMetaBuilder {
-    this.multiSelectNo = multiSelectNo;
+  public setMultipleSelectNumber(
+    multipleSelectNumber: number
+  ): AttachmentMetaBuilder {
+    this.multipleSelectNumber = multipleSelectNumber;
     return this;
   }
 
@@ -191,6 +197,11 @@ export class AttachmentMetaBuilder {
 
   public setAllowAddOption(allowAddOption: boolean): AttachmentMetaBuilder {
     this.allowAddOption = allowAddOption;
+    return this;
+  }
+
+  public setEntityId(entityId: string): AttachmentMetaBuilder {
+    this.entityId = entityId;
     return this;
   }
 
@@ -211,14 +222,15 @@ export class AttachmentMetaBuilder {
       this.title,
       this.pollQuestion,
       this.expiryTime,
-      this.pollOptions,
-      this.multiSelectState,
+      this.options,
+      this.multipleSelectState,
       this.pollType,
-      this.multiSelectNo,
+      this.multipleSelectNumber,
       this.isAnonymous,
       this.allowAddOption,
       this.body,
-      this.thumbnailUrl
+      this.thumbnailUrl,
+      this.entityId
     );
   }
 }

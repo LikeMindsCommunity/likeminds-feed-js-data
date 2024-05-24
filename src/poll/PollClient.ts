@@ -58,7 +58,7 @@ class PollFeedClient {
   // get poll votes
   getPollVotes(request: GetPollVotesRequest): Promise<LMResponse<any>> {
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.POLL}/${request.pollId}/vote`)
+      .makeAuthenticatedRequest(`${API.POLL}/${request.pollId}/vote?votes=${request.votes}&page=${request.page}&page_size=${request.pageSize}`)
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData.data);
         return new LMResponse<GetPollVotesResponse>(responseData, null, true);
