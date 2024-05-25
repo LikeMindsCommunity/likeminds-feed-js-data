@@ -410,7 +410,7 @@ class LMFeedClient {
     try {
       return await this.pollFeedClient.submitPollVote(request);
     } catch (error) {
-      console.log("Error while members", error);
+      console.log("Error while submit poll", error);
       throw error;
     }
   }
@@ -418,7 +418,7 @@ class LMFeedClient {
     try {
       return await this.pollFeedClient.addPollOption(request);
     } catch (error) {
-      console.log("Error while members", error);
+      console.log("Error while add poll option", error);
       throw error;
     }
   }
@@ -426,7 +426,7 @@ class LMFeedClient {
     try {
       return await this.pollFeedClient.getPollVotes(request);
     } catch (error) {
-      console.log("Error while members", error);
+      console.log("Error while get poll votes", error);
       throw error;
     }
   }
