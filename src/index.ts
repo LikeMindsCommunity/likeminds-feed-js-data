@@ -48,6 +48,10 @@ import { IMember } from "./initiateUser/model/GetAllMembersResponse";
 import { LMFeedTopics } from "./post/model/GetTopicsResponse";
 import HelperClient from "./helper/HelperClient";
 import RegisterDeviceRequest from "./helper/model/RegisterDeviceRequest";
+import PollFeedClient from "./poll/PollClient";
+import { GetPollVotesRequest } from "./poll/model/GetPollVotesRequest";
+import { AddPollOptionRequest } from "./poll/model/AddPollOptionRequest";
+import { SubmitPollVoteRequest } from "./poll/model/SubmitPollVoteRequest";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -60,6 +64,7 @@ class LMFeedClient {
   private platformCode: string | null = null;
   private versionCode: number | null = null;
   private helperClient: HelperClient;
+  private pollFeedClient: PollFeedClient;
   constructor() {
     this.networkLibrary = new NetworkLibrary();
     this.initiateUserClient = new InitiateUserClient(this.networkLibrary);
@@ -71,9 +76,8 @@ class LMFeedClient {
     this.notificationFeedClient = new NotificationFeedClient(
       this.networkLibrary
     );
-    this.helperClient = new HelperClient(
-      this.networkLibrary
-    );
+    this.helperClient = new HelperClient(this.networkLibrary);
+    this.pollFeedClient = new PollFeedClient(this.networkLibrary);
   }
 
   public static Builder(): LMFeedClient {
@@ -115,17 +119,17 @@ class LMFeedClient {
     }
   }
 
-  // async initiateUser(initiateUserRequest: InitiateUserRequest) {
-  //   try {
-  //     const initiateUserResponse =
-  //       await this.initiateUserClient.initiateUser(initiateUserRequest);
+  async initiateUser(initiateUserRequest: InitiateUserRequest) {
+    try {
+      const initiateUserResponse =
+        await this.initiateUserClient.initiateUser(initiateUserRequest);
 
-  //     return initiateUserResponse;
-  //   } catch (error) {
-  //     console.error("Error while initiating the user:", error);
-  //     throw error;
-  //   }
-  // }
+      return initiateUserResponse;
+    } catch (error) {
+      console.error("Error while initiating the user:", error);
+      throw error;
+    }
+  }
 
   async addPost(addPostRequest: AddPostRequest) {
     try {
@@ -402,6 +406,30 @@ class LMFeedClient {
       throw error;
     }
   }
+  async submitPollVote(request: SubmitPollVoteRequest) {
+    try {
+      return await this.pollFeedClient.submitPollVote(request);
+    } catch (error) {
+      console.log("Error while submit poll", error);
+      throw error;
+    }
+  }
+  async addPollOption(request: AddPollOptionRequest) {
+    try {
+      return await this.pollFeedClient.addPollOption(request);
+    } catch (error) {
+      console.log("Error while add poll option", error);
+      throw error;
+    }
+  }
+  async getPollVotes(request: GetPollVotesRequest) {
+    try {
+      return await this.pollFeedClient.getPollVotes(request);
+    } catch (error) {
+      console.log("Error while get poll votes", error);
+      throw error;
+    }
+  }
 }
 
 export {
@@ -449,5 +477,5 @@ export {
   GetTopicsRequest,
   LMFeedTopics,
   ValidateUserRequest,
-  RegisterDeviceRequest
+  RegisterDeviceRequest,
 };
