@@ -3,12 +3,21 @@ class InitiateUserRequest {
   userName?: string;
   uuid?: string;
   isGuest: boolean;
+  apikey: string;
+  token_expiry_beta = 1;
+  rtm_token_expiry_beta = 1;
 
   // Public constructor to create the request object
-  constructor(userName: string | undefined, uuid: string | undefined, isGuest: boolean) {
+  constructor(
+    userName: string | undefined,
+    uuid: string | undefined,
+    isGuest: boolean,
+    apiKey: string
+  ) {
     this.userName = userName;
     this.uuid = uuid;
     this.isGuest = isGuest;
+    this.apikey = apiKey;
   }
 
   // Static builder method to create the request object
@@ -22,6 +31,7 @@ export class InitiateUserRequestBuilder {
   private userName: string | undefined;
   private uuid: string | undefined;
   private isGuest: boolean | undefined;
+  private apiKey: string;
   // Add other properties as needed
 
   public setUserName(userName: string): InitiateUserRequestBuilder {
@@ -33,7 +43,10 @@ export class InitiateUserRequestBuilder {
     this.uuid = uuid;
     return this;
   }
-
+  public setApiKey(apiKey: string): InitiateUserRequestBuilder {
+    this.apiKey = apiKey;
+    return this;
+  }
   public setIsGuest(isGuest: boolean): InitiateUserRequestBuilder {
     this.isGuest = isGuest;
     return this;
@@ -47,7 +60,12 @@ export class InitiateUserRequestBuilder {
     //   throw new Error("UUID is required.");
     // }
 
-    return new InitiateUserRequest(this.userName, this.uuid, this.isGuest || false);
+    return new InitiateUserRequest(
+      this.userName,
+      this.uuid,
+      this.isGuest || false,
+      this.apiKey
+    );
   }
 }
 

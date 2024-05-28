@@ -48,6 +48,7 @@ import { IMember } from "./initiateUser/model/GetAllMembersResponse";
 import { LMFeedTopics } from "./post/model/GetTopicsResponse";
 import HelperClient from "./helper/HelperClient";
 import RegisterDeviceRequest from "./helper/model/RegisterDeviceRequest";
+import { LMSDKCallbacks } from "./LMCallback";
 import PollFeedClient from "./poll/PollClient";
 import { GetPollVotesRequest } from "./poll/model/GetPollVotesRequest";
 import { AddPollOptionRequest } from "./poll/model/AddPollOptionRequest";
@@ -63,10 +64,14 @@ class LMFeedClient {
   private feedClient: UniversalFeedClient;
   private platformCode: string | null = null;
   private versionCode: number | null = null;
+  private apiKey: string | null = null;
   private helperClient: HelperClient;
+  private LMSDKCallbacks: LMSDKCallbacks;
+
   private pollFeedClient: PollFeedClient;
   constructor() {
-    this.networkLibrary = new NetworkLibrary();
+    // this.LMSDKCallbacks = new LMSDKCallbacks();
+    this.networkLibrary = new NetworkLibrary(this.LMSDKCallbacks);
     this.initiateUserClient = new InitiateUserClient(this.networkLibrary);
     this.postClient = new PostClient(this.networkLibrary);
     this.moderationClient = new ModerationClient(this.networkLibrary);
@@ -93,18 +98,60 @@ class LMFeedClient {
     this.versionCode = versionCode;
     return this;
   }
+  setApiKey(apiKey: string) {
+    this.apiKey = apiKey;
+    return this;
+  }
+  public setLMSDKCallbacks(lmSdkCallbacks: LMSDKCallbacks) {
+    this.LMSDKCallbacks = lmSdkCallbacks;
+    this.networkLibrary.setLMSDKCallbacks(lmSdkCallbacks);
+  }
 
   public build(): LMFeedClient {
-    if (!this.platformCode || !this.versionCode) {
+    if (!this.platformCode) {
       throw new Error(
-        "Please provide apiKey, platformCode, and versionCode before building the LMFeedClient."
+        "Please provide platformCode before building the LMFeedClient."
+      );
+    }
+    if (!this.versionCode) {
+      throw new Error(
+        "Please provide versionCode before building the LMFeedClient."
       );
     }
 
     this.networkLibrary.setPlatformCode(this.platformCode);
     this.networkLibrary.setVersionCode(this.versionCode);
+    this.networkLibrary.setApiKey(this.apiKey);
 
     return this;
+  }
+
+  public setAccessTokenInLocalStorage(token: string) {
+    this.networkLibrary.setAccessTokenInLocalStorage(token);
+  }
+
+  public setRefreshTokenInLocalStorage(token: string) {
+    this.networkLibrary.setRefreshTokenInLocalStorage(token);
+  }
+  public setApiKeyInLocalStorage(apiKey: string) {
+    this.networkLibrary.setApiKeyInLocalStorage(apiKey);
+  }
+  public setUserInLocalStorage(user: string) {
+    this.networkLibrary.setUserInLocalStorage(user);
+  }
+  public getUserFromLocalStorage() {
+    return this.networkLibrary.getUserFromLocalStorage();
+  }
+  public getApiKeyFromLocalStorage() {
+    return this.networkLibrary.getApiKeyFromLocalStorage();
+  }
+
+  public getAccessTokenFromLocalStorage() {
+    return this.networkLibrary.getAccessTokenFromLocalStorage();
+  }
+
+  public getRefreshTokenFromLocalStorage() {
+    return this.networkLibrary.getRefreshTokenFromLocalStorage();
   }
 
   async validateUser(validateUserRequest: ValidateUserRequest) {
@@ -478,4 +525,5 @@ export {
   LMFeedTopics,
   ValidateUserRequest,
   RegisterDeviceRequest,
+  LMSDKCallbacks,
 };

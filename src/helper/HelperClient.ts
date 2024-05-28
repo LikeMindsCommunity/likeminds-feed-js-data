@@ -5,7 +5,7 @@ import { ModelConverter } from "../../src/utils/ModelConverter";
 
 import { DecodeUrlResponse } from "./model/DecodeUrlResponse";
 
-import { GetTaggingListResponse } from "./model/GetTaggingListResponse";
+import { GetTaggingListResponse } from "../shared/models/api-responses/getTaggingListResponse";
 import RegisterDeviceRequest from "./model/RegisterDeviceRequest";
 
 class HelperClient {
@@ -20,31 +20,30 @@ class HelperClient {
       .makeAuthenticatedRequest(`${API.HELPER_URL}`)
       .then((resData: any) => {
         const responseData: DecodeUrlResponse =
-          ModelConverter.responseBodyParser(resData.data);
+          ModelConverter.responseBodyParser(resData);
         return new LMResponse<DecodeUrlResponse>(responseData, null, true);
       })
       .catch((error) => {
         return new LMResponse<DecodeUrlResponse>(
           null,
           error.message || "An error occurred",
-          false,
+          false
         );
       });
   }
-  public async getTaggingList(): Promise<LMResponse<GetTaggingListResponse>> {
+  public async getTaggingList(): Promise<GetTaggingListResponse> {
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.COMMUNITY_TAG}`)
       .then((resData: any) => {
         const responseData: GetTaggingListResponse =
-          ModelConverter.responseBodyParser(resData.data);
-        return new LMResponse<GetTaggingListResponse>(responseData, null, true);
+          ModelConverter.responseBodyParser(resData);
+        return responseData;
       })
       .catch((error) => {
-        return new LMResponse<GetTaggingListResponse>(
-          null,
-          error.message || "An error occurred",
-          false,
-        );
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
@@ -53,7 +52,7 @@ class HelperClient {
       .makeAuthenticatedRequest(`${API.USER_DEVICE_PUSH}`)
       .then((resData: any) => {
         const responseData: any = ModelConverter.responseBodyParser(
-          resData.data,
+          resData.data
         );
         return new LMResponse<any>(responseData, null, true);
       })
@@ -61,13 +60,13 @@ class HelperClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occurred",
-          false,
+          false
         );
       });
   }
 
   async validateRegisterDeviceRequest(
-    request: RegisterDeviceRequest,
+    request: RegisterDeviceRequest
   ): Promise<LMResponse<any>> {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
@@ -78,7 +77,7 @@ class HelperClient {
       .then((resData: any) => {
         // Handle the response and return the LMResponse object
         const responseData: any = ModelConverter.responseBodyParser(
-          resData.data,
+          resData.data
         );
 
         return new LMResponse<any>(responseData, null, true);
@@ -87,7 +86,7 @@ class HelperClient {
         return new LMResponse<any>(
           null,
           error.message || "An error occurred",
-          false,
+          false
         );
       });
   }
