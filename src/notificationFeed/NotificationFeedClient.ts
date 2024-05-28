@@ -1,14 +1,16 @@
-import LMResponse from "../core/services/lmresponse";
 // import { environment } from "../environment";
 import { API } from "../shared/constants/api.constant";
 import NetworkLibrary from "../core/services/networklibrary";
 // import InitiateUserRequest from "../initiateUser/model/InitiateUserRequest";
 // import { InitiateUserResponse } from "../initiateUser/model/InitiateUserResponse";
 import GetNotificationFeedRequest from "./model/GetNotificationFeedRequest";
-import { GetNotificationFeedResponse } from "./model/GetNotificationFeedResponse";
+
 import { ModelConverter } from "../utils/ModelConverter";
 import MarkReadNotificationRequest from "./model/MarkReadNotificationRequest";
-import { GetUnreadNotificationCountResponse } from "./model/GetUnreadNotificationCountResponse";
+
+import { GetNotificationResponse } from "../shared/models/api-responses/getNotificationResponse";
+import { AnyArn } from "aws-sdk/clients/groundstation";
+import { GetNotificationCountResponse } from "../shared/models/api-responses/getNotificationCount";
 
 class NotificationFeedClient {
   public networkLibrary: NetworkLibrary;
@@ -18,32 +20,25 @@ class NotificationFeedClient {
   }
 
   getNotificationFeed(
-    request: GetNotificationFeedRequest,
-  ): Promise<LMResponse<GetNotificationFeedResponse>> {
+    request: GetNotificationFeedRequest
+  ): Promise<GetNotificationResponse> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
-        `${API.NOTIFICATION_FEED}?page=${request.page}&page_size=${request.pageSize}`,
+        `${API.NOTIFICATION_FEED}?page=${request.page}&page_size=${request.pageSize}`
       )
       .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData?.data);
-        return new LMResponse<GetNotificationFeedResponse>(
-          responseData,
-          null,
-          true,
-        );
+        const responseData = ModelConverter.responseBodyParser(resData);
+        return responseData;
       })
-      .catch((error: any) => {
-        return new LMResponse<GetNotificationFeedResponse>(
-          null,
-          error.message || "An error occoured",
-          false,
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
-  markReadNotification(
-    request: MarkReadNotificationRequest,
-  ): Promise<LMResponse<any>> {
+  markReadNotification(request: MarkReadNotificationRequest): Promise<AnyArn> {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
       .makeAuthenticatedRequest(
@@ -51,40 +46,32 @@ class NotificationFeedClient {
         {
           method: "POST",
           data: params,
-        },
+        }
       )
       .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData?.data);
-        return new LMResponse<any>(responseData, null, true);
+        const responseData = ModelConverter.responseBodyParser(resData);
+        return responseData;
       })
-      .catch((error: any) => {
-        return new LMResponse<any>(
-          null,
-          error.message || "An error occoured",
-          false,
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
-  getUnreadNotificationCount(): Promise<
-    LMResponse<GetUnreadNotificationCountResponse>
-  > {
+  getUnreadNotificationCount(): Promise<GetNotificationCountResponse> {
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.NOTIFICATION_FEED}/unread_count`)
       .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData?.data);
-        return new LMResponse<GetUnreadNotificationCountResponse>(
-          responseData,
-          null,
-          true,
-        );
+        const responseData = ModelConverter.responseBodyParser(resData);
+        return responseData;
       })
-      .catch((error: any) => {
-        return new LMResponse<GetUnreadNotificationCountResponse>(
-          null,
-          error.message || "An error occoured",
-          false,
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 }

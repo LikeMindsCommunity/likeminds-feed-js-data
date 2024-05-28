@@ -49,6 +49,10 @@ import { LMFeedTopics } from "./post/model/GetTopicsResponse";
 import HelperClient from "./helper/HelperClient";
 import RegisterDeviceRequest from "./helper/model/RegisterDeviceRequest";
 import { LMSDKCallbacks } from "./LMCallback";
+import PollFeedClient from "./poll/PollClient";
+import { GetPollVotesRequest } from "./poll/model/GetPollVotesRequest";
+import { AddPollOptionRequest } from "./poll/model/AddPollOptionRequest";
+import { SubmitPollVoteRequest } from "./poll/model/SubmitPollVoteRequest";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -64,6 +68,7 @@ class LMFeedClient {
   private helperClient: HelperClient;
   private LMSDKCallbacks: LMSDKCallbacks;
 
+  private pollFeedClient: PollFeedClient;
   constructor() {
     // this.LMSDKCallbacks = new LMSDKCallbacks();
     this.networkLibrary = new NetworkLibrary(this.LMSDKCallbacks);
@@ -77,6 +82,7 @@ class LMFeedClient {
       this.networkLibrary
     );
     this.helperClient = new HelperClient(this.networkLibrary);
+    this.pollFeedClient = new PollFeedClient(this.networkLibrary);
   }
 
   public static Builder(): LMFeedClient {
@@ -444,6 +450,30 @@ class LMFeedClient {
       return await this.helperClient.registerDevice();
     } catch (error) {
       console.log("Error while register device", error);
+      throw error;
+    }
+  }
+  async submitPollVote(request: SubmitPollVoteRequest) {
+    try {
+      return await this.pollFeedClient.submitPollVote(request);
+    } catch (error) {
+      console.log("Error while submit poll", error);
+      throw error;
+    }
+  }
+  async addPollOption(request: AddPollOptionRequest) {
+    try {
+      return await this.pollFeedClient.addPollOption(request);
+    } catch (error) {
+      console.log("Error while add poll option", error);
+      throw error;
+    }
+  }
+  async getPollVotes(request: GetPollVotesRequest) {
+    try {
+      return await this.pollFeedClient.getPollVotes(request);
+    } catch (error) {
+      console.log("Error while get poll votes", error);
       throw error;
     }
   }

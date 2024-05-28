@@ -3,20 +3,26 @@ import { API } from "../shared/constants/api.constant";
 import NetworkLibrary from "../core/services/networklibrary";
 import AddPostRequest from "./model/AddPostRequest";
 import { ModelConverter } from "../utils/ModelConverter";
-import { IAddPostResponse } from "./model/AddPostResponse";
 import DeletePostRequest from "./model/DeletePostRequest";
 import GetPostRequest from "./model/GetPostRequest";
-import { GetPostResponse } from "./model/GetPostResponse";
+// import { GetPostResponse } from "./model/GetPostResponse";
 import SavePostRequest from "./model/SavePostRequest";
 import GetPostLikesRequest from "./model/GetPostLikesRequest";
-import { GetPostLikesResponse } from "./model/GetPostLikesResponse";
+import { GetPostLikesResponse } from "../shared/models/api-responses/getPostLikesResponse";
 import LikePostRequest from "./model/LikePostRequest";
 import PinPostRequest from "./model/PinPostRequest";
 import EditPostRequest from "./model/EditPostRequest";
-import { EditPostResponse } from "./model/EditPostResponse";
+import { EditPostResponse } from "../shared/models/api-responses/addPostResponse";
 import DecodeURLRequest from "./model/DecodeUrlRequest";
 import GetTaggingListRequest from "./model/GetTaggingListRequest";
 import GetTopicsRequest from "./model/GetTopicsRequest";
+import { AddPostResponse } from "../shared/models/api-responses/addPostResponse";
+import { GetPostDetailsResponse } from "../shared/models/api-responses/getPostDetailsResponse";
+import { LikePostResponse } from "../shared/models/api-responses/likePostResponse";
+import { GetPinPostResponse } from "../shared/models/api-responses/getPinPostResponse";
+import { DeletePostResponse } from "../shared/models/api-responses/deletePostResponse";
+import { GetTaggingListResponse } from "../shared/models/api-responses/getTaggingListResponse";
+import { GetTopicsResponse } from "../shared/models/api-responses/getTopicsResponse";
 
 class PostClient {
   private networkLibrary: NetworkLibrary;
@@ -25,9 +31,7 @@ class PostClient {
     this.networkLibrary = instance;
   }
 
-  async addPost(
-    request: AddPostRequest
-  ): Promise<LMResponse<IAddPostResponse>> {
+  async addPost(request: AddPostRequest): Promise<AddPostResponse> {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.FEED_POST}`, {
@@ -36,45 +40,42 @@ class PostClient {
       })
       .then((resData: any) => {
         // Handle the response and return the LMResponse object
-        const responseData: IAddPostResponse =
-          ModelConverter.responseBodyParser(resData.data);
+        const responseData: AddPostResponse =
+          ModelConverter.responseBodyParser(resData);
 
-        return new LMResponse<IAddPostResponse>(responseData, null, true);
+        return responseData;
       })
       .catch((error) => {
-        return new LMResponse<IAddPostResponse>(
-          null,
-          error.message || "An error occurred",
-          false
-        );
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
   public async getPost(
     getPost: GetPostRequest
-  ): Promise<LMResponse<GetPostResponse>> {
+  ): Promise<GetPostDetailsResponse> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
         `${API.FEED_POST}/${getPost.postId}?page=${getPost.page}&page_size=${getPost.pageSize}`
       )
       .then((resData: any) => {
-        const responseData: GetPostResponse = ModelConverter.responseBodyParser(
-          resData.data
-        );
-        return new LMResponse<GetPostResponse>(responseData, null, true);
+        const responseData: GetPostDetailsResponse =
+          ModelConverter.responseBodyParser(resData);
+        return responseData;
       })
       .catch((error) => {
-        return new LMResponse<GetPostResponse>(
-          null,
-          error.message || "An error occurred",
-          false
-        );
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
   //   FEED_POST
   // TBD
-  public async savePost(savePost: SavePostRequest): Promise<LMResponse<any>> {
+  public async savePost(savePost: SavePostRequest): Promise<any> {
     const params = savePost;
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.FEED_POST}/${savePost.postId}/save`, {
@@ -84,75 +85,71 @@ class PostClient {
       .then(() => {
         return new LMResponse<any>(null, null, true);
       })
-      .catch((error: any) => {
-        return new LMResponse<any>(
-          null,
-          error.message || "An error occoured",
-          false
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
   public async getPostLikes(
     request: GetPostLikesRequest
-  ): Promise<LMResponse<GetPostLikesResponse>> {
+  ): Promise<GetPostLikesResponse> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
         `${API.FEED_POST}/${request.postId}/like?page=${request.page}&page_size=${request.pageSize}`
       )
       .then((resData: any) => {
         const responseData: GetPostLikesResponse =
-          ModelConverter.responseBodyParser(resData.data);
-        return new LMResponse<GetPostLikesResponse>(responseData, null, true);
+          ModelConverter.responseBodyParser(resData);
+        return responseData;
       })
-      .catch((error: any) => {
-        return new LMResponse<GetPostLikesResponse>(
-          null,
-          error.message || "An error occoured",
-          false
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
-  public async likePost(likePost: LikePostRequest): Promise<LMResponse<any>> {
+  public async likePost(likePost: LikePostRequest): Promise<LikePostResponse> {
     const params = ModelConverter.requestBodyGenerator(likePost);
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.FEED_POST}/${likePost.postId}/like`, {
         method: "PUT",
         data: params,
       })
-      .then(() => {
-        return new LMResponse<any>({}, null, true);
+      .then((res: any) => {
+        return ModelConverter.responseBodyParser(res);
       })
-      .catch((error: any) => {
-        return new LMResponse<any>(
-          null,
-          error.message || "An error occoured",
-          false
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
-  public async pinPost(pinPost: PinPostRequest): Promise<LMResponse<any>> {
+  public async pinPost(pinPost: PinPostRequest): Promise<GetPinPostResponse> {
     const params = ModelConverter.requestBodyGenerator(pinPost);
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.FEED_POST}/${pinPost.postId}/pin`, {
         method: "PUT",
         data: params,
       })
-      .then(() => {
-        return new LMResponse<any>({}, null, true);
+      .then((res: any) => {
+        return ModelConverter.responseBodyParser(res);
       })
-      .catch((error: any) => {
-        return new LMResponse<any>(
-          null,
-          error.message || "An error occoured",
-          false
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
-  editPost(editPost: EditPostRequest): Promise<LMResponse<EditPostResponse>> {
+  editPost(editPost: EditPostRequest): Promise<EditPostResponse> {
     const params = ModelConverter.requestBodyGenerator(editPost);
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.FEED_POST}/${editPost.postId}`, {
@@ -161,34 +158,32 @@ class PostClient {
       })
       .then((resData: any) => {
         const responseData: EditPostResponse =
-          ModelConverter.responseBodyParser(resData.data);
-        return new LMResponse<EditPostResponse>(responseData, null, true);
+          ModelConverter.responseBodyParser(resData);
+        return responseData;
       })
-      .catch((error: any) => {
-        return new LMResponse<EditPostResponse>(
-          null,
-          error.message || "An error occoured",
-          false
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
-  deletePost(deletePost: DeletePostRequest): Promise<LMResponse<any>> {
+  deletePost(deletePost: DeletePostRequest): Promise<DeletePostResponse> {
     const params = ModelConverter.requestBodyGenerator(deletePost);
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.FEED_POST}/${deletePost.postId}`, {
         method: "DELETE",
         data: params,
       })
-      .then(() => {
-        return new LMResponse<any>({}, null, true);
+      .then((res: any) => {
+        return ModelConverter.responseBodyParser(res);
       })
-      .catch((error: any) => {
-        return new LMResponse<any>(
-          null,
-          error.message || "An error occoured",
-          false
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
@@ -197,21 +192,22 @@ class PostClient {
       `${API.HELPER_URL}?url=${decodeUrl.url}`
     );
   }
-  getTaggingList(taggingList: GetTaggingListRequest): Promise<any> {
+  getTaggingList(
+    taggingList: GetTaggingListRequest
+  ): Promise<GetTaggingListResponse> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
         `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
       )
       .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData.data);
-        return new LMResponse<any>(responseData, null, true);
+        const responseData = ModelConverter.responseBodyParser(resData);
+        return responseData;
       })
-      .catch((error: any) => {
-        return new LMResponse<any>(
-          null,
-          error.message || "An error occoured",
-          false
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
   getPostComments(taggingList: GetTaggingListRequest): Promise<any> {
@@ -220,19 +216,18 @@ class PostClient {
         `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
       )
       .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData.data);
+        const responseData = ModelConverter.responseBodyParser(resData);
         return new LMResponse<any>(responseData, null, true);
       })
-      .catch((error: any) => {
-        return new LMResponse<any>(
-          null,
-          error.message || "An error occoured",
-          false
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
-  getTopics(request: GetTopicsRequest): Promise<any> {
+  getTopics(request: GetTopicsRequest): Promise<GetTopicsResponse> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
         request.isEnabled === null
@@ -240,15 +235,14 @@ class PostClient {
           : `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}&is_enabled=${request.isEnabled}`
       )
       .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData.data);
-        return new LMResponse<any>(responseData, null, true);
+        const responseData = ModelConverter.responseBodyParser(resData);
+        return responseData;
       })
-      .catch((error: any) => {
-        return new LMResponse<any>(
-          null,
-          error.message || "An error occoured",
-          false
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 }
