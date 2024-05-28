@@ -1,6 +1,8 @@
+import { IWidget } from "src/shared/models/widget";
 import { IUser } from "../../shared/models/user";
 import Attachment from "./Attachment";
 import { IMenuItem } from "./MenuItem";
+import { ITopic } from "src/shared/models/topic";
 
 interface IPost {
   id: string;
@@ -26,4 +28,6 @@ interface IPost {
 export interface IAddPostResponse {
   post: IPost;
   users: { [key: string]: IUser }; // Map<string, User> equivalent in TypeScript
+  topics: ITopic;
+  widget: IWidget;
 }
