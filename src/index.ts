@@ -98,6 +98,7 @@ class LMFeedClient {
   }
   public setLMSDKCallbacks(lmSdkCallbacks: LMSDKCallbacks) {
     this.LMSDKCallbacks = lmSdkCallbacks;
+    this.networkLibrary.setLMSDKCallbacks(lmSdkCallbacks);
   }
 
   public build(): LMFeedClient {

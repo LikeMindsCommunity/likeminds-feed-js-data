@@ -78,6 +78,10 @@ class NetworkLibrary {
   public getApiKey() {
     return this.xApiKey;
   }
+  public setLMSDKCallbacks(callback: LMSDKCallbacks) {
+    this.lmSdkCallbacks = callback;
+    this.tokenManager.setLMSdkCallbacks(callback);
+  }
 
   private async makeRequest<T>(
     url: string,
@@ -129,7 +133,7 @@ class NetworkLibrary {
       if (this.tokenManager.getPlatformCode() === "rt") {
         const xApiKey = localStorage.getItem("xApiKey");
         if (xApiKey && xApiKey.length) {
-          requestConfig.headers["x-api-key"] = this.xApiKey;
+          requestConfig.headers["x-api-key"] = xApiKey;
         } else {
           throw "Please provide the Api Key";
         }

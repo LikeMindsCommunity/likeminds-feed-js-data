@@ -19,6 +19,9 @@ class TokenManager {
     this.refreshToken = null;
   }
 
+  public setLMSdkCallbacks(callback: LMSDKCallbacks) {
+    this.lmSdkCallback = callback;
+  }
   // Access Token
   public setAccessToken(accessToken: string) {
     this.accessToken = accessToken;
@@ -87,6 +90,18 @@ class TokenManager {
       return accessToken.access_token;
     } catch (error) {
       console.error("Failed to refresh access token:", error);
+      const { accessToken, refreshToken } =
+        await this.lmSdkCallback.onRefreshTokenExpired();
+      // TODO expose functions for storing tokens from DL
+      // done
+      this.setAccessToken(accessToken);
+      this.setRefreshToken(refreshToken);
+      // TODO add tokens in local storage too
+      // done
+      // this.setAccessTokenInLocalStorage(accessToken);
+      localStorage.setItem(TokenValues.LOCAL_ACCESS_TOKEN, accessToken);
+      localStorage.setItem(TokenValues.LOCAL_REFRESH_TOKEN, refreshToken);
+      // this.setRefreshTokenInLocalStorage(refreshToken);
       if (error?.response && error?.response?.status >= 500) throw error;
     }
   }

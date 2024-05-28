@@ -65,6 +65,7 @@ class InitiateUserClient {
         return new LMResponse<InitiateUserResponse>(responseData, null, true);
       })
       .catch((error) => {
+        console.log(error);
         return new LMResponse<InitiateUserResponse>(
           null,
           error.message || "An error occurred",
