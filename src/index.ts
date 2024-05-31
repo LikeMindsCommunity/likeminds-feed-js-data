@@ -382,6 +382,16 @@ class LMFeedClient {
       throw error;
     }
   }
+
+  async getCommunityConfigurations() {
+    try {
+      return await this.initiateUserClient.getCommunityConfigurations();
+    } catch (error) {
+      console.log("Error while getting configuration", error);
+      throw error;
+    }
+  }
+
   async getAllMembers(request: GetAllMembersRequest) {
     try {
       return await this.initiateUserClient.getAllMembers(request);
@@ -390,6 +400,7 @@ class LMFeedClient {
       throw error;
     }
   }
+
   async validateRegisterDeviceRequest(request: RegisterDeviceRequest) {
     try {
       return await this.helperClient.validateRegisterDeviceRequest(request);
