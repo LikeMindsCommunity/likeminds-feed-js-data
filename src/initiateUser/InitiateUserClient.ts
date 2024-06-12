@@ -12,6 +12,10 @@ import GetAllMembersRequest from "./model/GetAllMembersRequest";
 import ValidateUserRequest from "./model/ValidateUserRequest";
 import { ValidateUserResponse } from "../shared/models/api-responses/initiateUserResponse";
 import { GetAllMembersResponse } from "../shared/models/api-responses/getAllMembersResponse";
+// import { ValidateUserResponse } from "./model/ValidateUserResponse";
+import { GetCommunityConfigurationsResponse } from "./model/GetCommunityConfigurationsResponse";
+
+import LMResponse from "../core/services/lmresponse";
 
 class InitiateUserClient {
   private networkLibrary: NetworkLibrary;
@@ -74,6 +78,31 @@ class InitiateUserClient {
           success: false,
           errorMessage: error,
         };
+      });
+  }
+
+  public async getCommunityConfigurations(): Promise<
+    LMResponse<GetCommunityConfigurationsResponse>
+  > {
+    return this.networkLibrary
+      .makeAuthenticatedRequest(`${API.COMMUNITY_CONFIGURATIONS}`)
+      .then((resData: any) => {
+        // Handle the response and return the LMResponse object
+        const responseData: GetCommunityConfigurationsResponse =
+          ModelConverter.responseBodyParser(resData.data);
+
+        return new LMResponse<GetCommunityConfigurationsResponse>(
+          responseData,
+          null,
+          true
+        );
+      })
+      .catch((error) => {
+        return new LMResponse<GetCommunityConfigurationsResponse>(
+          null,
+          error.message || "An error occurred",
+          false
+        );
       });
   }
 
