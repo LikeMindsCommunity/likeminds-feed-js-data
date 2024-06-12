@@ -112,7 +112,7 @@ class InitiateUserClient {
       .then((resData: any) => {
         // Handle the response and return the LMResponse object
         const responseData: GetMemberStateResponse =
-          ModelConverter.responseBodyParser(resData.data);
+          ModelConverter.responseBodyParser(resData);
 
         return responseData;
       })

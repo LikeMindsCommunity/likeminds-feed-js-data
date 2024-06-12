@@ -85,12 +85,12 @@ import { ReportObject } from "./types/models/reportTags";
 import { User } from "aws-sdk/clients/appstream";
 import { Activity } from "aws-sdk/clients/autoscaling";
 import { Topic } from "aws-sdk/clients/iot";
-import { Member } from "./pages/user";
 import { Community } from "./types/models/community";
 import { OgTag } from "./types/models/ogTag";
 import { Post } from "./types/models/post";
 import { Reply } from "./types/models/replies";
 import { TaggingMember } from "./types/models/taggingMember";
+import { Member } from "./shared/models/models/member";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
