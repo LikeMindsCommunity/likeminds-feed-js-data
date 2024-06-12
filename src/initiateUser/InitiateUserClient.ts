@@ -2,16 +2,16 @@
 import { API } from "../shared/constants/api.constant";
 
 import InitiateUserRequest from "./model/InitiateUserRequest";
-import { InitiateUserResponse } from "../shared/models/api-responses/initiateUserResponse";
+import { InitiateUserResponse } from "../types/api-responses/initiateUserResponse";
 import NetworkLibrary from "../core/services/networklibrary";
 import { ModelConverter } from "../utils/ModelConverter";
 
 // import { GetMemberStateResponse } from "./model/GetMemberStateResponse";
-import { GetMemberStateResponse } from "../shared/models/api-responses/getMemberStateResponse";
+import { GetMemberStateResponse } from "../types/api-responses/getMemberStateResponse";
 import GetAllMembersRequest from "./model/GetAllMembersRequest";
 import ValidateUserRequest from "./model/ValidateUserRequest";
-import { ValidateUserResponse } from "../shared/models/api-responses/initiateUserResponse";
-import { GetAllMembersResponse } from "../shared/models/api-responses/getAllMembersResponse";
+import { ValidateUserResponse } from "../types/api-responses/initiateUserResponse";
+import { GetAllMembersResponse } from "../types/api-responses/getAllMembersResponse";
 // import { ValidateUserResponse } from "./model/ValidateUserResponse";
 import { GetCommunityConfigurationsResponse } from "./model/GetCommunityConfigurationsResponse";
 

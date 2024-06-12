@@ -4,7 +4,7 @@ import { Topic } from "../models/topic";
 
 export interface GetPostDetailsResponse {
   success: boolean;
-  data: {
+  data?: {
     post: Post;
     // repostedPosts: Record<string, any>; // Replace 'Record<string, any>' with actual type if known
     topics: Record<string, Topic>; // Replace 'Record<string, any>' with actual type if known

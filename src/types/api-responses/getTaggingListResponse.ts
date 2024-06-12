@@ -2,7 +2,8 @@ import { TaggingMember } from "../models/taggingMember";
 
 export interface GetTaggingListResponse {
   success: boolean;
-  data: {
+  data?: {
     members: TaggingMember[];
   };
+  error?: any;
 }

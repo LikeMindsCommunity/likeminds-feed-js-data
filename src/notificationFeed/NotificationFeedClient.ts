@@ -8,9 +8,9 @@ import GetNotificationFeedRequest from "./model/GetNotificationFeedRequest";
 import { ModelConverter } from "../utils/ModelConverter";
 import MarkReadNotificationRequest from "./model/MarkReadNotificationRequest";
 
-import { GetNotificationResponse } from "../shared/models/api-responses/getNotificationResponse";
+import { GetNotificationResponse } from "../types/api-responses/getNotificationResponse";
 import { AnyArn } from "aws-sdk/clients/groundstation";
-import { GetNotificationCountResponse } from "../shared/models/api-responses/getNotificationCount";
+import { GetNotificationCountResponse } from "../types/api-responses/getNotificationCount";
 
 class NotificationFeedClient {
   public networkLibrary: NetworkLibrary;

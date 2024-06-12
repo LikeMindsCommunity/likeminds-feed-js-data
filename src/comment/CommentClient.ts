@@ -7,7 +7,7 @@ import { ModelConverter } from "../../src/utils/ModelConverter";
 
 import ReplyCommentRequest from "./model/ReplyCommentRequest";
 
-import { EditCommentResponse } from "../shared/models/api-responses/postCommentResponse";
+import { EditCommentResponse } from "../types/api-responses/postCommentResponse";
 import DeleteCommentRequest from "./model/DeleteCommentRequest";
 import LikeCommentRequest from "./model/LikeCommentRequest";
 
@@ -15,10 +15,10 @@ import EditCommentRequest from "./model/EditCommentRequest";
 import {
   PostCommentResponse,
   PostReplyResponse,
-} from "../shared/models/api-responses/postCommentResponse";
-import { GetCommentDetailsResponse } from "../shared/models/api-responses/getCommentDetailsResponse";
-import { GetPostLikesResponse } from "../shared/models/api-responses/getPostLikesResponse";
-import { LikeCommentResponse } from "../shared/models/api-responses/likeCommentResponse";
+} from "../types/api-responses/postCommentResponse";
+import { GetCommentDetailsResponse } from "../types/api-responses/getCommentDetailsResponse";
+import { GetPostLikesResponse } from "../types/api-responses/getPostLikesResponse";
+import { LikeCommentResponse } from "../types/api-responses/likeCommentResponse";
 
 class CommentClient {
   public networkLibrary: NetworkLibrary;

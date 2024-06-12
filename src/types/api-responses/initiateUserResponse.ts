@@ -12,4 +12,11 @@ export interface ValidateUserData {
 export interface ValidateUserResponse {
   success: boolean;
   data?: ValidateUserData;
+  error?: any;
+}
+
+export interface InitiateUserResponse {
+  success: boolean;
+  data?: ValidateUserData;
+  error?: any;
 }

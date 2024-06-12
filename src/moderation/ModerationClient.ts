@@ -2,7 +2,7 @@ import { API } from "../shared/constants/api.constant";
 import NetworkLibrary from "../core/services/networklibrary";
 import GetReportTagsRequest from "./model/GetReportTagsRequest";
 // import { GetReportTagsResponse } from "./model/GetReportTagsResponse";
-import { GetReportTagsResponse } from "../shared/models/api-responses/getReportTagsResponse";
+import { GetReportTagsResponse } from "../types/api-responses/getReportTagsResponse";
 import { ModelConverter } from "../utils/ModelConverter";
 import PostReportRequest from "./model/PostReportRequest";
 

@@ -2,7 +2,7 @@ import { Member } from "../models/member";
 
 export interface GetAllMembersResponse {
   success: boolean;
-  data: {
+  data?: {
     // admins_count: number;
     members: Member[];
     membersCount: number;
@@ -12,4 +12,5 @@ export interface GetAllMembersResponse {
     totalMembers: number;
     // total_only_members: number;
   };
+  error?: any;
 }

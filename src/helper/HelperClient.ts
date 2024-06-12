@@ -5,7 +5,7 @@ import { ModelConverter } from "../../src/utils/ModelConverter";
 
 import { DecodeUrlResponse } from "./model/DecodeUrlResponse";
 
-import { GetTaggingListResponse } from "../shared/models/api-responses/getTaggingListResponse";
+import { GetTaggingListResponse } from "../types/api-responses/getTaggingListResponse";
 import RegisterDeviceRequest from "./model/RegisterDeviceRequest";
 
 class HelperClient {
