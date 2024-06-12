@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import LMResponse from "../core/services/lmresponse";
 import { API } from "../shared/constants/api.constant";
 
 import InitiateUserRequest from "./model/InitiateUserRequest";
-import { InitiateUserResponse } from "./model/InitiateUserResponse";
+import { InitiateUserResponse } from "../shared/models/api-responses/initiateUserResponse";
 import NetworkLibrary from "../core/services/networklibrary";
 import { ModelConverter } from "../utils/ModelConverter";
 
-import { GetMemberStateResponse } from "./model/GetMemberStateResponse";
+// import { GetMemberStateResponse } from "./model/GetMemberStateResponse";
+import { GetMemberStateResponse } from "../shared/models/api-responses/getMemberStateResponse";
 import GetAllMembersRequest from "./model/GetAllMembersRequest";
 import ValidateUserRequest from "./model/ValidateUserRequest";
-import { ValidateUserResponse } from "./model/ValidateUserResponse";
+import { ValidateUserResponse } from "../shared/models/api-responses/initiateUserResponse";
+import { GetAllMembersResponse } from "../shared/models/api-responses/getAllMembersResponse";
 
 class InitiateUserClient {
   private networkLibrary: NetworkLibrary;
@@ -21,7 +22,7 @@ class InitiateUserClient {
 
   public async validateUser(
     request: ValidateUserRequest
-  ): Promise<LMResponse<ValidateUserResponse>> {
+  ): Promise<ValidateUserResponse> {
     this.networkLibrary.setAccessToken(request.accessToken);
     this.networkLibrary.setRefreshToken(request.refreshToken);
 
@@ -32,22 +33,21 @@ class InitiateUserClient {
       .then((resData: any) => {
         // Handle the response and return the LMResponse object
         const responseData: ValidateUserResponse =
-          ModelConverter.responseBodyParser(resData.data);
+          ModelConverter.responseBodyParser(resData);
 
-        return new LMResponse<ValidateUserResponse>(responseData, null, true);
+        return responseData;
       })
       .catch((error) => {
-        return new LMResponse<ValidateUserResponse>(
-          null,
-          error.message || "An error occurred",
-          false
-        );
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
   public async initiateUser(
     request: InitiateUserRequest
-  ): Promise<LMResponse<InitiateUserResponse>> {
+  ): Promise<InitiateUserResponse> {
     const params = ModelConverter.requestBodyGenerator(request);
 
     this.networkLibrary.setApiKey(request.apikey);
@@ -65,21 +65,19 @@ class InitiateUserClient {
 
         // Handle the response and return the LMResponse object
         const responseData: InitiateUserResponse =
-          ModelConverter.responseBodyParser(resData.data);
+          ModelConverter.responseBodyParser(resData);
 
-        return new LMResponse<InitiateUserResponse>(responseData, null, true);
+        return responseData;
       })
       .catch((error) => {
-        console.log(error);
-        return new LMResponse<InitiateUserResponse>(
-          null,
-          error.message || "An error occurred",
-          false
-        );
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
-  public async getMemberState(): Promise<LMResponse<GetMemberStateResponse>> {
+  public async getMemberState(): Promise<GetMemberStateResponse> {
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.COMMUNITY_MEMBER_STATE}`)
       .then((resData: any) => {
@@ -87,36 +85,32 @@ class InitiateUserClient {
         const responseData: GetMemberStateResponse =
           ModelConverter.responseBodyParser(resData.data);
 
-        return new LMResponse<GetMemberStateResponse>(responseData, null, true);
+        return responseData;
       })
       .catch((error) => {
-        return new LMResponse<GetMemberStateResponse>(
-          null,
-          error.message || "An error occurred",
-          false
-        );
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 
   public async getAllMembers(
     request: GetAllMembersRequest
-  ): Promise<LMResponse<any>> {
+  ): Promise<GetAllMembersResponse> {
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.DM_ALL_MEMBERS}?page=${request.page}`)
       .then((resData: any) => {
         // Handle the response and return the LMResponse object
-        const responseData: any = ModelConverter.responseBodyParser(
-          resData.data
-        );
+        const responseData: any = ModelConverter.responseBodyParser(resData);
 
-        return new LMResponse<any>(responseData, null, true);
+        return responseData;
       })
       .catch((error) => {
-        return new LMResponse<any>(
-          null,
-          error.message || "An error occurred",
-          false
-        );
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 }

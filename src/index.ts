@@ -192,6 +192,14 @@ class LMFeedClient {
     return this.networkLibrary.getRefreshTokenFromLocalStorage();
   }
 
+  public getAccessToken() {
+    return this.networkLibrary.getAccessToken();
+  }
+
+  public getRefreshToken() {
+    return this.networkLibrary.getRefreshToken();
+  }
+
   async validateUser(validateUserRequest: ValidateUserRequest) {
     try {
       const initiateUserResponse =
