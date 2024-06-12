@@ -1,4 +1,3 @@
-import LMResponse from "../core/services/lmresponse";
 // import { environment } from "../environment";
 import { API } from "../shared/constants/api.constant";
 import NetworkLibrary from "../core/services/networklibrary";
@@ -6,7 +5,8 @@ import NetworkLibrary from "../core/services/networklibrary";
 // import { InitiateUserResponse } from "../initiateUser/model/InitiateUserResponse";
 import GetFeedRequest from "./model/GetFeedRequest";
 import { ModelConverter } from "../utils/ModelConverter";
-import { GetFeedResponse } from "./model/GetFeedResponse";
+
+import { GetUniversalFeedResponse } from "../types/api-responses/getUniversalFeed";
 
 class UniversalFeedClient {
   private networkLibrary;
@@ -16,7 +16,7 @@ class UniversalFeedClient {
   }
 
   // get normal feed
-  getFeed(feed: GetFeedRequest): Promise<LMResponse<GetFeedResponse>> {
+  getFeed(feed: GetFeedRequest): Promise<GetUniversalFeedResponse> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
         feed.topicIds
@@ -26,15 +26,14 @@ class UniversalFeedClient {
           : `${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}`
       )
       .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData.data);
-        return new LMResponse<GetFeedResponse>(responseData, null, true);
+        const responseData = ModelConverter.responseBodyParser(resData);
+        return responseData;
       })
-      .catch((error: any) => {
-        return new LMResponse<GetFeedResponse>(
-          null,
-          error.message || "An error occoured",
-          false
-        );
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
       });
   }
 }

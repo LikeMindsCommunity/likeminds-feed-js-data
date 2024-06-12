@@ -4,15 +4,19 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import LMResponse from "./lmresponse";
 import TokenManager from "./tokenmanager";
 import { environment } from "src/environment";
+import { LMSDKCallbacks } from "../../LMCallback";
+import { TokenValues } from "../../shared/tokens";
 
 class NetworkLibrary {
   private tokenManager: TokenManager;
 
   private xApiKey: string | null;
-  private randomNumber: number;
-  constructor() {
-    this.tokenManager = new TokenManager();
-    this.randomNumber = Math.random();
+
+  private lmSdkCallbacks: LMSDKCallbacks | null;
+
+  constructor(lmSdkCallbacks: LMSDKCallbacks) {
+    this.lmSdkCallbacks = lmSdkCallbacks;
+    this.tokenManager = new TokenManager(lmSdkCallbacks);
   }
 
   public setAccessToken(accessToken: string) {
@@ -22,10 +26,48 @@ class NetworkLibrary {
     this.tokenManager.setRefreshToken(refreshToken);
   }
 
+  public getAccessToken() {
+    return this.tokenManager.getAccessToken();
+  }
+
+  public getRefreshToken() {
+    return this.tokenManager.getRefreshToken();
+  }
+  public setUserInLocalStorage(user: string) {
+    localStorage.setItem(TokenValues.LOCAL_USER, user);
+  }
+  public setApiKeyInLocalStorage(apiKey: string) {
+    localStorage.setItem(TokenValues.LOCAL_API_KEY, apiKey);
+  }
+
+  public setAccessTokenInLocalStorage(token: string) {
+    localStorage.setItem(TokenValues.LOCAL_ACCESS_TOKEN, token);
+  }
+
+  public setRefreshTokenInLocalStorage(token: string) {
+    localStorage.setItem(TokenValues.LOCAL_REFRESH_TOKEN, token);
+  }
+
+  public getAccessTokenFromLocalStorage() {
+    return localStorage.getItem(TokenValues.LOCAL_ACCESS_TOKEN);
+  }
+
+  public getRefreshTokenFromLocalStorage() {
+    return localStorage.getItem(TokenValues.LOCAL_REFRESH_TOKEN);
+  }
+
+  public getApiKeyFromLocalStorage() {
+    return localStorage.getItem(TokenValues.LOCAL_API_KEY);
+  }
+  public getUserFromLocalStorage() {
+    return localStorage.getItem(TokenValues.LOCAL_USER);
+  }
+
   public setPlatformCode(platFormCode: string) {
     this.tokenManager.setPlatformCode(platFormCode);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public setVersionCode(versionCode: any) {
     this.tokenManager.setVersionCode(versionCode);
   }
@@ -37,10 +79,14 @@ class NetworkLibrary {
   public getApiKey() {
     return this.xApiKey;
   }
+  public setLMSDKCallbacks(callback: LMSDKCallbacks) {
+    this.lmSdkCallbacks = callback;
+    this.tokenManager.setLMSdkCallbacks(callback);
+  }
 
   private async makeRequest<T>(
     url: string,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): Promise<AxiosResponse<T>> {
     const baseUrl: string = environment.apiUrl;
     const requestUrl = baseUrl + url;
@@ -49,7 +95,7 @@ class NetworkLibrary {
 
   public async makeAuthenticatedRequest<T>(
     url: string,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): Promise<LMResponse<T>> {
     const requestConfig: AxiosRequestConfig = {
       ...config,
@@ -59,7 +105,7 @@ class NetworkLibrary {
       },
     };
     const initApi = url.includes("initiate");
-    requestConfig.headers["Content-Type"] = "application/json"; 
+    requestConfig.headers["Content-Type"] = "application/json";
     requestConfig.headers["x-version-code"] =
       this.tokenManager.getVersionCode();
 
@@ -78,28 +124,53 @@ class NetworkLibrary {
 
     // Add the access token to the request headers
     // if (this.tokenManager.getAccessToken && !initApi) {
-    if (this.tokenManager.getAccessToken) {
-      requestConfig.headers[
-        "Authorization"
-      ] = `Bearer ${this.tokenManager.getAccessToken()}`;
+    if (
+      this.tokenManager.getAccessToken() &&
+      this.tokenManager.getAccessToken().length
+    ) {
+      requestConfig.headers["Authorization"] =
+        `Bearer ${this.tokenManager.getAccessToken()}`;
     }
 
     // Add the apiKey in initiate api to the request headers
-    // if (initApi) requestConfig.headers["x-api-key"] = this.xApiKey;
+    if (initApi && config.method === "POST") {
+      if (this.tokenManager.getPlatformCode() === "rt") {
+        if (this.xApiKey && this.xApiKey.length) {
+          requestConfig.headers["x-api-key"] = this.xApiKey;
+        } else {
+          throw "Please provide the Api Key";
+        }
+      } else {
+        requestConfig.headers["x-api-key"] = this.xApiKey;
+      }
+    }
 
     try {
       const response = await this.makeRequest<{ data: T }>(url, requestConfig);
+
       return new LMResponse<T>(response?.data?.data, null, true);
     } catch (error) {
       if (error?.response && error?.response?.status === 401) {
         // Access token expired, refresh the token and retry the request
-        await this.tokenManager.refreshAccessToken();
+        if (url.includes("user/refresh")) {
+          const { accessToken, refreshToken } =
+            await this.lmSdkCallbacks.onRefreshTokenExpired();
+          // TODO expose functions for storing tokens from DL
+          // done
+          this.tokenManager.setAccessToken(accessToken);
+          this.tokenManager.setRefreshToken(refreshToken);
+          // TODO add tokens in local storage too
+          // done
+          this.setAccessTokenInLocalStorage(accessToken);
+          this.setRefreshTokenInLocalStorage(refreshToken);
+        } else {
+          await this.tokenManager.refreshAccessToken();
+        }
 
         // Update the Authorization header with the new access token
         const updatedConfig = { ...requestConfig };
-        updatedConfig.headers[
-          "Authorization"
-        ] = `Bearer ${this.tokenManager.getAccessToken()}`;
+        updatedConfig.headers["Authorization"] =
+          `Bearer ${this.tokenManager.getAccessToken()}`;
 
         // Retry the request
         return this.makeRequest<{ data: T }>(url, updatedConfig)

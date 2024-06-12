@@ -48,10 +48,49 @@ import { IMember } from "./initiateUser/model/GetAllMembersResponse";
 import { LMFeedTopics } from "./post/model/GetTopicsResponse";
 import HelperClient from "./helper/HelperClient";
 import RegisterDeviceRequest from "./helper/model/RegisterDeviceRequest";
+import { LMSDKCallbacks } from "./LMCallback";
 import PollFeedClient from "./poll/PollClient";
 import { GetPollVotesRequest } from "./poll/model/GetPollVotesRequest";
 import { AddPollOptionRequest } from "./poll/model/AddPollOptionRequest";
 import { SubmitPollVoteRequest } from "./poll/model/SubmitPollVoteRequest";
+import {
+  AddPostResponse,
+  EditPostResponse,
+} from "./types/api-responses/addPostResponse";
+import {
+  DeletePostResponse,
+  DeleteCommentResponse,
+} from "./types/api-responses/deletePostResponse";
+import {
+  PostCommentResponse,
+  PostReplyResponse,
+} from "./types/api-responses/postCommentResponse";
+import { GetTaggingListResponse } from "./helper/model/GetTaggingListResponse";
+import { GetMemberStateResponse } from "./initiateUser/model/GetMemberStateResponse";
+import { ValidateUserResponse } from "./initiateUser/model/ValidateUserResponse";
+import { GetReportTagsResponse } from "./moderation/model/GetReportTagsResponse";
+import { GetPostLikesResponse } from "./post/model/GetPostLikesResponse";
+import { GetAllMembersResponse } from "./types/api-responses/getAllMembersResponse";
+import { GetCommentDetailsResponse } from "./types/api-responses/getCommentDetailsResponse";
+import { GetNotificationCountResponse } from "./types/api-responses/getNotificationCount";
+import { GetNotificationResponse } from "./types/api-responses/getNotificationResponse";
+import { GetOgTagResponse } from "./types/api-responses/getOgTagResponse";
+import { GetPinPostResponse } from "./types/api-responses/getPinPostResponse";
+import { GetPostDetailsResponse } from "./types/api-responses/getPostDetailsResponse";
+import { GetTopicsResponse } from "./types/api-responses/getTopicsResponse";
+import { GetUniversalFeedResponse } from "./types/api-responses/getUniversalFeed";
+import { LikeCommentResponse } from "./types/api-responses/likeCommentResponse";
+import { LikePostResponse } from "./types/api-responses/likePostResponse";
+import { ReportObject } from "./types/models/reportTags";
+import { User } from "aws-sdk/clients/appstream";
+import { Activity } from "aws-sdk/clients/autoscaling";
+import { Topic } from "aws-sdk/clients/iot";
+import { Community } from "./types/models/community";
+import { OgTag } from "./types/models/ogTag";
+import { Post } from "./types/models/post";
+import { Reply } from "./types/models/replies";
+import { TaggingMember } from "./types/models/taggingMember";
+import { Member } from "./types/models/member";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -63,10 +102,14 @@ class LMFeedClient {
   private feedClient: UniversalFeedClient;
   private platformCode: string | null = null;
   private versionCode: number | null = null;
+  private apiKey: string | null = null;
   private helperClient: HelperClient;
+  private LMSDKCallbacks: LMSDKCallbacks;
+
   private pollFeedClient: PollFeedClient;
   constructor() {
-    this.networkLibrary = new NetworkLibrary();
+    // this.LMSDKCallbacks = new LMSDKCallbacks();
+    this.networkLibrary = new NetworkLibrary(this.LMSDKCallbacks);
     this.initiateUserClient = new InitiateUserClient(this.networkLibrary);
     this.postClient = new PostClient(this.networkLibrary);
     this.moderationClient = new ModerationClient(this.networkLibrary);
@@ -93,18 +136,68 @@ class LMFeedClient {
     this.versionCode = versionCode;
     return this;
   }
+  setApiKey(apiKey: string) {
+    this.apiKey = apiKey;
+    return this;
+  }
+  public setLMSDKCallbacks(lmSdkCallbacks: LMSDKCallbacks) {
+    this.LMSDKCallbacks = lmSdkCallbacks;
+    this.networkLibrary.setLMSDKCallbacks(lmSdkCallbacks);
+  }
 
   public build(): LMFeedClient {
-    if (!this.platformCode || !this.versionCode) {
+    if (!this.platformCode) {
       throw new Error(
-        "Please provide apiKey, platformCode, and versionCode before building the LMFeedClient."
+        "Please provide platformCode before building the LMFeedClient."
+      );
+    }
+    if (!this.versionCode) {
+      throw new Error(
+        "Please provide versionCode before building the LMFeedClient."
       );
     }
 
     this.networkLibrary.setPlatformCode(this.platformCode);
     this.networkLibrary.setVersionCode(this.versionCode);
+    this.networkLibrary.setApiKey(this.apiKey);
 
     return this;
+  }
+
+  public setAccessTokenInLocalStorage(token: string) {
+    this.networkLibrary.setAccessTokenInLocalStorage(token);
+  }
+
+  public setRefreshTokenInLocalStorage(token: string) {
+    this.networkLibrary.setRefreshTokenInLocalStorage(token);
+  }
+  public setApiKeyInLocalStorage(apiKey: string) {
+    this.networkLibrary.setApiKeyInLocalStorage(apiKey);
+  }
+  public setUserInLocalStorage(user: string) {
+    this.networkLibrary.setUserInLocalStorage(user);
+  }
+  public getUserFromLocalStorage() {
+    return this.networkLibrary.getUserFromLocalStorage();
+  }
+  public getApiKeyFromLocalStorage() {
+    return this.networkLibrary.getApiKeyFromLocalStorage();
+  }
+
+  public getAccessTokenFromLocalStorage() {
+    return this.networkLibrary.getAccessTokenFromLocalStorage();
+  }
+
+  public getRefreshTokenFromLocalStorage() {
+    return this.networkLibrary.getRefreshTokenFromLocalStorage();
+  }
+
+  public getAccessToken() {
+    return this.networkLibrary.getAccessToken();
+  }
+
+  public getRefreshToken() {
+    return this.networkLibrary.getRefreshToken();
   }
 
   async validateUser(validateUserRequest: ValidateUserRequest) {
@@ -473,7 +566,6 @@ export {
   GetCommentResponse,
   ReplyCommentRequest,
   DeleteCommentRequest,
-  EditCommentResponse,
   LikeCommentRequest,
   GetCommentLikesRequest,
   IMemberState,
@@ -489,4 +581,38 @@ export {
   LMFeedTopics,
   ValidateUserRequest,
   RegisterDeviceRequest,
+  LMSDKCallbacks,
+  AddPostResponse,
+  EditPostResponse,
+  DeletePostResponse,
+  DeleteCommentResponse,
+  GetAllMembersResponse,
+  GetCommentDetailsResponse,
+  GetMemberStateResponse,
+  GetNotificationCountResponse,
+  GetNotificationResponse,
+  GetOgTagResponse,
+  GetPinPostResponse,
+  GetPostDetailsResponse,
+  GetPostLikesResponse,
+  GetReportTagsResponse,
+  GetTaggingListResponse,
+  GetTopicsResponse,
+  GetUniversalFeedResponse,
+  ValidateUserResponse,
+  LikeCommentResponse,
+  LikePostResponse,
+  PostCommentResponse,
+  EditCommentResponse,
+  PostReplyResponse,
+  Activity,
+  Community,
+  User,
+  Member,
+  OgTag,
+  Post,
+  Reply,
+  ReportObject,
+  TaggingMember,
+  Topic,
 };
