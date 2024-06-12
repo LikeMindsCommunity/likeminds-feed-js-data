@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import LMResponse from "../core/services/lmresponse";
 import { API } from "../shared/constants/api.constant";
 
@@ -25,7 +26,9 @@ class InitiateUserClient {
     this.networkLibrary.setRefreshToken(request.refreshToken);
 
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.SDK_INITIATE}`)
+      .makeAuthenticatedRequest(`${API.SDK_INITIATE}`, {
+        method: "GET",
+      })
       .then((resData: any) => {
         // Handle the response and return the LMResponse object
         const responseData: ValidateUserResponse =
@@ -46,6 +49,8 @@ class InitiateUserClient {
     request: InitiateUserRequest
   ): Promise<LMResponse<InitiateUserResponse>> {
     const params = ModelConverter.requestBodyGenerator(request);
+
+    this.networkLibrary.setApiKey(request.apikey);
 
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.SDK_INITIATE}`, {
