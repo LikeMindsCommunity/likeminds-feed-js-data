@@ -33,6 +33,11 @@ class NetworkLibrary {
   public getRefreshToken() {
     return this.tokenManager.getRefreshToken();
   }
+
+  public onRefreshAccessToken(){
+    return this.tokenManager.refreshAccessToken()
+  }
+
   public setUserInLocalStorage(user: string) {
     localStorage.setItem(TokenValues.LOCAL_USER, user);
   }

@@ -53,6 +53,10 @@ import PollFeedClient from "./poll/PollClient";
 import { GetPollVotesRequest } from "./poll/model/GetPollVotesRequest";
 import { AddPollOptionRequest } from "./poll/model/AddPollOptionRequest";
 import { SubmitPollVoteRequest } from "./poll/model/SubmitPollVoteRequest";
+import Like from "./post/model/Like";
+import TokenManager from "./core/services/tokenmanager";
+import { TokenValues } from "./shared/tokens";
+import { API } from "./shared/constants/api.constant";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -83,6 +87,10 @@ class LMFeedClient {
     );
     this.helperClient = new HelperClient(this.networkLibrary);
     this.pollFeedClient = new PollFeedClient(this.networkLibrary);
+  }
+
+  getNetworkLibrary() {
+    return this.networkLibrary;
   }
 
   public static Builder(): LMFeedClient {
@@ -534,4 +542,9 @@ export {
   ValidateUserRequest,
   RegisterDeviceRequest,
   LMSDKCallbacks,
+  Like,
+  NetworkLibrary,
+  TokenValues,
+  TokenManager,
+  API,
 };

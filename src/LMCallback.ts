@@ -37,8 +37,14 @@ export abstract class LMSDKCallbacks {
     accessToken: string,
     refreshToken: string
   ): void;
-  abstract onRefreshTokenExpired(): {
-    accessToken: string;
-    refreshToken: string;
-  } | null;
+  abstract onRefreshTokenExpired():
+    | {
+        accessToken: string;
+        refreshToken: string;
+      }
+    | Promise<{
+        accessToken: string;
+        refreshToken: string;
+      }>
+    | null;
 }
