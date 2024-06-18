@@ -72,6 +72,7 @@ class NetworkLibrary {
     this.tokenManager.setPlatformCode(platFormCode);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public setVersionCode(versionCode: any) {
     this.tokenManager.setVersionCode(versionCode);
   }
@@ -128,17 +129,19 @@ class NetworkLibrary {
 
     // Add the access token to the request headers
     // if (this.tokenManager.getAccessToken && !initApi) {
-    if (this.tokenManager.getAccessToken) {
+    if (
+      this.tokenManager.getAccessToken() &&
+      this.tokenManager.getAccessToken().length
+    ) {
       requestConfig.headers["Authorization"] =
         `Bearer ${this.tokenManager.getAccessToken()}`;
     }
 
     // Add the apiKey in initiate api to the request headers
-    if (initApi) {
+    if (initApi && config.method === "POST") {
       if (this.tokenManager.getPlatformCode() === "rt") {
-        const xApiKey = localStorage.getItem("xApiKey");
-        if (xApiKey && xApiKey.length) {
-          requestConfig.headers["x-api-key"] = xApiKey;
+        if (this.xApiKey && this.xApiKey.length) {
+          requestConfig.headers["x-api-key"] = this.xApiKey;
         } else {
           throw "Please provide the Api Key";
         }
@@ -149,6 +152,7 @@ class NetworkLibrary {
 
     try {
       const response = await this.makeRequest<{ data: T }>(url, requestConfig);
+
       return new LMResponse<T>(response?.data?.data, null, true);
     } catch (error) {
       if (error?.response && error?.response?.status === 401) {

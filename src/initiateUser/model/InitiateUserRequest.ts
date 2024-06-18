@@ -12,7 +12,7 @@ class InitiateUserRequest {
     userName: string | undefined,
     uuid: string | undefined,
     isGuest: boolean,
-    apiKey: string
+    apiKey: string,
   ) {
     this.userName = userName;
     this.uuid = uuid;
@@ -32,10 +32,21 @@ export class InitiateUserRequestBuilder {
   private uuid: string | undefined;
   private isGuest: boolean | undefined;
   private apiKey: string;
+  private tokenExpiryBeta: number;
+  private rtmTokenExpiryBeta: number;
   // Add other properties as needed
 
   public setUserName(userName: string): InitiateUserRequestBuilder {
     this.userName = userName;
+    return this;
+  }
+
+  public setTokenExpiryBeta(duration: number): InitiateUserRequestBuilder {
+    this.tokenExpiryBeta = duration;
+    return this;
+  }
+  public setRTMTokenExpiryBeta(duration: number): InitiateUserRequestBuilder {
+    this.rtmTokenExpiryBeta = duration;
     return this;
   }
 
@@ -64,7 +75,7 @@ export class InitiateUserRequestBuilder {
       this.userName,
       this.uuid,
       this.isGuest || false,
-      this.apiKey
+      this.apiKey,
     );
   }
 }

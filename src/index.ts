@@ -57,6 +57,44 @@ import Like from "./post/model/Like";
 import TokenManager from "./core/services/tokenmanager";
 import { TokenValues } from "./shared/tokens";
 import { API } from "./shared/constants/api.constant";
+import {
+  AddPostResponse,
+  EditPostResponse,
+} from "./types/api-responses/addPostResponse";
+import {
+  DeletePostResponse,
+  DeleteCommentResponse,
+} from "./types/api-responses/deletePostResponse";
+import {
+  PostCommentResponse,
+  PostReplyResponse,
+} from "./types/api-responses/postCommentResponse";
+import { GetTaggingListResponse } from "./helper/model/GetTaggingListResponse";
+import { GetMemberStateResponse } from "./initiateUser/model/GetMemberStateResponse";
+import { ValidateUserResponse } from "./initiateUser/model/ValidateUserResponse";
+import { GetReportTagsResponse } from "./moderation/model/GetReportTagsResponse";
+import { GetPostLikesResponse } from "./post/model/GetPostLikesResponse";
+import { GetAllMembersResponse } from "./types/api-responses/getAllMembersResponse";
+import { GetCommentDetailsResponse } from "./types/api-responses/getCommentDetailsResponse";
+import { GetNotificationCountResponse } from "./types/api-responses/getNotificationCount";
+import { GetNotificationResponse } from "./types/api-responses/getNotificationResponse";
+import { GetOgTagResponse } from "./types/api-responses/getOgTagResponse";
+import { GetPinPostResponse } from "./types/api-responses/getPinPostResponse";
+import { GetPostDetailsResponse } from "./types/api-responses/getPostDetailsResponse";
+import { GetTopicsResponse } from "./types/api-responses/getTopicsResponse";
+import { GetUniversalFeedResponse } from "./types/api-responses/getUniversalFeed";
+import { LikeCommentResponse } from "./types/api-responses/likeCommentResponse";
+import { LikePostResponse } from "./types/api-responses/likePostResponse";
+import { ReportObject } from "./types/models/reportTags";
+import { User } from "aws-sdk/clients/appstream";
+import { Activity } from "aws-sdk/clients/autoscaling";
+import { Topic } from "aws-sdk/clients/iot";
+import { Community } from "./types/models/community";
+import { OgTag } from "./types/models/ogTag";
+import { Post } from "./types/models/post";
+import { Reply } from "./types/models/replies";
+import { TaggingMember } from "./types/models/taggingMember";
+import { Member } from "./shared/models/models/member";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -445,6 +483,16 @@ class LMFeedClient {
       throw error;
     }
   }
+
+  async getCommunityConfigurations() {
+    try {
+      return await this.initiateUserClient.getCommunityConfigurations();
+    } catch (error) {
+      console.log("Error while getting configuration", error);
+      throw error;
+    }
+  }
+
   async getAllMembers(request: GetAllMembersRequest) {
     try {
       return await this.initiateUserClient.getAllMembers(request);
@@ -453,6 +501,7 @@ class LMFeedClient {
       throw error;
     }
   }
+
   async validateRegisterDeviceRequest(request: RegisterDeviceRequest) {
     try {
       return await this.helperClient.validateRegisterDeviceRequest(request);
@@ -525,7 +574,6 @@ export {
   GetCommentResponse,
   ReplyCommentRequest,
   DeleteCommentRequest,
-  EditCommentResponse,
   LikeCommentRequest,
   GetCommentLikesRequest,
   IMemberState,
@@ -547,4 +595,37 @@ export {
   TokenValues,
   TokenManager,
   API,
+  AddPostResponse,
+  EditPostResponse,
+  DeletePostResponse,
+  DeleteCommentResponse,
+  GetAllMembersResponse,
+  GetCommentDetailsResponse,
+  GetMemberStateResponse,
+  GetNotificationCountResponse,
+  GetNotificationResponse,
+  GetOgTagResponse,
+  GetPinPostResponse,
+  GetPostDetailsResponse,
+  GetPostLikesResponse,
+  GetReportTagsResponse,
+  GetTaggingListResponse,
+  GetTopicsResponse,
+  GetUniversalFeedResponse,
+  ValidateUserResponse,
+  LikeCommentResponse,
+  LikePostResponse,
+  PostCommentResponse,
+  EditCommentResponse,
+  PostReplyResponse,
+  Activity,
+  Community,
+  User,
+  Member,
+  OgTag,
+  Post,
+  Reply,
+  ReportObject,
+  TaggingMember,
+  Topic,
 };
