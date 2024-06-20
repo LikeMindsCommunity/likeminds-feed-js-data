@@ -4,8 +4,6 @@ class InitiateUserRequest {
   uuid?: string;
   isGuest: boolean;
   apikey: string;
-  token_expiry_beta = 1;
-  rtm_token_expiry_beta = 1;
 
   // Public constructor to create the request object
   constructor(
