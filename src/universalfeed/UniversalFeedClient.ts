@@ -6,7 +6,7 @@ import NetworkLibrary from "../core/services/networklibrary";
 import GetFeedRequest from "./model/GetFeedRequest";
 import { ModelConverter } from "../utils/ModelConverter";
 
-import { GetUniversalFeedResponse } from "../shared/models/api-responses/getUniversalFeed";
+import { GetUniversalFeedResponse } from "../types/api-responses/getUniversalFeed";
 
 class UniversalFeedClient {
   private networkLibrary;

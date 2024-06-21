@@ -1,7 +1,8 @@
 import { Topic } from "../models/topic";
 export interface GetTopicsResponse {
   success: boolean;
-  data: {
+  data?: {
     topics: Topic[];
   };
+  error?: any;
 }

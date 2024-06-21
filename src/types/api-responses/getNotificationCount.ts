@@ -1,6 +1,7 @@
 export interface GetNotificationCountResponse {
   success: boolean;
-  data: {
+  data?: {
     count: number;
   };
+  error?: any;
 }

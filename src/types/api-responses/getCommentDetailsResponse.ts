@@ -3,8 +3,9 @@ import { Reply } from "../models/replies";
 
 export interface GetCommentDetailsResponse {
   success: boolean;
-  data: {
+  data?: {
     comment: Reply;
     users: Record<string, User>;
   };
+  error?: any;
 }

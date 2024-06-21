@@ -4,9 +4,10 @@ import { Topic } from "../models/topic";
 
 export interface GetNotificationResponse {
   success: boolean;
-  data: {
+  data?: {
     activities: Activity[];
     topics: { [key: string]: Topic };
     users: { [key: string]: User };
   };
+  error?: any;
 }

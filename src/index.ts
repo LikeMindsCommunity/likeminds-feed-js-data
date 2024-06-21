@@ -94,7 +94,7 @@ import { OgTag } from "./types/models/ogTag";
 import { Post } from "./types/models/post";
 import { Reply } from "./types/models/replies";
 import { TaggingMember } from "./types/models/taggingMember";
-import { Member } from "./shared/models/models/member";
+import { Member } from "./types/models/member";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
