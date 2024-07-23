@@ -74,15 +74,19 @@ class TokenManager {
       this.accessToken = accessToken.access_token;
       this.setRefreshToken(accessToken.refresh_token);
       this.setAccessToken(accessToken.access_token);
-      // TODO set tokens in local storage
-      localStorage.setItem(
-        TokenValues.LOCAL_ACCESS_TOKEN,
-        accessToken.access_token
-      );
-      localStorage.setItem(
-        TokenValues.LOCAL_REFRESH_TOKEN,
-        accessToken.refresh_token
-      );
+
+      if (this.xPlatformCode === "rt") {
+        // TODO set tokens in local storage
+        localStorage.setItem(
+          TokenValues.LOCAL_ACCESS_TOKEN,
+          accessToken.access_token
+        );
+        localStorage.setItem(
+          TokenValues.LOCAL_REFRESH_TOKEN,
+          accessToken.refresh_token
+        );
+      }
+
       this.lmSdkCallback.onAccessTokenExpiredAndRefreshed(
         this.accessToken,
         this.refreshToken
@@ -99,8 +103,11 @@ class TokenManager {
       // TODO add tokens in local storage too
       // done
       // this.setAccessTokenInLocalStorage(accessToken);
-      localStorage.setItem(TokenValues.LOCAL_ACCESS_TOKEN, accessToken);
-      localStorage.setItem(TokenValues.LOCAL_REFRESH_TOKEN, refreshToken);
+
+      if (this.xPlatformCode === "rt") {
+        localStorage.setItem(TokenValues.LOCAL_ACCESS_TOKEN, accessToken);
+        localStorage.setItem(TokenValues.LOCAL_REFRESH_TOKEN, refreshToken);
+      }
       // this.setRefreshTokenInLocalStorage(refreshToken);
       if (error?.response && error?.response?.status >= 500) throw error;
     }

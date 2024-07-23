@@ -4,8 +4,6 @@ class InitiateUserRequest {
   uuid?: string;
   isGuest: boolean;
   apikey: string;
-  private tokenExpiryBeta: number;
-  private rtmTokenExpiryBeta: number;
 
   // Public constructor to create the request object
   constructor(
@@ -13,15 +11,11 @@ class InitiateUserRequest {
     uuid: string | undefined,
     isGuest: boolean,
     apiKey: string,
-    tokenExpiryBeta?: number,
-    rtmTokenExpiryBeta?: number
   ) {
     this.userName = userName;
     this.uuid = uuid;
     this.isGuest = isGuest;
     this.apikey = apiKey;
-    this.tokenExpiryBeta = tokenExpiryBeta;
-    this.rtmTokenExpiryBeta = rtmTokenExpiryBeta;
   }
 
   // Static builder method to create the request object
@@ -36,21 +30,10 @@ export class InitiateUserRequestBuilder {
   private uuid: string | undefined;
   private isGuest: boolean | undefined;
   private apiKey: string;
-  private tokenExpiryBeta: number;
-  private rtmTokenExpiryBeta: number;
   // Add other properties as needed
 
   public setUserName(userName: string): InitiateUserRequestBuilder {
     this.userName = userName;
-    return this;
-  }
-
-  public setTokenExpiryBeta(duration: number): InitiateUserRequestBuilder {
-    this.tokenExpiryBeta = duration;
-    return this;
-  }
-  public setRTMTokenExpiryBeta(duration: number): InitiateUserRequestBuilder {
-    this.rtmTokenExpiryBeta = duration;
     return this;
   }
 
@@ -80,8 +63,6 @@ export class InitiateUserRequestBuilder {
       this.uuid,
       this.isGuest || false,
       this.apiKey,
-      this.tokenExpiryBeta,
-      this.rtmTokenExpiryBeta
     );
   }
 }
