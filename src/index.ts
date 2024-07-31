@@ -95,6 +95,8 @@ import { Post } from "./types/models/post";
 import { Reply } from "./types/models/replies";
 import { TaggingMember } from "./types/models/taggingMember";
 import { Member } from "./types/models/member";
+import { EditProfile, Nothing } from "./pages/user/types";
+import LMResponse from "./LMResponse";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -230,6 +232,10 @@ class LMFeedClient {
       console.error("Error while initiating the user:", error);
       throw error;
     }
+  }
+
+  async editProfile(editProfile:EditProfile) {
+    return this.initiateUserClient.editProfile(editProfile)
   }
 
   async addPost(addPostRequest: AddPostRequest) {

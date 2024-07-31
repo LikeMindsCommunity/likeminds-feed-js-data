@@ -21,7 +21,10 @@ export declare type EditProfile = {
   userUniqueId: string;
   userName: string;
   imageUrl: string;
+  name?: string;
 };
+
+export declare type Nothing = {}
 
 export declare type GetAllMembers = {
   chatroomId?: number;
