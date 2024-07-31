@@ -96,7 +96,6 @@ import { Reply } from "./types/models/replies";
 import { TaggingMember } from "./types/models/taggingMember";
 import { Member } from "./types/models/member";
 import { EditProfile, Nothing } from "./pages/user/types";
-import LMResponse from "./LMResponse";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
