@@ -15,6 +15,7 @@ export const API = {
   GET_REPORT_TAGS: "/community/report/tag",
   POST_REPORT: "/community/report",
   NOTIFICATION_FEED: "/feed/user/activity",
+  COMMUNITY_MEMBER_PROFILE: '/community/member/profile',
 
   CHATROOM_SECRET_LEAVE: "/chatroom/secret/leave", //(Post)
   DM_ALL_MEMBERS: "/community/member", //(GET)

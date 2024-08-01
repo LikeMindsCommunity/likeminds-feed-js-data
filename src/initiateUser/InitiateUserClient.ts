@@ -16,6 +16,7 @@ import { GetAllMembersResponse } from "../types/api-responses/getAllMembersRespo
 import { GetCommunityConfigurationsResponse } from "./model/GetCommunityConfigurationsResponse";
 
 import LMResponse from "../core/services/lmresponse";
+import { EditProfile, Nothing } from "src/pages/user/types";
 
 class InitiateUserClient {
   private networkLibrary: NetworkLibrary;
@@ -141,6 +142,35 @@ class InitiateUserClient {
           errorMessage: error,
         };
       });
+  }
+
+  public async editProfile(
+    editProfile: EditProfile
+  ): Promise<LMResponse<Nothing>> {
+    const params = ModelConverter.requestBodyGenerator(editProfile);
+    return this.networkLibrary
+    .makeAuthenticatedRequest(`${API.COMMUNITY_MEMBER_PROFILE}`,{
+      method: 'PUT',
+      data: params,
+  })
+    .then((resData: any) => {
+      // Handle the response and return the LMResponse object
+      const responseData: Nothing =
+        ModelConverter.responseBodyParser(resData.data);
+
+      return new LMResponse<Nothing>(
+        responseData,
+        null,
+        true
+      );
+    })
+    .catch((error) => {
+      return new LMResponse<Nothing>(
+        null,
+        error.message || "An error occurred",
+        false
+      );
+    });
   }
 }
 
