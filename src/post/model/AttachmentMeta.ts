@@ -22,6 +22,7 @@ class AttachmentMeta {
   isAnonymous?: boolean;
   allowAddOption?: boolean;
   entityId?: string;
+  meta?: Record<string, any> | null;
 
   // ogTags: LinkOGTags
   // attachmentMeta: List<Attachment>;
@@ -42,12 +43,13 @@ class AttachmentMeta {
     options: string[],
     multipleSelectState: PollMultipleSelectState,
     pollType: PollType,
-    multipleSelectNumber: number = 1,
-    isAnonymous: boolean = false,
-    allowAddOption: boolean = false,
+    multipleSelectNumber: number,
+    isAnonymous: boolean,
+    allowAddOption: boolean,
     body?: string,
     thumbnailUrl?: string,
-    entityId?: string
+    entityId?: string,
+    meta?: Record<string, any> | null
   ) {
     this.name = name;
     this.url = url;
@@ -69,6 +71,7 @@ class AttachmentMeta {
     this.body = body;
     this.thumbnailUrl = thumbnailUrl;
     this.entityId = entityId;
+    this.meta = meta;
   }
 
   // Static builder method to create the request object
@@ -99,6 +102,7 @@ export class AttachmentMetaBuilder {
   isAnonymous?: boolean | undefined;
   allowAddOption?: boolean | undefined;
   entityId?: string | undefined;
+  meta?: Record<string, any> | null;
   // Add other properties as needed
 
   public setname(name: string): AttachmentMetaBuilder {
@@ -205,6 +209,10 @@ export class AttachmentMetaBuilder {
     return this;
   }
 
+  public setMeta(meta: Record<string, any> | null): AttachmentMetaBuilder {
+    this.meta = meta;
+    return this;
+  }
   // Build method to create the final AttachmentMeta object
   public build(): AttachmentMeta {
     // if (!this.ogTags) {
@@ -230,7 +238,8 @@ export class AttachmentMetaBuilder {
       this.allowAddOption,
       this.body,
       this.thumbnailUrl,
-      this.entityId
+      this.entityId,
+      this.meta
     );
   }
 }
