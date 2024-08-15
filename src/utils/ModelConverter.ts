@@ -42,9 +42,9 @@ export class ModelConverter<S> {
     const result: any = {};
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        const camelKey = key == '_id'
-          ? 'id'
-          : key.replace(/_([a-z])/g, (match, letter) => letter.toUpperCase());
+        const camelKey = key.replace(/_([a-z])/g, (match, letter) =>
+          letter.toUpperCase(),
+        );
         result[camelKey] = this.responseBodyParser(obj[key]);
       }
     }
