@@ -3,7 +3,6 @@ import { IUser } from "./user";
 // Activity interface (you can define this separately if needed)
 export interface IActivity {
   Id: string;
-  id: string;
   action: number;
   actionBy: string[];
   actionOn: string;

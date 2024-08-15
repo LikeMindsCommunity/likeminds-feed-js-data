@@ -4,7 +4,6 @@ import { IComment } from "./comment";
 
 export interface IPost {
   Id: string;
-  id: string;
   text: string;
   attachments?: Attachment[];
   communityId: number;

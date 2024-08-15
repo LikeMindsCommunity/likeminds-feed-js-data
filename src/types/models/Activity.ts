@@ -2,7 +2,6 @@ import { Attachment } from "./attachment";
 
 export interface Activity {
   Id: string;
-  id: string;
   action: number;
   actionBy: string[];
   actionOn: string;
@@ -19,7 +18,6 @@ export interface Activity {
 }
 export interface ActivityEntityData {
   Id: string;
-  id: string;
   attachments: Attachment[];
   commentIds: null;
   commentsCount: number;

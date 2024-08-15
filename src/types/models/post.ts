@@ -3,7 +3,6 @@ import { Reply } from "./replies";
 
 export interface Post {
   Id: string;
-  id: string;
   attachments: Attachment[];
   commentsCount: number;
   communityId: number;

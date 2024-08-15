@@ -14,7 +14,6 @@ export interface GetPostLikesResponse {
 
 interface Like {
   _id: string;
-  id: string;
   createdAt: number;
   updatedAt: number;
   userId: string;
