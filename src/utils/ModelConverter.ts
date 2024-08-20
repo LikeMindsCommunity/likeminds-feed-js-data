@@ -20,7 +20,7 @@ export class ModelConverter<S> {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         const snakeKey = key.replace(
           /([A-Z])/g,
-          (match, letter) => `_${letter.toLowerCase()}`,
+          (match, letter) => `_${letter.toLowerCase()}`
         );
         result[snakeKey] = this.requestBodyGenerator(obj[key]);
       }
@@ -43,7 +43,7 @@ export class ModelConverter<S> {
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         const camelKey = key.replace(/_([a-z])/g, (match, letter) =>
-          letter.toUpperCase(),
+          letter.toUpperCase()
         );
         result[camelKey] = this.responseBodyParser(obj[key]);
       }
