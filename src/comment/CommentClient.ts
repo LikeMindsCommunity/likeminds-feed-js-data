@@ -59,7 +59,7 @@ class CommentClient {
         `${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`
       )
       .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData.data);
+        const responseData = ModelConverter.responseBodyParser(resData);
         return responseData;
       })
       .catch((error) => {
