@@ -96,7 +96,6 @@ import { Reply } from "./types/models/replies";
 import { TaggingMember } from "./types/models/taggingMember";
 import { Member } from "./types/models/member";
 import { EditProfile } from "./pages/user/types";
-import { ModelConverter } from "./utils/ModelConverter";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -111,6 +110,7 @@ class LMFeedClient {
   private apiKey: string | null = null;
   private helperClient: HelperClient;
   private LMSDKCallbacks: LMSDKCallbacks;
+
   private pollFeedClient: PollFeedClient;
   constructor() {
     // this.LMSDKCallbacks = new LMSDKCallbacks();
