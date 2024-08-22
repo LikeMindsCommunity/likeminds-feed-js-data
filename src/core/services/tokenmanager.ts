@@ -3,6 +3,7 @@ import { environment } from "src/environment";
 import { API } from "src/shared/constants/api.constant";
 import { LMSDKCallbacks } from "../../LMCallback";
 import { TokenValues } from "../../shared/tokens";
+import { ModelConverter } from "src/utils/ModelConverter";
 
 // TokenManager.ts
 class TokenManager {
@@ -40,6 +41,7 @@ class TokenManager {
 
   // Platform Code
   public setPlatformCode(xPlatformCode: string) {
+    ModelConverter.vCode = xPlatformCode;
     this.xPlatformCode = xPlatformCode;
   }
   public getPlatformCode() {
