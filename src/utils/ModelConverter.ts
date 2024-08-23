@@ -1,5 +1,6 @@
 export class ModelConverter<S> {
   convertedModel: S | null;
+  static versionCode = "rt"
   constructor() {
     // this.convertedModel = this.camelToSnake(objectInSnakeCase);
   }
@@ -42,9 +43,9 @@ export class ModelConverter<S> {
     const result: any = {};
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        const camelKey = key.replace(/_([a-z])/g, (match, letter) =>
-          letter.toUpperCase()
-        );
+        const camelKey = (key == '_id' && this.versionCode == "rn")
+          ? 'id'
+          : key.replace(/_([a-z])/g, (match, letter) => letter.toUpperCase());
         result[camelKey] = this.responseBodyParser(obj[key]);
       }
     }
