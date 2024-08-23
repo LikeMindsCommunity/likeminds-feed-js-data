@@ -5,6 +5,7 @@ interface MenuItem {
 
 export interface Reply {
   Id: string;
+  id: string;
   commentsCount: number;
   communityId: number;
   createdAt: number;
