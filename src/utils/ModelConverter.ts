@@ -21,7 +21,7 @@ export class ModelConverter<S> {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         const snakeKey = key.replace(
           /([A-Z])/g,
-          (match, letter) => `_${letter.toLowerCase()}`,
+          (match, letter) => `_${letter.toLowerCase()}`
         );
         result[snakeKey] = this.requestBodyGenerator(obj[key]);
       }
