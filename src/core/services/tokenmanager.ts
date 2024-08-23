@@ -41,7 +41,7 @@ class TokenManager {
 
   // Platform Code
   public setPlatformCode(xPlatformCode: string) {
-    ModelConverter.vCode = xPlatformCode;
+    ModelConverter.versionCode = xPlatformCode;
     this.xPlatformCode = xPlatformCode;
   }
   public getPlatformCode() {
