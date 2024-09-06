@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'localMachine'}
+    agent any
     tools {nodejs "nodejs"}
 
     stages {
