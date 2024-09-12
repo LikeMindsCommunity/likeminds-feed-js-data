@@ -6,11 +6,9 @@ interface Users {
 }
 
 export interface PostResponse {
-  success: boolean;
   data?: {
     comment: Reply;
 
     users: Users;
   };
-  error?: any;
 }

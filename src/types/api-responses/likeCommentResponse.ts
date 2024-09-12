@@ -1,4 +1,1 @@
-export interface LikeCommentResponse {
-  success: boolean;
-  error?: any;
-}
+export interface LikeCommentResponse {}

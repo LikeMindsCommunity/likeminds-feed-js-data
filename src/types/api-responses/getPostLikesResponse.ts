@@ -1,7 +1,6 @@
 import { Member } from "../models/member";
 
 export interface GetPostLikesResponse {
-  success: boolean;
   data?: {
     likes: Like[];
     topics: Record<string, unknown>;
@@ -9,7 +8,6 @@ export interface GetPostLikesResponse {
     userTopics: Record<string, unknown>;
     users: Member[];
   };
-  error?: any;
 }
 
 interface Like {

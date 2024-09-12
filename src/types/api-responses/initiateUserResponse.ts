@@ -10,13 +10,9 @@ export interface ValidateUserData {
   user: User;
 }
 export interface ValidateUserResponse {
-  success: boolean;
   data?: ValidateUserData;
-  error?: any;
 }
 
 export interface InitiateUserResponse {
-  success: boolean;
   data?: ValidateUserData;
-  error?: any;
 }

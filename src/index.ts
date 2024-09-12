@@ -208,7 +208,7 @@ class LMFeedClient {
   public getRefreshToken() {
     return this.networkLibrary.getRefreshToken();
   }
-
+  // TBD
   async validateUser(validateUserRequest: ValidateUserRequest) {
     try {
       const initiateUserResponse =

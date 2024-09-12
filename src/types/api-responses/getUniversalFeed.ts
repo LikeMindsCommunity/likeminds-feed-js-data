@@ -7,6 +7,4 @@ export interface GetUniversalFeedResponse {
     topics: Record<string, Topic>;
     users: Record<string, User>;
   };
-  error?: any;
-  success: boolean;
 }

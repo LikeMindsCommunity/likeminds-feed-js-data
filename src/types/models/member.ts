@@ -5,7 +5,7 @@ export interface User {
   isGuest: boolean;
   isOwner?: boolean;
   name: string;
-  organisationName?: null;
+  organisationName?: string;
   sdkClientInfo: SdkClientInfo;
   state?: number;
   updatedAt?: number;

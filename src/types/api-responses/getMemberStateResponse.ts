@@ -10,7 +10,6 @@ interface MemberRight {
 }
 
 export interface GetMemberStateResponse {
-  success: boolean;
   data?: {
     createdAt: string;
     editRequired: boolean;
@@ -19,5 +18,4 @@ export interface GetMemberStateResponse {
     state: number;
     toolState: number;
   };
-  error?: any;
 }

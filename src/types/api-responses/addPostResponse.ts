@@ -3,7 +3,6 @@ import { Post } from "../models/post";
 import { Topic } from "../models/topic";
 
 export interface AddPostResponse {
-  success: boolean;
   data?: {
     post: Post;
 
@@ -11,10 +10,8 @@ export interface AddPostResponse {
 
     users: Record<string, User>;
   };
-  error?: any;
 }
 export interface EditPostResponse {
-  success: boolean;
   data?: {
     post: Post;
 
@@ -22,5 +19,4 @@ export interface EditPostResponse {
 
     users: Record<string, User>;
   };
-  error?: any;
 }
