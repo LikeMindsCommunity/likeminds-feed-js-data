@@ -20,6 +20,7 @@ export interface Post {
     id: number;
     title: string;
   }[];
+  commentIds?: string[];
   repostCount: number;
   tempId: null | string;
   text: string;
