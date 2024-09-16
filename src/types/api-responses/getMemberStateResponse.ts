@@ -9,7 +9,7 @@ interface MemberRight {
   title: string;
 }
 
-export interface GetMemberStateResponse {
+export interface GetMemberState {
   data?: {
     createdAt: string;
     editRequired: boolean;

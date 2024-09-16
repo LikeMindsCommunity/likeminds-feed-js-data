@@ -2,7 +2,10 @@
 import { API } from "../shared/constants/api.constant";
 
 import InitiateUserRequest from "./model/InitiateUserRequest";
-import { InitiateUserResponse } from "../types/api-responses/initiateUserResponse";
+import {
+  InitiateUser,
+  InitiateUserResponse,
+} from "../types/api-responses/initiateUserResponse";
 import NetworkLibrary from "../core/services/networklibrary";
 import { ModelConverter } from "../utils/ModelConverter";
 
@@ -50,22 +53,20 @@ class InitiateUserClient {
       });
   }
 
-  public async initiateUser(
-    request: InitiateUserRequest
-  ): Promise<InitiateUserResponse> {
+  public async initiateUser(request: InitiateUserRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
 
     this.networkLibrary.setApiKey(request.apikey);
 
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.SDK_INITIATE}`, {
+      .makeAuthenticatedRequest<InitiateUser>(`${API.SDK_INITIATE}`, {
         method: "POST",
         data: params,
       })
-      .then((resData: any) => {
-        const accessToken = resData?.data?.access_token;
+      .then((resData) => {
+        const accessToken = resData?.data?.accessToken;
         this.networkLibrary.setAccessToken(accessToken);
-        const refreshToken = resData?.data?.refresh_token;
+        const refreshToken = resData?.data?.refreshToken;
         this.networkLibrary.setRefreshToken(refreshToken);
 
         // Handle the response and return the LMResponse object
@@ -149,28 +150,25 @@ class InitiateUserClient {
   ): Promise<LMResponse<Nothing>> {
     const params = ModelConverter.requestBodyGenerator(editProfile);
     return this.networkLibrary
-    .makeAuthenticatedRequest(`${API.COMMUNITY_MEMBER_PROFILE}`,{
-      method: 'PUT',
-      data: params,
-  })
-    .then((resData: any) => {
-      // Handle the response and return the LMResponse object
-      const responseData: Nothing =
-        ModelConverter.responseBodyParser(resData.data);
+      .makeAuthenticatedRequest(`${API.COMMUNITY_MEMBER_PROFILE}`, {
+        method: "PUT",
+        data: params,
+      })
+      .then((resData: any) => {
+        // Handle the response and return the LMResponse object
+        const responseData: Nothing = ModelConverter.responseBodyParser(
+          resData.data
+        );
 
-      return new LMResponse<Nothing>(
-        responseData,
-        null,
-        true
-      );
-    })
-    .catch((error) => {
-      return new LMResponse<Nothing>(
-        null,
-        error.message || "An error occurred",
-        false
-      );
-    });
+        return new LMResponse<Nothing>(responseData, null, true);
+      })
+      .catch((error) => {
+        return new LMResponse<Nothing>(
+          null,
+          error.message || "An error occurred",
+          false
+        );
+      });
   }
 }
 

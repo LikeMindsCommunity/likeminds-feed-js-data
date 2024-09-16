@@ -1,7 +1,7 @@
 import { Community } from "../models/community";
 import { User } from "../models/member";
 
-export interface ValidateUserData {
+export interface ValidateUser {
   accessToken: string;
   appAccess: boolean;
   community: Community;
@@ -10,9 +10,18 @@ export interface ValidateUserData {
   user: User;
 }
 export interface ValidateUserResponse {
-  data?: ValidateUserData;
+  data?: ValidateUser;
 }
 
 export interface InitiateUserResponse {
-  data?: ValidateUserData;
+  data?: ValidateUser;
+}
+
+export interface InitiateUser {
+  accessToken: string;
+  appAccess: boolean;
+  community: Community;
+  hasAnswers: boolean;
+  refreshToken: string;
+  user: User;
 }
