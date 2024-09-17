@@ -1,1 +1,1 @@
-export interface LikeCommentResponse {}
+export interface LikeComment {}

@@ -9,13 +9,6 @@ export interface ValidateUser {
   refreshToken: string;
   user: User;
 }
-export interface ValidateUserResponse {
-  data?: ValidateUser;
-}
-
-export interface InitiateUserResponse {
-  data?: ValidateUser;
-}
 
 export interface InitiateUser {
   accessToken: string;

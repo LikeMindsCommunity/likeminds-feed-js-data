@@ -7,18 +7,17 @@ import { ModelConverter } from "../../src/utils/ModelConverter";
 
 import ReplyCommentRequest from "./model/ReplyCommentRequest";
 
-import { EditCommentResponse } from "../types/api-responses/postCommentResponse";
+import { EditComment } from "../types/api-responses/postCommentResponse";
 import DeleteCommentRequest from "./model/DeleteCommentRequest";
 import LikeCommentRequest from "./model/LikeCommentRequest";
 
 import EditCommentRequest from "./model/EditCommentRequest";
-import {
-  PostCommentResponse,
-  PostReplyResponse,
-} from "../types/api-responses/postCommentResponse";
-import { GetCommentDetailsResponse } from "../types/api-responses/getCommentDetailsResponse";
-import { GetPostLikesResponse } from "../types/api-responses/getPostLikesResponse";
-import { LikeCommentResponse } from "../types/api-responses/likeCommentResponse";
+import { PostComment } from "../types/api-responses/postCommentResponse";
+import { GetCommentDetails } from "../types/api-responses/getCommentDetailsResponse";
+
+import { LikeComment } from "../types/api-responses/likeCommentResponse";
+import { GetCommentLikesResponse } from "./model/GetCommentLikesResponse";
+import { ReplyCommentResponse } from "./model/ReplyCommentResponse";
 
 class CommentClient {
   public networkLibrary: NetworkLibrary;
@@ -27,10 +26,10 @@ class CommentClient {
     this.networkLibrary = instance;
   }
 
-  addComment(addComment: AddCommentRequest): Promise<PostCommentResponse> {
+  addComment(addComment: AddCommentRequest) {
     const params = ModelConverter.requestBodyGenerator(addComment);
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<PostComment>(
         `${API.FEED_POST}/${addComment.postId}/comment`,
         {
           method: "POST",
@@ -49,13 +48,9 @@ class CommentClient {
       });
   }
 
-  getComment(
-    getComment: GetCommentRequest,
-    postId: string,
-    commentId: any
-  ): Promise<GetCommentDetailsResponse> {
+  getComment(getComment: GetCommentRequest, postId: string, commentId: any) {
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<GetCommentDetails>(
         `${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`
       )
       .then((resData: any) => {
@@ -69,16 +64,13 @@ class CommentClient {
         };
       });
   }
-  getCommentLikes(
-    request: GetCommentLikesRequest
-  ): Promise<GetPostLikesResponse> {
+  getCommentLikes(request: GetCommentLikesRequest) {
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<GetCommentLikesResponse>(
         `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/like?page=${request.page}&page_size=${request.pageSize}`
       )
       .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return responseData;
+        return resData;
       })
       .catch((error) => {
         return {
@@ -88,9 +80,9 @@ class CommentClient {
       });
   }
 
-  likeComment(request: LikeCommentRequest): Promise<LikeCommentResponse> {
+  likeComment(request: LikeCommentRequest) {
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<LikeComment>(
         `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/like`,
         {
           method: "PUT",
@@ -98,8 +90,7 @@ class CommentClient {
         }
       )
       .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return responseData;
+        return resData;
       })
       .catch((error) => {
         return {
@@ -109,19 +100,18 @@ class CommentClient {
       });
   }
 
-  replyComment(request: ReplyCommentRequest): Promise<PostReplyResponse> {
+  replyComment(request: ReplyCommentRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<ReplyCommentResponse>(
         `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/comment`,
         {
           method: "POST",
           data: params,
         }
       )
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return responseData;
+      .then((resData) => {
+        return resData;
       })
       .catch((error) => {
         return {
@@ -131,19 +121,18 @@ class CommentClient {
       });
   }
 
-  editComment(request: EditCommentRequest): Promise<EditCommentResponse> {
+  editComment(request: EditCommentRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<EditComment>(
         `${API.FEED_POST}/${request.postId}/comment/${request.commentId}`,
         {
           method: "PUT",
           data: params,
         }
       )
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return responseData;
+      .then((resData) => {
+        return resData;
       })
       .catch((error) => {
         return {
@@ -153,19 +142,18 @@ class CommentClient {
       });
   }
 
-  deleteComment(request: DeleteCommentRequest): Promise<DeleteCommentRequest> {
+  deleteComment(request: DeleteCommentRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<undefined>(
         `${API.FEED_POST}/${request.postId}/comment/${request.commentId}`,
         {
           method: "DELETE",
           data: params,
         }
       )
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return responseData;
+      .then((resData) => {
+        return resData;
       })
       .catch((error) => {
         return {

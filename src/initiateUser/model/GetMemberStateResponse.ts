@@ -1,4 +1,4 @@
-export interface GetMemberStateResponse {
+export interface GetMemberState {
   created_at: number;
   edit_required: boolean;
   member: {

@@ -1,7 +1,5 @@
 import { TaggingMember } from "../models/taggingMember";
 
-export interface GetTaggingListResponse {
-  data?: {
-    members: TaggingMember[];
-  };
+export interface GetTaggingList {
+  members: TaggingMember[];
 }

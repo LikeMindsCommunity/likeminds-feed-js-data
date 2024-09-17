@@ -10,12 +10,10 @@ interface MemberRight {
 }
 
 export interface GetMemberState {
-  data?: {
-    createdAt: string;
-    editRequired: boolean;
-    member: User;
-    memberRights: MemberRight[];
-    state: number;
-    toolState: number;
-  };
+  createdAt: string;
+  editRequired: boolean;
+  member: User;
+  memberRights: MemberRight[];
+  state: number;
+  toolState: number;
 }

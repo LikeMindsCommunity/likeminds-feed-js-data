@@ -1,7 +1,5 @@
 import { OgTag } from "../models/ogTag";
 
-export interface GetOgTagResponse {
-  data?: {
-    og_tags: OgTag;
-  };
+export interface GetOgTag {
+  og_tags: OgTag;
 }

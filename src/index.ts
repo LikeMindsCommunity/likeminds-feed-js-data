@@ -57,34 +57,31 @@ import Like from "./post/model/Like";
 import TokenManager from "./core/services/tokenmanager";
 import { TokenValues } from "./shared/tokens";
 import { API } from "./shared/constants/api.constant";
+import { AddPost, EditPost } from "./types/api-responses/addPostResponse";
 import {
-  AddPostResponse,
-  EditPostResponse,
-} from "./types/api-responses/addPostResponse";
-import {
-  DeletePostResponse,
-  DeleteCommentResponse,
+  DeletePost,
+  DeleteComment,
 } from "./types/api-responses/deletePostResponse";
 import {
-  PostCommentResponse,
-  PostReplyResponse,
+  PostComment,
+  PostReply,
 } from "./types/api-responses/postCommentResponse";
 import { GetTaggingListResponse } from "./helper/model/GetTaggingListResponse";
-import { GetMemberStateResponse } from "./initiateUser/model/GetMemberStateResponse";
+import { GetMemberState } from "./initiateUser/model/GetMemberStateResponse";
 import { ValidateUserResponse } from "./initiateUser/model/ValidateUserResponse";
 import { GetReportTagsResponse } from "./moderation/model/GetReportTagsResponse";
 import { GetPostLikesResponse } from "./post/model/GetPostLikesResponse";
-import { GetAllMembersResponse } from "./types/api-responses/getAllMembersResponse";
-import { GetCommentDetailsResponse } from "./types/api-responses/getCommentDetailsResponse";
-import { GetNotificationCountResponse } from "./types/api-responses/getNotificationCount";
-import { GetNotificationResponse } from "./types/api-responses/getNotificationResponse";
-import { GetOgTagResponse } from "./types/api-responses/getOgTagResponse";
-import { GetPinPostResponse } from "./types/api-responses/getPinPostResponse";
-import { GetPostDetailsResponse } from "./types/api-responses/getPostDetailsResponse";
-import { GetTopicsResponse } from "./types/api-responses/getTopicsResponse";
-import { GetUniversalFeedResponse } from "./types/api-responses/getUniversalFeed";
-import { LikeCommentResponse } from "./types/api-responses/likeCommentResponse";
-import { LikePostResponse } from "./types/api-responses/likePostResponse";
+import { GetAllMembers } from "./types/api-responses/getAllMembersResponse";
+import { GetCommentDetails } from "./types/api-responses/getCommentDetailsResponse";
+import { GetNotificationCount } from "./types/api-responses/getNotificationCount";
+import { GetNotification } from "./types/api-responses/getNotificationResponse";
+import { GetOgTag } from "./types/api-responses/getOgTagResponse";
+import { GetPinPost } from "./types/api-responses/getPinPostResponse";
+import { GetPostDetails } from "./types/api-responses/getPostDetailsResponse";
+import { GetTopics } from "./types/api-responses/getTopicsResponse";
+import { GetUniversalFeed } from "./types/api-responses/getUniversalFeed";
+import { LikeComment } from "./types/api-responses/likeCommentResponse";
+import { LikePost } from "./types/api-responses/likePostResponse";
 import { ReportObject } from "./types/models/reportTags";
 import { User } from "aws-sdk/clients/appstream";
 import { Activity } from "aws-sdk/clients/autoscaling";
@@ -96,6 +93,7 @@ import { Reply } from "./types/models/replies";
 import { TaggingMember } from "./types/models/taggingMember";
 import { Member } from "./types/models/member";
 import { EditProfile } from "./pages/user/types";
+import LMResponseType from "./LMResponse";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -600,29 +598,29 @@ export {
   TokenValues,
   TokenManager,
   API,
-  AddPostResponse,
-  EditPostResponse,
-  DeletePostResponse,
-  DeleteCommentResponse,
-  GetAllMembersResponse,
-  GetCommentDetailsResponse,
-  GetMemberStateResponse,
-  GetNotificationCountResponse,
-  GetNotificationResponse,
-  GetOgTagResponse,
-  GetPinPostResponse,
-  GetPostDetailsResponse,
+  AddPost,
+  EditPost,
+  DeletePost,
+  DeleteComment,
+  GetAllMembers,
+  GetCommentDetails,
+  GetMemberState,
+  GetNotificationCount,
+  GetNotification,
+  GetOgTag,
+  GetPinPost,
+  GetPostDetails,
   GetPostLikesResponse,
   GetReportTagsResponse,
   GetTaggingListResponse,
-  GetTopicsResponse,
-  GetUniversalFeedResponse,
+  GetTopics,
+  GetUniversalFeed,
   ValidateUserResponse,
-  LikeCommentResponse,
-  LikePostResponse,
-  PostCommentResponse,
+  LikeComment,
+  LikePost,
+  PostComment,
   EditCommentResponse,
-  PostReplyResponse,
+  PostReply,
   Activity,
   Community,
   User,
@@ -633,4 +631,5 @@ export {
   ReportObject,
   TaggingMember,
   Topic,
+  LMResponseType,
 };

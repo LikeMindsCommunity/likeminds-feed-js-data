@@ -1,6 +1,6 @@
-export interface DeletePostResponse {
+export interface DeletePost {
   errorMessage?: string | null;
 }
-export interface DeleteCommentResponse {
+export interface DeleteComment {
   errorMessage?: string | null;
 }

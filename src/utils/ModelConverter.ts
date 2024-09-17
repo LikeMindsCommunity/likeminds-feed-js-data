@@ -35,18 +35,18 @@ export class ModelConverter<S> {
     if (typeof obj !== "object" || obj === null) {
       return obj;
     }
-
     if (Array.isArray(obj)) {
       return obj.map((item) => this.responseBodyParser(item)) as T;
     }
 
-    let result: T;
+    const result = {} as T;
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         const camelKey =
           key == "_id" && this.versionCode == "rn"
             ? "id"
             : key.replace(/_([a-z])/g, (match, letter) => letter.toUpperCase());
+
         result[camelKey] = this.responseBodyParser(obj[key]);
       }
     }

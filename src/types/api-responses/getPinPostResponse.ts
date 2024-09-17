@@ -1,3 +1,3 @@
-export interface GetPinPostResponse {
+export interface GetPinPost {
   errorMessage?: string | null;
 }

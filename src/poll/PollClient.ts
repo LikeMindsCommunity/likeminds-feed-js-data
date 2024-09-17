@@ -9,22 +9,22 @@ import { AddPollOptionResponse } from "./model/AddPollOptionResponse";
 import { GetPollVotesResponse } from "./model/GetPollVotesResponse";
 
 class PollFeedClient {
-  private networkLibrary;
+  private networkLibrary: NetworkLibrary;
 
   constructor(networkInstance: NetworkLibrary) {
     this.networkLibrary = networkInstance;
   }
 
   // submit poll vote
-  submitPollVote(request: SubmitPollVoteRequest): Promise<LMResponse<any>> {
+  submitPollVote(request: SubmitPollVoteRequest) {
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.POLL}/${request.pollId}/vote`, {
+      .makeAuthenticatedRequest<any>(`${API.POLL}/${request.pollId}/vote`, {
         method: "PUT",
         data: ModelConverter.requestBodyGenerator(request),
       })
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData.data);
-        return new LMResponse<any>(responseData, null, true);
+      .then((resData) => {
+        // const responseData = ModelConverter.responseBodyParser(resData.data);
+        return resData;
       })
       .catch((error: any) => {
         return new LMResponse<any>(
@@ -36,15 +36,14 @@ class PollFeedClient {
   }
 
   // add poll option
-  addPollOption(request: AddPollOptionRequest): Promise<LMResponse<any>> {
+  addPollOption(request: AddPollOptionRequest) {
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.POLL}/${request.pollId}`, {
+      .makeAuthenticatedRequest<any>(`${API.POLL}/${request.pollId}`, {
         method: "PUT",
         data: ModelConverter.requestBodyGenerator(request),
       })
       .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData.data);
-        return new LMResponse<AddPollOptionResponse>(responseData, null, true);
+        return resData;
       })
       .catch((error: any) => {
         return new LMResponse<AddPollOptionResponse>(
@@ -56,12 +55,13 @@ class PollFeedClient {
   }
 
   // get poll votes
-  getPollVotes(request: GetPollVotesRequest): Promise<LMResponse<any>> {
+  getPollVotes(request: GetPollVotesRequest) {
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.POLL}/${request.pollId}/vote?votes=${request.votes}&page=${request.page}&page_size=${request.pageSize}`)
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData.data);
-        return new LMResponse<GetPollVotesResponse>(responseData, null, true);
+      .makeAuthenticatedRequest<any>(
+        `${API.POLL}/${request.pollId}/vote?votes=${request.votes}&page=${request.page}&page_size=${request.pageSize}`
+      )
+      .then((resData) => {
+        return resData;
       })
       .catch((error: any) => {
         return new LMResponse<GetPollVotesResponse>(

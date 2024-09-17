@@ -2,24 +2,25 @@
 import { API } from "../shared/constants/api.constant";
 
 import InitiateUserRequest from "./model/InitiateUserRequest";
-import {
-  InitiateUser,
-  InitiateUserResponse,
-} from "../types/api-responses/initiateUserResponse";
+
 import NetworkLibrary from "../core/services/networklibrary";
 import { ModelConverter } from "../utils/ModelConverter";
 
 // import { GetMemberStateResponse } from "./model/GetMemberStateResponse";
-import { GetMemberStateResponse } from "../types/api-responses/getMemberStateResponse";
+import { GetMemberState } from "../types/api-responses/getMemberStateResponse";
 import GetAllMembersRequest from "./model/GetAllMembersRequest";
 import ValidateUserRequest from "./model/ValidateUserRequest";
-import { ValidateUserResponse } from "../types/api-responses/initiateUserResponse";
-import { GetAllMembersResponse } from "../types/api-responses/getAllMembersResponse";
+
+import { GetAllMembers } from "../types/api-responses/getAllMembersResponse";
 // import { ValidateUserResponse } from "./model/ValidateUserResponse";
 import { GetCommunityConfigurationsResponse } from "./model/GetCommunityConfigurationsResponse";
 
 import LMResponse from "../core/services/lmresponse";
 import { EditProfile, Nothing } from "src/pages/user/types";
+import {
+  InitiateUser,
+  ValidateUser,
+} from "../types/api-responses/initiateUserResponse";
 
 class InitiateUserClient {
   private networkLibrary: NetworkLibrary;
@@ -28,22 +29,18 @@ class InitiateUserClient {
     this.networkLibrary = networkInstance;
   }
 
-  public async validateUser(
-    request: ValidateUserRequest
-  ): Promise<ValidateUserResponse> {
+  public async validateUser(request: ValidateUserRequest) {
     this.networkLibrary.setAccessToken(request.accessToken);
     this.networkLibrary.setRefreshToken(request.refreshToken);
 
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.SDK_INITIATE}`, {
+      .makeAuthenticatedRequest<ValidateUser>(`${API.SDK_INITIATE}`, {
         method: "GET",
       })
-      .then((resData: any) => {
+      .then((resData) => {
         // Handle the response and return the LMResponse object
-        const responseData: ValidateUserResponse =
-          ModelConverter.responseBodyParser(resData);
 
-        return responseData;
+        return resData;
       })
       .catch((error) => {
         return {
@@ -64,16 +61,17 @@ class InitiateUserClient {
         data: params,
       })
       .then((resData) => {
+        console.log(resData);
         const accessToken = resData?.data?.accessToken;
         this.networkLibrary.setAccessToken(accessToken);
         const refreshToken = resData?.data?.refreshToken;
         this.networkLibrary.setRefreshToken(refreshToken);
 
         // Handle the response and return the LMResponse object
-        const responseData: InitiateUserResponse =
-          ModelConverter.responseBodyParser(resData);
+        // const responseData: InitiateUserResponse =
+        //   ModelConverter.responseBodyParser(resData);
 
-        return responseData;
+        return resData;
       })
       .catch((error) => {
         return {
@@ -83,21 +81,13 @@ class InitiateUserClient {
       });
   }
 
-  public async getCommunityConfigurations(): Promise<
-    LMResponse<GetCommunityConfigurationsResponse>
-  > {
+  public async getCommunityConfigurations() {
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.COMMUNITY_CONFIGURATIONS}`)
-      .then((resData: any) => {
+      .then((resData) => {
         // Handle the response and return the LMResponse object
-        const responseData: GetCommunityConfigurationsResponse =
-          ModelConverter.responseBodyParser(resData.data);
 
-        return new LMResponse<GetCommunityConfigurationsResponse>(
-          responseData,
-          null,
-          true
-        );
+        return resData;
       })
       .catch((error) => {
         return new LMResponse<GetCommunityConfigurationsResponse>(
@@ -108,15 +98,15 @@ class InitiateUserClient {
       });
   }
 
-  public async getMemberState(): Promise<GetMemberStateResponse> {
+  public async getMemberState() {
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.COMMUNITY_MEMBER_STATE}`)
-      .then((resData: any) => {
+      .makeAuthenticatedRequest<GetMemberState>(`${API.COMMUNITY_MEMBER_STATE}`)
+      .then((resData) => {
         // Handle the response and return the LMResponse object
-        const responseData: GetMemberStateResponse =
-          ModelConverter.responseBodyParser(resData);
+        // const responseData: GetMemberStateResponse =
+        //   ModelConverter.responseBodyParser(resData);
 
-        return responseData;
+        return resData;
       })
       .catch((error) => {
         return {
@@ -128,7 +118,7 @@ class InitiateUserClient {
 
   public async getAllMembers(
     request: GetAllMembersRequest
-  ): Promise<GetAllMembersResponse> {
+  ): Promise<GetAllMembers> {
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.DM_ALL_MEMBERS}?page=${request.page}`)
       .then((resData: any) => {
@@ -145,22 +135,17 @@ class InitiateUserClient {
       });
   }
 
-  public async editProfile(
-    editProfile: EditProfile
-  ): Promise<LMResponse<Nothing>> {
+  public async editProfile(editProfile: EditProfile) {
     const params = ModelConverter.requestBodyGenerator(editProfile);
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.COMMUNITY_MEMBER_PROFILE}`, {
         method: "PUT",
         data: params,
       })
-      .then((resData: any) => {
+      .then((resData) => {
         // Handle the response and return the LMResponse object
-        const responseData: Nothing = ModelConverter.responseBodyParser(
-          resData.data
-        );
 
-        return new LMResponse<Nothing>(responseData, null, true);
+        return resData;
       })
       .catch((error) => {
         return new LMResponse<Nothing>(

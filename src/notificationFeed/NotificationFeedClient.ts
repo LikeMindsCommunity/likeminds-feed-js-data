@@ -1,16 +1,14 @@
-// import { environment } from "../environment";
 import { API } from "../shared/constants/api.constant";
 import NetworkLibrary from "../core/services/networklibrary";
-// import InitiateUserRequest from "../initiateUser/model/InitiateUserRequest";
-// import { InitiateUserResponse } from "../initiateUser/model/InitiateUserResponse";
+
 import GetNotificationFeedRequest from "./model/GetNotificationFeedRequest";
 
 import { ModelConverter } from "../utils/ModelConverter";
 import MarkReadNotificationRequest from "./model/MarkReadNotificationRequest";
 
-import { GetNotificationResponse } from "../types/api-responses/getNotificationResponse";
-import { AnyArn } from "aws-sdk/clients/groundstation";
-import { GetNotificationCountResponse } from "../types/api-responses/getNotificationCount";
+import { GetNotification } from "../types/api-responses/getNotificationResponse";
+
+import { GetNotificationCount } from "../types/api-responses/getNotificationCount";
 
 class NotificationFeedClient {
   public networkLibrary: NetworkLibrary;
@@ -19,16 +17,13 @@ class NotificationFeedClient {
     this.networkLibrary = instance;
   }
 
-  getNotificationFeed(
-    request: GetNotificationFeedRequest
-  ): Promise<GetNotificationResponse> {
+  getNotificationFeed(request: GetNotificationFeedRequest) {
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<GetNotification>(
         `${API.NOTIFICATION_FEED}?page=${request.page}&page_size=${request.pageSize}`
       )
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return responseData;
+      .then((resData) => {
+        return resData;
       })
       .catch((error) => {
         return {
@@ -37,20 +32,19 @@ class NotificationFeedClient {
         };
       });
   }
-
-  markReadNotification(request: MarkReadNotificationRequest): Promise<AnyArn> {
+  // TBD giving error
+  markReadNotification(request: MarkReadNotificationRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<undefined>(
         `${API.NOTIFICATION_FEED}/${request.activityId}/mark_read`,
         {
           method: "POST",
           data: params,
         }
       )
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return responseData;
+      .then((resData) => {
+        return resData;
       })
       .catch((error) => {
         return {
@@ -60,12 +54,13 @@ class NotificationFeedClient {
       });
   }
 
-  getUnreadNotificationCount(): Promise<GetNotificationCountResponse> {
+  getUnreadNotificationCount() {
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.NOTIFICATION_FEED}/unread_count`)
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return responseData;
+      .makeAuthenticatedRequest<GetNotificationCount>(
+        `${API.NOTIFICATION_FEED}/unread_count`
+      )
+      .then((resData) => {
+        return resData;
       })
       .catch((error) => {
         return {

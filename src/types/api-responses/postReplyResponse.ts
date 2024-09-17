@@ -5,10 +5,8 @@ interface Users {
   [key: string]: User;
 }
 
-export interface PostResponse {
-  data?: {
-    comment: Reply;
+export interface Post {
+  comment: Reply;
 
-    users: Users;
-  };
+  users: Users;
 }

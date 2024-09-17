@@ -8,21 +8,22 @@ import GetPostRequest from "./model/GetPostRequest";
 // import { GetPostResponse } from "./model/GetPostResponse";
 import SavePostRequest from "./model/SavePostRequest";
 import GetPostLikesRequest from "./model/GetPostLikesRequest";
-import { GetPostLikesResponse } from "../types/api-responses/getPostLikesResponse";
+import { GetPostLikes } from "../types/api-responses/getPostLikesResponse";
 import LikePostRequest from "./model/LikePostRequest";
 import PinPostRequest from "./model/PinPostRequest";
 import EditPostRequest from "./model/EditPostRequest";
-import { EditPostResponse } from "../types/api-responses/addPostResponse";
+import { EditPost } from "../types/api-responses/addPostResponse";
 import DecodeURLRequest from "./model/DecodeUrlRequest";
 import GetTaggingListRequest from "./model/GetTaggingListRequest";
 import GetTopicsRequest from "./model/GetTopicsRequest";
-import { AddPostResponse } from "../types/api-responses/addPostResponse";
-import { GetPostDetailsResponse } from "../types/api-responses/getPostDetailsResponse";
-import { LikePostResponse } from "../types/api-responses/likePostResponse";
-import { GetPinPostResponse } from "../types/api-responses/getPinPostResponse";
-import { DeletePostResponse } from "../types/api-responses/deletePostResponse";
-import { GetTaggingListResponse } from "../types/api-responses/getTaggingListResponse";
-import { GetTopicsResponse } from "../types/api-responses/getTopicsResponse";
+import { AddPost } from "../types/api-responses/addPostResponse";
+import { GetPostDetails } from "../types/api-responses/getPostDetailsResponse";
+import { LikePost } from "../types/api-responses/likePostResponse";
+import { GetPinPost } from "../types/api-responses/getPinPostResponse";
+import { DeletePost } from "../types/api-responses/deletePostResponse";
+import { GetTaggingList } from "../types/api-responses/getTaggingListResponse";
+import { GetTopics } from "../types/api-responses/getTopicsResponse";
+import { DecodeURLResponse } from "./model/DecodeURLResponse";
 
 class PostClient {
   private networkLibrary: NetworkLibrary;
@@ -31,19 +32,19 @@ class PostClient {
     this.networkLibrary = instance;
   }
 
-  async addPost(request: AddPostRequest): Promise<AddPostResponse> {
+  async addPost(request: AddPostRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.FEED_POST}`, {
+      .makeAuthenticatedRequest<AddPost>(`${API.FEED_POST}`, {
         method: "POST",
         data: params,
       })
-      .then((resData: any) => {
+      .then((resData) => {
         // Handle the response and return the LMResponse object
-        const responseData: AddPostResponse =
-          ModelConverter.responseBodyParser(resData);
+        // const responseData: AddPostResponse =
+        //   ModelConverter.responseBodyParser(resData);
 
-        return responseData;
+        return resData;
       })
       .catch((error) => {
         return {
@@ -53,17 +54,13 @@ class PostClient {
       });
   }
 
-  public async getPost(
-    getPost: GetPostRequest
-  ): Promise<GetPostDetailsResponse> {
+  public async getPost(getPost: GetPostRequest) {
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<GetPostDetails>(
         `${API.FEED_POST}/${getPost.postId}?page=${getPost.page}&page_size=${getPost.pageSize}`
       )
-      .then((resData: any) => {
-        const responseData: GetPostDetailsResponse =
-          ModelConverter.responseBodyParser(resData);
-        return responseData;
+      .then((resData) => {
+        return resData;
       })
       .catch((error) => {
         return {
@@ -93,17 +90,15 @@ class PostClient {
       });
   }
 
-  public async getPostLikes(
-    request: GetPostLikesRequest
-  ): Promise<GetPostLikesResponse> {
+  public async getPostLikes(request: GetPostLikesRequest) {
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<GetPostLikes>(
         `${API.FEED_POST}/${request.postId}/like?page=${request.page}&page_size=${request.pageSize}`
       )
-      .then((resData: any) => {
-        const responseData: GetPostLikesResponse =
-          ModelConverter.responseBodyParser(resData);
-        return responseData;
+      .then((resData) => {
+        // const responseData: GetPostLikesResponse =
+        //   ModelConverter.responseBodyParser(resData);
+        return resData;
       })
       .catch((error) => {
         return {
@@ -113,7 +108,7 @@ class PostClient {
       });
   }
 
-  public async likePost(likePost: LikePostRequest): Promise<LikePostResponse> {
+  public async likePost(likePost: LikePostRequest): Promise<LikePost> {
     const params = ModelConverter.requestBodyGenerator(likePost);
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.FEED_POST}/${likePost.postId}/like`, {
@@ -131,7 +126,7 @@ class PostClient {
       });
   }
 
-  public async pinPost(pinPost: PinPostRequest): Promise<GetPinPostResponse> {
+  public async pinPost(pinPost: PinPostRequest): Promise<GetPinPost> {
     const params = ModelConverter.requestBodyGenerator(pinPost);
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.FEED_POST}/${pinPost.postId}/pin`, {
@@ -149,17 +144,18 @@ class PostClient {
       });
   }
 
-  editPost(editPost: EditPostRequest): Promise<EditPostResponse> {
+  editPost(editPost: EditPostRequest) {
     const params = ModelConverter.requestBodyGenerator(editPost);
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.FEED_POST}/${editPost.postId}`, {
-        method: "PUT",
-        data: params,
-      })
-      .then((resData: any) => {
-        const responseData: EditPostResponse =
-          ModelConverter.responseBodyParser(resData);
-        return responseData;
+      .makeAuthenticatedRequest<EditPost>(
+        `${API.FEED_POST}/${editPost.postId}`,
+        {
+          method: "PUT",
+          data: params,
+        }
+      )
+      .then((resData) => {
+        return resData;
       })
       .catch((error) => {
         return {
@@ -169,7 +165,7 @@ class PostClient {
       });
   }
 
-  deletePost(deletePost: DeletePostRequest): Promise<DeletePostResponse> {
+  deletePost(deletePost: DeletePostRequest): Promise<DeletePost> {
     const params = ModelConverter.requestBodyGenerator(deletePost);
     return this.networkLibrary
       .makeAuthenticatedRequest(`${API.FEED_POST}/${deletePost.postId}`, {
@@ -187,21 +183,26 @@ class PostClient {
       });
   }
 
-  decodeUrl(decodeUrl: DecodeURLRequest): Promise<any> {
-    return this.networkLibrary.makeAuthenticatedRequest(
-      `${API.HELPER_URL}?url=${decodeUrl.url}`
-    );
-  }
-  getTaggingList(
-    taggingList: GetTaggingListRequest
-  ): Promise<GetTaggingListResponse> {
+  decodeUrl(decodeUrl: DecodeURLRequest) {
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<DecodeURLResponse>(
+        `${API.HELPER_URL}?url=${decodeUrl.url}`
+      )
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        return err;
+      });
+  }
+  getTaggingList(taggingList: GetTaggingListRequest) {
+    return this.networkLibrary
+      .makeAuthenticatedRequest<GetTaggingList>(
         `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
       )
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return responseData;
+      .then((resData) => {
+        // const responseData = ModelConverter.responseBodyParser(resData);
+        return resData;
       })
       .catch((error) => {
         return {
@@ -210,33 +211,33 @@ class PostClient {
         };
       });
   }
-  getPostComments(taggingList: GetTaggingListRequest): Promise<any> {
-    return this.networkLibrary
-      .makeAuthenticatedRequest(
-        `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
-      )
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return new LMResponse<any>(responseData, null, true);
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
-  }
+  // Check
+  // getPostComments(taggingList: GetTaggingListRequest) {
+  //   return this.networkLibrary
+  //     .makeAuthenticatedRequest(
+  //       `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
+  //     )
+  //     .then((resData: any) => {
+  //       const responseData = ModelConverter.responseBodyParser(resData);
+  //       return new LMResponse<any>(responseData, null, true);
+  //     })
+  //     .catch((error) => {
+  //       return {
+  //         success: false,
+  //         errorMessage: error,
+  //       };
+  //     });
+  // }
 
-  getTopics(request: GetTopicsRequest): Promise<GetTopicsResponse> {
+  getTopics(request: GetTopicsRequest) {
     return this.networkLibrary
-      .makeAuthenticatedRequest(
+      .makeAuthenticatedRequest<GetTopics>(
         request.isEnabled === null
           ? `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}`
           : `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}&is_enabled=${request.isEnabled}`
       )
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return responseData;
+      .then((resData) => {
+        return resData;
       })
       .catch((error) => {
         return {

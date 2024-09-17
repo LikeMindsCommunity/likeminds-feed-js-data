@@ -5,8 +5,9 @@ import { ModelConverter } from "../../src/utils/ModelConverter";
 
 import { DecodeUrlResponse } from "./model/DecodeUrlResponse";
 
-import { GetTaggingListResponse } from "../types/api-responses/getTaggingListResponse";
+import { GetTaggingList } from "../types/api-responses/getTaggingListResponse";
 import RegisterDeviceRequest from "./model/RegisterDeviceRequest";
+import { DecodeURLResponse } from "../post/model/DecodeURLResponse";
 
 class HelperClient {
   public networkLibrary: NetworkLibrary;
@@ -15,13 +16,11 @@ class HelperClient {
     this.networkLibrary = instance;
   }
 
-  public async decodeUrl(): Promise<LMResponse<DecodeUrlResponse>> {
+  public async decodeUrl() {
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.HELPER_URL}`)
-      .then((resData: any) => {
-        const responseData: DecodeUrlResponse =
-          ModelConverter.responseBodyParser(resData);
-        return new LMResponse<DecodeUrlResponse>(responseData, null, true);
+      .makeAuthenticatedRequest<DecodeURLResponse>(`${API.HELPER_URL}`)
+      .then((resData) => {
+        return resData;
       })
       .catch((error) => {
         return new LMResponse<DecodeUrlResponse>(
@@ -31,13 +30,11 @@ class HelperClient {
         );
       });
   }
-  public async getTaggingList(): Promise<GetTaggingListResponse> {
+  public async getTaggingList() {
     return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.COMMUNITY_TAG}`)
-      .then((resData: any) => {
-        const responseData: GetTaggingListResponse =
-          ModelConverter.responseBodyParser(resData);
-        return responseData;
+      .makeAuthenticatedRequest<GetTaggingList>(`${API.COMMUNITY_TAG}`)
+      .then((resData) => {
+        return resData;
       })
       .catch((error) => {
         return {

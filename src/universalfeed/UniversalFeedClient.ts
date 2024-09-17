@@ -6,7 +6,7 @@ import NetworkLibrary from "../core/services/networklibrary";
 import GetFeedRequest from "./model/GetFeedRequest";
 import { ModelConverter } from "../utils/ModelConverter";
 
-import { GetUniversalFeedResponse } from "../types/api-responses/getUniversalFeed";
+import { GetUniversalFeed } from "../types/api-responses/getUniversalFeed";
 
 class UniversalFeedClient {
   private networkLibrary;
@@ -16,7 +16,7 @@ class UniversalFeedClient {
   }
 
   // get normal feed
-  getFeed(feed: GetFeedRequest): Promise<GetUniversalFeedResponse> {
+  getFeed(feed: GetFeedRequest): Promise<GetUniversalFeed> {
     return this.networkLibrary
       .makeAuthenticatedRequest(
         feed.topicIds
