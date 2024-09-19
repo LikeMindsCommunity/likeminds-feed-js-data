@@ -1,11 +1,11 @@
-import Attachment from "./Attachment";
+import { Attachment } from "../../types/models/attachment";
 
 class AddPostRequest {
   // Properties of the request class
   text?: string;
   attachments: Attachment[];
   heading?: string;
-  topic_ids: string[] | null;
+  topicIds: string[] | null;
   tempId?: string;
   onBehalfOfUuid?: string;
 
@@ -14,14 +14,14 @@ class AddPostRequest {
     text: string,
     attachments: Attachment[],
     heading: string,
-    topic_ids: string[],
+    topicIds: string[],
     tempId: string,
     onBehalfOfUUID?: string
   ) {
     this.text = text;
     this.attachments = attachments;
     this.heading = heading;
-    this.topic_ids = topic_ids;
+    this.topicIds = topicIds;
     this.tempId = tempId;
     this.onBehalfOfUuid = onBehalfOfUUID;
   }
@@ -37,7 +37,7 @@ export class AddPostRequestBuilder {
   private text: string | undefined;
   private attachments: Attachment[] | undefined;
   private heading: string | undefined;
-  private topic_ids: string[] | null;
+  private topicIds: string[] | null;
   private tempId: string;
   private onBehalfOfUUID?: string | undefined;
   // Add other properties as needed
@@ -55,7 +55,7 @@ export class AddPostRequestBuilder {
     return this;
   }
   public setTopicIds(topicIds: string[] | null) {
-    this.topic_ids = topicIds;
+    this.topicIds = topicIds;
     return this;
   }
 
@@ -79,7 +79,7 @@ export class AddPostRequestBuilder {
       this.text,
       this.attachments,
       this.heading,
-      this.topic_ids,
+      this.topicIds,
       this.tempId,
       this.onBehalfOfUUID
     );

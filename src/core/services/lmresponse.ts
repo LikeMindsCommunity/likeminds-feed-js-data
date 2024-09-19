@@ -14,7 +14,7 @@ class LMResponse<T> {
     const responseData = ModelConverter.responseBodyParser<T>(
       responseObjectFromServer.data
     );
-    console.log(responseData);
+
     this.data = responseData;
     this.errorMessage = errorMessage;
     this.success = success;

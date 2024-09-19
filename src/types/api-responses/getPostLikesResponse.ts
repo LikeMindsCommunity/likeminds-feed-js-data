@@ -1,5 +1,5 @@
 import { User } from "../models/member";
-
+// TODO change unknowns
 export interface GetPostLikes {
   likes: Like[];
   topics: Record<string, unknown>;

@@ -4,8 +4,7 @@ import InitiateUserRequest from "./initiateUser/model/InitiateUserRequest";
 import PostClient from "./post/PostClient";
 import AddPostRequest from "./post/model/AddPostRequest";
 import UniversalFeedClient from "./universalfeed/UniversalFeedClient";
-import Attachment from "./post/model/Attachment";
-import AttachmentMeta from "./post/model/AttachmentMeta";
+
 import DecodeURLRequest from "./post/model/DecodeUrlRequest";
 import DeletePostRequest from "./post/model/DeletePostRequest";
 import EditPostRequest from "./post/model/EditPostRequest";
@@ -50,6 +49,7 @@ import {
   DeleteComment,
 } from "./types/api-responses/deletePostResponse";
 import {
+  EditComment,
   PostComment,
   PostReply,
 } from "./types/api-responses/postCommentResponse";
@@ -57,25 +57,41 @@ import { GetAllMembers } from "./types/api-responses/getAllMembersResponse";
 import { GetCommentDetails } from "./types/api-responses/getCommentDetailsResponse";
 import { GetNotificationCount } from "./types/api-responses/getNotificationCount";
 import { GetNotification } from "./types/api-responses/getNotificationResponse";
-import { GetOgTag } from "./types/api-responses/getOgTagResponse";
+
 import { GetPinPost } from "./types/api-responses/getPinPostResponse";
 import { GetPostDetails } from "./types/api-responses/getPostDetailsResponse";
 import { GetTopics } from "./types/api-responses/getTopicsResponse";
 import { GetUniversalFeed } from "./types/api-responses/getUniversalFeed";
 import { LikeComment } from "./types/api-responses/likeCommentResponse";
 import { LikePost } from "./types/api-responses/likePostResponse";
-import { ReportTag } from "./types/models/reportTags";
-import { User } from "aws-sdk/clients/appstream";
-import { Activity } from "aws-sdk/clients/autoscaling";
-import { Topic } from "aws-sdk/clients/iot";
-import { Community } from "./types/models/community";
-import { OgTag } from "./types/models/ogTag";
-import { Post } from "./types/models/post";
-import { Reply } from "./types/models/replies";
-import { TaggingUser } from "./types/models/taggingMember";
-
 import { EditProfile } from "./pages/user/types";
 import LMResponseType from "./LMResponse";
+import { Activity, ActivityEntityData } from "./types/models/Activity";
+import { Attachment, AttachmentMeta } from "./types/models/attachment";
+import { Community } from "./types/models/community";
+import { SdkClientInfo, User } from "./types/models/member";
+import { OgTag } from "./types/models/ogTag";
+import { MenuItem, Post } from "./types/models/post";
+import { Reply } from "./types/models/replies";
+import { ReportTag } from "./types/models/reportTags";
+import { TaggingUser } from "./types/models/taggingMember";
+import { Topic } from "./types/models/topic";
+import { UploadMedia } from "./types/models/uploadMedia";
+import { Widget } from "./types/models/widget";
+import { SavePost } from "./types/api-responses/savePostResponse";
+import { PostReport } from "./types/api-responses/postReportResponse";
+import { MarkReadNotification } from "./types/api-responses/markReadResponse";
+import {
+  InitiateUser,
+  ValidateUser,
+} from "./types/api-responses/initiateUserResponse";
+import { GetTaggingList } from "./types/api-responses/getTaggingListResponse";
+import { GetReportTags } from "./types/api-responses/getReportTagsResponse";
+import { GetPostLikes } from "./types/api-responses/getPostLikesResponse";
+import { GetMemberState } from "./types/api-responses/getMemberStateResponse";
+import { GetCommentLikes } from "./types/api-responses/getCommentLikesResponse";
+import { DecodeURL } from "./types/api-responses/decodeUrlResponse";
+import { FilterComment } from "./types/models/filterComment";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -90,7 +106,6 @@ class LMFeedClient {
   private apiKey: string | null = null;
   private helperClient: HelperClient;
   private LMSDKCallbacks: LMSDKCallbacks;
-
   private pollFeedClient: PollFeedClient;
   constructor() {
     // this.LMSDKCallbacks = new LMSDKCallbacks();
@@ -377,8 +392,6 @@ export {
   LMFeedClient,
   InitiateUserRequest,
   AddPostRequest,
-  Attachment,
-  AttachmentMeta,
   DecodeURLRequest,
   DeletePostRequest,
   EditPostRequest,
@@ -409,31 +422,53 @@ export {
   TokenValues,
   TokenManager,
   API,
-  AddPost,
-  EditPost,
+  LMResponseType,
+  // APIs
+  SavePost,
+  PostReport,
+  PostReply,
+  EditComment,
+  PostComment,
+  MarkReadNotification,
+  LikePost,
+  LikeComment,
+  InitiateUser,
+  ValidateUser,
+  GetUniversalFeed,
+  GetTopics,
+  GetTaggingList,
+  GetReportTags,
+  GetPostLikes,
+  GetPostDetails,
+  GetPinPost,
+  GetNotification,
+  GetMemberState,
+  GetCommentLikes,
+  GetCommentDetails,
+  GetAllMembers,
   DeletePost,
   DeleteComment,
-  GetAllMembers,
-  GetCommentDetails,
+  DecodeURL,
+  AddPost,
+  EditPost,
   GetNotificationCount,
-  GetNotification,
-  GetOgTag,
-  GetPinPost,
-  GetPostDetails,
-  GetTopics,
-  GetUniversalFeed,
-  LikeComment,
-  LikePost,
-  PostComment,
-  PostReply,
+
+  // Models
   Activity,
+  ActivityEntityData,
+  Attachment,
+  AttachmentMeta,
   Community,
   User,
+  SdkClientInfo,
   OgTag,
   Post,
+  MenuItem,
   Reply,
   ReportTag,
   TaggingUser,
   Topic,
-  LMResponseType,
+  UploadMedia,
+  Widget,
+  FilterComment,
 };

@@ -153,7 +153,8 @@ class NetworkLibrary {
 
     try {
       const response = await this.makeRequest<T>(url, requestConfig);
-
+      console.log(`The response is`);
+      console.log(response.data);
       return new LMResponse<T>(response.data as LMResponseType<T>, null, true);
     } catch (error) {
       if (error?.response && error?.response?.status === 401) {

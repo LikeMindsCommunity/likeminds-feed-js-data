@@ -1,4 +1,4 @@
-import Attachment from "./Attachment";
+import { Attachment } from "../../types/models/attachment";
 
 class EditPostRequest {
   // Properties of the request class
@@ -14,13 +14,13 @@ class EditPostRequest {
     text: string,
     attachments: Attachment[],
     heading: string,
-    topic_ids: string[]
+    topicIds: string[]
   ) {
     this.postId = postId;
     this.text = text;
     this.attachments = attachments;
     this.heading = heading;
-    this.topic_ids = topic_ids;
+    this.topic_ids = topicIds;
   }
 
   // Static builder method to create the request object

@@ -24,6 +24,7 @@ export interface Post {
   userId: string;
   uuid: string;
   replies?: Reply[];
+  commentIds?: string[];
 }
 
 export interface MenuItem {
