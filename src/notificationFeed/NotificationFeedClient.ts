@@ -9,6 +9,7 @@ import MarkReadNotificationRequest from "./model/MarkReadNotificationRequest";
 import { GetNotification } from "../types/api-responses/getNotificationResponse";
 
 import { GetNotificationCount } from "../types/api-responses/getNotificationCount";
+import { MarkReadNotification } from "../types/api-responses/markReadResponse";
 
 class NotificationFeedClient {
   public networkLibrary: NetworkLibrary;
@@ -18,56 +19,26 @@ class NotificationFeedClient {
   }
 
   getNotificationFeed(request: GetNotificationFeedRequest) {
-    return this.networkLibrary
-      .makeAuthenticatedRequest<GetNotification>(
-        `${API.NOTIFICATION_FEED}?page=${request.page}&page_size=${request.pageSize}`
-      )
-      .then((resData) => {
-        return resData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+    return this.networkLibrary.makeAuthenticatedRequest<GetNotification>(
+      `${API.NOTIFICATION_FEED}?page=${request.page}&page_size=${request.pageSize}`
+    );
   }
-  // TBD giving error
+
   markReadNotification(request: MarkReadNotificationRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
-    return this.networkLibrary
-      .makeAuthenticatedRequest<undefined>(
-        `${API.NOTIFICATION_FEED}/${request.activityId}/mark_read`,
-        {
-          method: "POST",
-          data: params,
-        }
-      )
-      .then((resData) => {
-        return resData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+    return this.networkLibrary.makeAuthenticatedRequest<MarkReadNotification>(
+      `${API.NOTIFICATION_FEED}/${request.activityId}/mark_read`,
+      {
+        method: "POST",
+        data: params,
+      }
+    );
   }
 
   getUnreadNotificationCount() {
-    return this.networkLibrary
-      .makeAuthenticatedRequest<GetNotificationCount>(
-        `${API.NOTIFICATION_FEED}/unread_count`
-      )
-      .then((resData) => {
-        return resData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+    return this.networkLibrary.makeAuthenticatedRequest<GetNotificationCount>(
+      `${API.NOTIFICATION_FEED}/unread_count`
+    );
   }
 }
 

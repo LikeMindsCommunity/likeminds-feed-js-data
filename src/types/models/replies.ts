@@ -1,10 +1,6 @@
-interface MenuItem {
-  id: number;
-  title: string;
-}
+import { MenuItem } from "./post";
 
 export interface Reply {
-  Id: string;
   id: string;
   commentsCount: number;
   communityId: number;

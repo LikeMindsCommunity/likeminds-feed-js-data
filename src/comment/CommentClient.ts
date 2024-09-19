@@ -16,8 +16,8 @@ import { PostComment } from "../types/api-responses/postCommentResponse";
 import { GetCommentDetails } from "../types/api-responses/getCommentDetailsResponse";
 
 import { LikeComment } from "../types/api-responses/likeCommentResponse";
-import { GetCommentLikesResponse } from "./model/GetCommentLikesResponse";
-import { ReplyCommentResponse } from "./model/ReplyCommentResponse";
+import { GetCommentLikes } from "../types/api-responses/getCommentLikesResponse";
+import { DeleteComment } from "../types/api-responses/deleteCommentResponse";
 
 class CommentClient {
   public networkLibrary: NetworkLibrary;
@@ -26,7 +26,7 @@ class CommentClient {
     this.networkLibrary = instance;
   }
 
-  addComment(addComment: AddCommentRequest) {
+  public async addComment(addComment: AddCommentRequest) {
     const params = ModelConverter.requestBodyGenerator(addComment);
     return this.networkLibrary
       .makeAuthenticatedRequest<PostComment>(
@@ -39,16 +39,14 @@ class CommentClient {
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData);
         return responseData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
       });
   }
 
-  getComment(getComment: GetCommentRequest, postId: string, commentId: any) {
+  public async getComment(
+    getComment: GetCommentRequest,
+    postId: string,
+    commentId: any
+  ) {
     return this.networkLibrary
       .makeAuthenticatedRequest<GetCommentDetails>(
         `${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`
@@ -56,111 +54,56 @@ class CommentClient {
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData);
         return responseData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
-  }
-  getCommentLikes(request: GetCommentLikesRequest) {
-    return this.networkLibrary
-      .makeAuthenticatedRequest<GetCommentLikesResponse>(
-        `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/like?page=${request.page}&page_size=${request.pageSize}`
-      )
-      .then((resData: any) => {
-        return resData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
       });
   }
 
-  likeComment(request: LikeCommentRequest) {
-    return this.networkLibrary
-      .makeAuthenticatedRequest<LikeComment>(
-        `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/like`,
-        {
-          method: "PUT",
-          data: ModelConverter.requestBodyGenerator(request),
-        }
-      )
-      .then((resData: any) => {
-        return resData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+  public async getCommentLikes(request: GetCommentLikesRequest) {
+    return this.networkLibrary.makeAuthenticatedRequest<GetCommentLikes>(
+      `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/like?page=${request.page}&page_size=${request.pageSize}`
+    );
   }
 
-  replyComment(request: ReplyCommentRequest) {
+  public async likeComment(request: LikeCommentRequest) {
+    return this.networkLibrary.makeAuthenticatedRequest<LikeComment>(
+      `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/like`,
+      {
+        method: "PUT",
+        data: ModelConverter.requestBodyGenerator(request),
+      }
+    );
+  }
+
+  public async replyComment(request: ReplyCommentRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
-    return this.networkLibrary
-      .makeAuthenticatedRequest<ReplyCommentResponse>(
-        `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/comment`,
-        {
-          method: "POST",
-          data: params,
-        }
-      )
-      .then((resData) => {
-        return resData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+    return this.networkLibrary.makeAuthenticatedRequest<PostComment>(
+      `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/comment`,
+      {
+        method: "POST",
+        data: params,
+      }
+    );
   }
 
-  editComment(request: EditCommentRequest) {
+  public async editComment(request: EditCommentRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
-    return this.networkLibrary
-      .makeAuthenticatedRequest<EditComment>(
-        `${API.FEED_POST}/${request.postId}/comment/${request.commentId}`,
-        {
-          method: "PUT",
-          data: params,
-        }
-      )
-      .then((resData) => {
-        return resData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+    return this.networkLibrary.makeAuthenticatedRequest<EditComment>(
+      `${API.FEED_POST}/${request.postId}/comment/${request.commentId}`,
+      {
+        method: "PUT",
+        data: params,
+      }
+    );
   }
 
-  deleteComment(request: DeleteCommentRequest) {
+  public async deleteComment(request: DeleteCommentRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
-    return this.networkLibrary
-      .makeAuthenticatedRequest<undefined>(
-        `${API.FEED_POST}/${request.postId}/comment/${request.commentId}`,
-        {
-          method: "DELETE",
-          data: params,
-        }
-      )
-      .then((resData) => {
-        return resData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+    return this.networkLibrary.makeAuthenticatedRequest<DeleteComment>(
+      `${API.FEED_POST}/${request.postId}/comment/${request.commentId}`,
+      {
+        method: "DELETE",
+        data: params,
+      }
+    );
   }
 }
 

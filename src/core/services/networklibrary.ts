@@ -188,15 +188,17 @@ class NetworkLibrary {
             );
           })
           .catch((error) => {
+            console.log(error);
             if (error?.response && error?.response?.status >= 500) {
-              return new LMResponse<T>(null, error.message, false);
+              return new LMResponse<T>(undefined, error.message, false);
             }
           });
       }
 
       if (error?.response && error?.response?.status >= 500) {
-        return new LMResponse<T>(null, error.message, false);
+        return new LMResponse<T>(undefined, error.message, false);
       }
+      throw error;
     }
   }
 }

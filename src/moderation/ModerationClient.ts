@@ -5,6 +5,7 @@ import GetReportTagsRequest from "./model/GetReportTagsRequest";
 import { GetReportTags } from "../types/api-responses/getReportTagsResponse";
 import { ModelConverter } from "../utils/ModelConverter";
 import PostReportRequest from "./model/PostReportRequest";
+import { PostReport } from "../types/api-responses/postReportResponse";
 
 class ModerationClient {
   networkLibrary: NetworkLibrary;
@@ -14,36 +15,19 @@ class ModerationClient {
   }
 
   getReportTags(request: GetReportTagsRequest) {
-    return this.networkLibrary
-      .makeAuthenticatedRequest<GetReportTags>(
-        `${API.GET_REPORT_TAGS}?type=${request.type}`
-      )
-      .then((resData) => {
-        return resData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+    return this.networkLibrary.makeAuthenticatedRequest<GetReportTags>(
+      `${API.GET_REPORT_TAGS}?type=${request.type}`
+    );
   }
 
   postReport(request: PostReportRequest) {
-    return this.networkLibrary
-      .makeAuthenticatedRequest<undefined>(`${API.POST_REPORT}`, {
+    return this.networkLibrary.makeAuthenticatedRequest<PostReport>(
+      `${API.POST_REPORT}`,
+      {
         data: ModelConverter.requestBodyGenerator(request),
         method: "POST",
-      })
-      .then((res) => {
-        return res;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+      }
+    );
   }
 }
 

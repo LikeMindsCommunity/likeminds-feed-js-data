@@ -5,8 +5,8 @@ export interface Attachment {
     entityId?: string;
     format: string;
     name: string;
-    ogTags: OgTag;
-    size: number;
+    ogTags?: OgTag;
+    size?: number;
     url: string;
   };
   attachmentType: number;

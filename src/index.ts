@@ -33,19 +33,6 @@ import MarkReadNotificationRequest from "./notificationFeed/model/MarkReadNotifi
 import EditCommentRequest from "./comment/model/EditCommentRequest";
 import GetTopicsRequest from "./post/model/GetTopicsRequest";
 import ValidateUserRequest from "./initiateUser/model/ValidateUserRequest";
-import { GetFeedResponse } from "./universalfeed/model/GetFeedResponse";
-import { IPost } from "./shared/models/post";
-import { IOgTag } from "./shared/models/ogTags";
-import { IUser } from "./shared/models/user";
-import { IMenuItem } from "./shared/models/menuItem";
-import { AddCommentResponse } from "./comment/model/AddCommentResponse";
-import { GetCommentResponse } from "./comment/model/GetCommentResponse";
-import { IComment } from "./shared/models/comment";
-import { EditCommentResponse } from "./comment/model/EditCommentResponse";
-import { IMemberRight, IMemberState } from "./shared/models/memberRights";
-import { IActivities, IActivity } from "./shared/models/activity";
-import { IMember } from "./initiateUser/model/GetAllMembersResponse";
-import { LMFeedTopics } from "./post/model/GetTopicsResponse";
 import HelperClient from "./helper/HelperClient";
 import RegisterDeviceRequest from "./helper/model/RegisterDeviceRequest";
 import { LMSDKCallbacks } from "./LMCallback";
@@ -53,7 +40,7 @@ import PollFeedClient from "./poll/PollClient";
 import { GetPollVotesRequest } from "./poll/model/GetPollVotesRequest";
 import { AddPollOptionRequest } from "./poll/model/AddPollOptionRequest";
 import { SubmitPollVoteRequest } from "./poll/model/SubmitPollVoteRequest";
-import Like from "./post/model/Like";
+
 import TokenManager from "./core/services/tokenmanager";
 import { TokenValues } from "./shared/tokens";
 import { API } from "./shared/constants/api.constant";
@@ -66,11 +53,6 @@ import {
   PostComment,
   PostReply,
 } from "./types/api-responses/postCommentResponse";
-import { GetTaggingListResponse } from "./helper/model/GetTaggingListResponse";
-import { GetMemberState } from "./initiateUser/model/GetMemberStateResponse";
-import { ValidateUserResponse } from "./initiateUser/model/ValidateUserResponse";
-import { GetReportTagsResponse } from "./moderation/model/GetReportTagsResponse";
-import { GetPostLikesResponse } from "./post/model/GetPostLikesResponse";
 import { GetAllMembers } from "./types/api-responses/getAllMembersResponse";
 import { GetCommentDetails } from "./types/api-responses/getCommentDetailsResponse";
 import { GetNotificationCount } from "./types/api-responses/getNotificationCount";
@@ -82,7 +64,7 @@ import { GetTopics } from "./types/api-responses/getTopicsResponse";
 import { GetUniversalFeed } from "./types/api-responses/getUniversalFeed";
 import { LikeComment } from "./types/api-responses/likeCommentResponse";
 import { LikePost } from "./types/api-responses/likePostResponse";
-import { ReportObject } from "./types/models/reportTags";
+import { ReportTag } from "./types/models/reportTags";
 import { User } from "aws-sdk/clients/appstream";
 import { Activity } from "aws-sdk/clients/autoscaling";
 import { Topic } from "aws-sdk/clients/iot";
@@ -90,8 +72,8 @@ import { Community } from "./types/models/community";
 import { OgTag } from "./types/models/ogTag";
 import { Post } from "./types/models/post";
 import { Reply } from "./types/models/replies";
-import { TaggingMember } from "./types/models/taggingMember";
-import { Member } from "./types/models/member";
+import { TaggingUser } from "./types/models/taggingMember";
+
 import { EditProfile } from "./pages/user/types";
 import LMResponseType from "./LMResponse";
 
@@ -208,27 +190,15 @@ class LMFeedClient {
   }
   // TBD
   async validateUser(validateUserRequest: ValidateUserRequest) {
-    try {
-      const initiateUserResponse =
-        await this.initiateUserClient.validateUser(validateUserRequest);
-
-      return initiateUserResponse;
-    } catch (error) {
-      console.error("Error while validating the user:", error);
-      throw error;
-    }
+    const initiateUserResponse =
+      await this.initiateUserClient.validateUser(validateUserRequest);
+    return initiateUserResponse;
   }
 
   async initiateUser(initiateUserRequest: InitiateUserRequest) {
-    try {
-      const initiateUserResponse =
-        await this.initiateUserClient.initiateUser(initiateUserRequest);
-
-      return initiateUserResponse;
-    } catch (error) {
-      console.error("Error while initiating the user:", error);
-      throw error;
-    }
+    const initiateUserResponse =
+      await this.initiateUserClient.initiateUser(initiateUserRequest);
+    return initiateUserResponse;
   }
 
   async editProfile(editProfile: EditProfile) {
@@ -236,255 +206,137 @@ class LMFeedClient {
   }
 
   async addPost(addPostRequest: AddPostRequest) {
-    try {
-      const addPostResponse = await this.postClient.addPost(addPostRequest);
-      return addPostResponse;
-    } catch (error) {
-      console.log("Error while posting feed :", error);
-      return error;
-    }
+    const addPostResponse = await this.postClient.addPost(addPostRequest);
+    return addPostResponse;
   }
 
   async decodeURL(decodeURLRequest: DecodeURLRequest) {
-    try {
-      const addPostResponse = await this.postClient.decodeUrl(decodeURLRequest);
-      return addPostResponse;
-    } catch (error) {
-      console.log("Error while posting feed :", error);
-      return error;
-    }
+    const addPostResponse = await this.postClient.decodeUrl(decodeURLRequest);
+    return addPostResponse;
   }
 
   async deletePost(deletePostRequest: DeletePostRequest) {
-    try {
-      const deletePostResponse =
-        await this.postClient.deletePost(deletePostRequest);
-      return deletePostResponse;
-    } catch (error) {
-      console.log("Error while deleting post:", error);
-      throw error;
-    }
+    const deletePostResponse =
+      await this.postClient.deletePost(deletePostRequest);
+    return deletePostResponse;
   }
 
   async editPost(editPostRequest: EditPostRequest) {
-    try {
-      const editPostResponse = await this.postClient.editPost(editPostRequest);
-      return editPostResponse;
-    } catch (error) {
-      console.log("Error while editing post:", error);
-      throw error;
-    }
+    const editPostResponse = await this.postClient.editPost(editPostRequest);
+    return editPostResponse;
   }
 
-  // Function for GetPostLikesRequest
   async getPostLikes(getPostLikesRequest: GetPostLikesRequest) {
-    try {
-      const getPostLikesResponse =
-        await this.postClient.getPostLikes(getPostLikesRequest);
-      return getPostLikesResponse;
-    } catch (error) {
-      console.log("Error while getting post likes:", error);
-      throw error;
-    }
+    const getPostLikesResponse =
+      await this.postClient.getPostLikes(getPostLikesRequest);
+    return getPostLikesResponse;
   }
 
   async getPost(getPostRequest: GetPostRequest) {
-    try {
-      const getPostResponse = await this.postClient.getPost(getPostRequest);
-      return getPostResponse;
-    } catch (error) {
-      console.log("Error while getting post:", error);
-      throw error;
-    }
+    const getPostResponse = await this.postClient.getPost(getPostRequest);
+    return getPostResponse;
   }
 
   async getTopics(request: GetTopicsRequest) {
-    try {
-      const getPostResponse = await this.postClient.getTopics(request);
-      return getPostResponse;
-    } catch (error) {
-      console.log("Error while getting post:", error);
-      throw error;
-    }
+    const getPostResponse = await this.postClient.getTopics(request);
+    return getPostResponse;
   }
 
   async likePost(likePostRequest: LikePostRequest) {
-    try {
-      const likePostResponse = await this.postClient.likePost(likePostRequest);
-      return likePostResponse;
-    } catch (error) {
-      console.log("Error while liking post:", error);
-      throw error;
-    }
+    const likePostResponse = await this.postClient.likePost(likePostRequest);
+    return likePostResponse;
   }
 
   async pinPost(request: PinPostRequest) {
-    try {
-      const pinPostResponse = await this.postClient.pinPost(request);
-      return pinPostResponse;
-    } catch (error) {
-      console.log("Error while pinning post:", error);
-      throw error;
-    }
+    const pinPostResponse = await this.postClient.pinPost(request);
+    return pinPostResponse;
   }
 
   async savePost(request: SavePostRequest) {
-    try {
-      const savePostResponse = await this.postClient.savePost(request);
-      return savePostResponse;
-    } catch (error) {
-      console.log("Error while saving post:", error);
-      throw error;
-    }
+    const savePostResponse = await this.postClient.savePost(request);
+    return savePostResponse;
   }
+
   async getTaggingList(request: GetTaggingListRequest) {
-    try {
-      const gettaggingListResponse =
-        await this.postClient.getTaggingList(request);
-      return gettaggingListResponse;
-    } catch (error) {
-      console.log("Error while getting tagging list:", error);
-      throw error;
-    }
+    const gettaggingListResponse =
+      await this.postClient.getTaggingList(request);
+    return gettaggingListResponse;
   }
+
   async getFeed(request: GetFeedRequest) {
-    try {
-      const getFeedResponse = await this.feedClient.getFeed(request);
-      return getFeedResponse;
-    } catch (error) {
-      console.log("Error while getting tagging list:", error);
-      throw error;
-    }
+    const getFeedResponse = await this.feedClient.getFeed(request);
+    return getFeedResponse;
   }
+
   async getReportTags(request: GetReportTagsRequest) {
-    try {
-      const getReportTagsResponse =
-        await this.moderationClient.getReportTags(request);
-      return getReportTagsResponse;
-    } catch (error) {
-      console.log("Error while getting tagging list:", error);
-      throw error;
-    }
+    const getReportTagsResponse =
+      await this.moderationClient.getReportTags(request);
+    return getReportTagsResponse;
   }
+
   async postReport(request: PostReportRequest) {
-    try {
-      const postReportResponse =
-        await this.moderationClient.postReport(request);
-      return postReportResponse;
-    } catch (error) {
-      console.log("Error while getting tagging list:", error);
-      throw error;
-    }
+    const postReportResponse = await this.moderationClient.postReport(request);
+    return postReportResponse;
   }
+
   async getComments(
     postId: string,
     comment: GetCommentRequest,
     commentId: string,
     pageNo: number
   ) {
-    try {
-      const getCommentResponse = await this.commentClient.getComment(
-        GetCommentRequest.builder()
-          .setcommentId(commentId)
-          .setpage(pageNo)
-          .setpageSize(10)
-          .setpostId(postId)
-          .build(),
-        postId,
-        commentId
-      );
-      return getCommentResponse;
-    } catch (error) {
-      console.log("Error while getting tagging list:", error);
-      throw error;
-    }
+    const getCommentResponse = await this.commentClient.getComment(
+      GetCommentRequest.builder()
+        .setcommentId(commentId)
+        .setpage(pageNo)
+        .setpageSize(10)
+        .setpostId(postId)
+        .build(),
+      postId,
+      commentId
+    );
+    return getCommentResponse;
   }
 
   async addComment(request: AddCommentRequest) {
-    try {
-      const postReportResponse = await this.commentClient.addComment(request);
-      return postReportResponse;
-    } catch (error) {
-      console.log("Error while getting tagging list:", error);
-      throw error;
-    }
+    const postReportResponse = await this.commentClient.addComment(request);
+    return postReportResponse;
   }
 
   async replyComment(request: ReplyCommentRequest) {
-    try {
-      return await this.commentClient.replyComment(request);
-    } catch (error) {
-      console.log("Error while replying to comment:", error);
-      throw error;
-    }
+    return await this.commentClient.replyComment(request);
   }
+
   async editComment(request: EditCommentRequest) {
-    try {
-      return await this.commentClient.editComment(request);
-    } catch (error) {
-      console.log("Error while editing comment:", error);
-      throw error;
-    }
+    return await this.commentClient.editComment(request);
   }
 
   async deleteComment(request: DeleteCommentRequest) {
-    try {
-      return await this.commentClient.deleteComment(request);
-    } catch (error) {
-      console.log("Error while deleting comment:", error);
-      throw error;
-    }
+    return await this.commentClient.deleteComment(request);
   }
+
   async likeComment(request: LikeCommentRequest) {
-    try {
-      return await this.commentClient.likeComment(request);
-    } catch (error) {
-      console.log("Error while liking comment:", error);
-      throw error;
-    }
+    return await this.commentClient.likeComment(request);
   }
+
   async getCommentLikes(request: GetCommentLikesRequest) {
-    try {
-      return await this.commentClient.getCommentLikes(request);
-    } catch (error) {
-      console.log("Error while getting comment likes:", error);
-      throw error;
-    }
+    return await this.commentClient.getCommentLikes(request);
   }
+
   async getMemberState() {
-    try {
-      return await this.initiateUserClient.getMemberState();
-    } catch (error) {
-      console.log("Error while getting member state:", error);
-      throw error;
-    }
+    return await this.initiateUserClient.getMemberState();
   }
 
   async getNotificationFeed(request: GetNotificationFeedRequest) {
-    try {
-      return await this.notificationFeedClient.getNotificationFeed(request);
-    } catch (error) {
-      console.log("Error while getting notification feed:", error);
-      throw error;
-    }
+    return await this.notificationFeedClient.getNotificationFeed(request);
   }
 
   async markReadNotification(request: MarkReadNotificationRequest) {
-    try {
-      return await this.notificationFeedClient.markReadNotification(request);
-    } catch (error) {
-      console.log("Error while marking notification as read:", error);
-      throw error;
-    }
+    return await this.notificationFeedClient.markReadNotification(request);
   }
 
   async getUnreadNotificationCount() {
-    try {
-      return await this.notificationFeedClient.getUnreadNotificationCount();
-    } catch (error) {
-      console.log("Error while getting unread notification count:", error);
-      throw error;
-    }
+    return await this.notificationFeedClient.getUnreadNotificationCount();
   }
 
   async getCommunityConfigurations() {
@@ -497,53 +349,27 @@ class LMFeedClient {
   }
 
   async getAllMembers(request: GetAllMembersRequest) {
-    try {
-      return await this.initiateUserClient.getAllMembers(request);
-    } catch (error) {
-      console.log("Error while members", error);
-      throw error;
-    }
+    return await this.initiateUserClient.getAllMembers(request);
   }
 
   async validateRegisterDeviceRequest(request: RegisterDeviceRequest) {
-    try {
-      return await this.helperClient.validateRegisterDeviceRequest(request);
-    } catch (error) {
-      console.log("Error while validate register device", error);
-      throw error;
-    }
+    return await this.helperClient.validateRegisterDeviceRequest(request);
   }
+
   async registerDevice() {
-    try {
-      return await this.helperClient.registerDevice();
-    } catch (error) {
-      console.log("Error while register device", error);
-      throw error;
-    }
+    return await this.helperClient.registerDevice();
   }
+
   async submitPollVote(request: SubmitPollVoteRequest) {
-    try {
-      return await this.pollFeedClient.submitPollVote(request);
-    } catch (error) {
-      console.log("Error while submit poll", error);
-      throw error;
-    }
+    return await this.pollFeedClient.submitPollVote(request);
   }
+
   async addPollOption(request: AddPollOptionRequest) {
-    try {
-      return await this.pollFeedClient.addPollOption(request);
-    } catch (error) {
-      console.log("Error while add poll option", error);
-      throw error;
-    }
+    return await this.pollFeedClient.addPollOption(request);
   }
+
   async getPollVotes(request: GetPollVotesRequest) {
-    try {
-      return await this.pollFeedClient.getPollVotes(request);
-    } catch (error) {
-      console.log("Error while get poll votes", error);
-      throw error;
-    }
+    return await this.pollFeedClient.getPollVotes(request);
   }
 }
 
@@ -563,37 +389,22 @@ export {
   SavePostRequest,
   GetTaggingListRequest,
   GetFeedRequest,
-  GetFeedResponse,
-  IPost,
-  IOgTag,
-  IUser,
-  IMenuItem,
-  IComment,
   GetReportTagsRequest,
   PostReportRequest,
   AddCommentRequest,
-  AddCommentResponse,
   GetCommentRequest,
-  GetCommentResponse,
   ReplyCommentRequest,
   DeleteCommentRequest,
   LikeCommentRequest,
   GetCommentLikesRequest,
-  IMemberState,
-  IMemberRight,
   GetNotificationFeedRequest,
   MarkReadNotificationRequest,
-  IActivities,
-  IActivity,
   GetAllMembersRequest,
-  IMember,
   EditCommentRequest,
   GetTopicsRequest,
-  LMFeedTopics,
   ValidateUserRequest,
   RegisterDeviceRequest,
   LMSDKCallbacks,
-  Like,
   NetworkLibrary,
   TokenValues,
   TokenManager,
@@ -604,32 +415,25 @@ export {
   DeleteComment,
   GetAllMembers,
   GetCommentDetails,
-  GetMemberState,
   GetNotificationCount,
   GetNotification,
   GetOgTag,
   GetPinPost,
   GetPostDetails,
-  GetPostLikesResponse,
-  GetReportTagsResponse,
-  GetTaggingListResponse,
   GetTopics,
   GetUniversalFeed,
-  ValidateUserResponse,
   LikeComment,
   LikePost,
   PostComment,
-  EditCommentResponse,
   PostReply,
   Activity,
   Community,
   User,
-  Member,
   OgTag,
   Post,
   Reply,
-  ReportObject,
-  TaggingMember,
+  ReportTag,
+  TaggingUser,
   Topic,
   LMResponseType,
 };

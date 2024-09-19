@@ -1,2 +1,1 @@
-export interface DeletePost {}
 export interface DeleteComment {}

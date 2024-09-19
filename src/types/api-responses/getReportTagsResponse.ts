@@ -1,5 +1,5 @@
-import { ReportObject } from "../models/reportTags";
+import { ReportTag } from "../models/reportTags";
 
 export interface GetReportTags {
-  reportTags: ReportObject[];
+  reportTags: ReportTag[];
 }

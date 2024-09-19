@@ -1,15 +1,15 @@
 import { User } from "../models/member";
 
-export interface GetPostLikes {
+export interface GetCommentLikes {
   likes: Like[];
-  topics: Record<string, unknown>;
+
   totalCount: number;
-  userTopics: Record<string, unknown>;
+
   users: User[];
 }
 
 interface Like {
-  id: string;
+  Id: string;
   createdAt: number;
   updatedAt: number;
   userId: string;

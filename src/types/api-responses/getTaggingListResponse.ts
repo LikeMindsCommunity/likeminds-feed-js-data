@@ -1,5 +1,7 @@
-import { TaggingMember } from "../models/taggingMember";
+import { TaggingUser } from "../models/taggingMember";
+import { Widget } from "../models/widget";
 
 export interface GetTaggingList {
-  members: TaggingMember[];
+  members: TaggingUser[];
+  widgets: Record<string, Widget>;
 }

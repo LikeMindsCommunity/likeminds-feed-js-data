@@ -33,21 +33,12 @@ class InitiateUserClient {
     this.networkLibrary.setAccessToken(request.accessToken);
     this.networkLibrary.setRefreshToken(request.refreshToken);
 
-    return this.networkLibrary
-      .makeAuthenticatedRequest<ValidateUser>(`${API.SDK_INITIATE}`, {
+    return this.networkLibrary.makeAuthenticatedRequest<ValidateUser>(
+      `${API.SDK_INITIATE}`,
+      {
         method: "GET",
-      })
-      .then((resData) => {
-        // Handle the response and return the LMResponse object
-
-        return resData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+      }
+    );
   }
 
   public async initiateUser(request: InitiateUserRequest) {
@@ -66,18 +57,7 @@ class InitiateUserClient {
         this.networkLibrary.setAccessToken(accessToken);
         const refreshToken = resData?.data?.refreshToken;
         this.networkLibrary.setRefreshToken(refreshToken);
-
-        // Handle the response and return the LMResponse object
-        // const responseData: InitiateUserResponse =
-        //   ModelConverter.responseBodyParser(resData);
-
         return resData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
       });
   }
 
@@ -99,40 +79,15 @@ class InitiateUserClient {
   }
 
   public async getMemberState() {
-    return this.networkLibrary
-      .makeAuthenticatedRequest<GetMemberState>(`${API.COMMUNITY_MEMBER_STATE}`)
-      .then((resData) => {
-        // Handle the response and return the LMResponse object
-        // const responseData: GetMemberStateResponse =
-        //   ModelConverter.responseBodyParser(resData);
-
-        return resData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+    return this.networkLibrary.makeAuthenticatedRequest<GetMemberState>(
+      `${API.COMMUNITY_MEMBER_STATE}`
+    );
   }
 
-  public async getAllMembers(
-    request: GetAllMembersRequest
-  ): Promise<GetAllMembers> {
-    return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.DM_ALL_MEMBERS}?page=${request.page}`)
-      .then((resData: any) => {
-        // Handle the response and return the LMResponse object
-        const responseData: any = ModelConverter.responseBodyParser(resData);
-
-        return responseData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+  public async getAllMembers(request: GetAllMembersRequest) {
+    return this.networkLibrary.makeAuthenticatedRequest<GetAllMembers>(
+      `${API.DM_ALL_MEMBERS}?page=${request.page}`
+    );
   }
 
   public async editProfile(editProfile: EditProfile) {

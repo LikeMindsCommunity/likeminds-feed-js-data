@@ -1,12 +1,13 @@
-import { Member } from "../models/member";
+import { Community } from "../models/community";
+import { User } from "../models/member";
 
 export interface GetAllMembers {
-  // admins_count: number;
-  members: Member[];
+  adminsCount: number;
+  members: User[];
+  community: Community;
   membersCount: number;
-  // pending_members_count: number;
-  // total_filtered_members: number;
-  // total_members?: number;
+  pendingMembersCount: number;
+  totalFilteredMembers: number;
   totalMembers: number;
-  // total_only_members: number;
+  totalOnlyMembers: number;
 }
