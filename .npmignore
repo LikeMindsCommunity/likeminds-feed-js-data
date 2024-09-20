@@ -4,6 +4,7 @@ node_modules/
 karma.conf.js
 spec/
 testing/
+Jenkinsfile
 # ignore src
 
 src/**/*
