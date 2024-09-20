@@ -92,6 +92,8 @@ import { GetMemberState } from "./types/api-responses/getMemberStateResponse";
 import { GetCommentLikes } from "./types/api-responses/getCommentLikesResponse";
 import { DecodeURL } from "./types/api-responses/decodeUrlResponse";
 import { FilterComment } from "./types/models/filterComment";
+import {Like} from "./types/api-responses/getCommentLikesResponse";
+import {MemberRight} from "./types/api-responses/getMemberStateResponse"
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -104,6 +106,7 @@ class LMFeedClient {
   private platformCode: string | null = null;
   private versionCode: number | null = null;
   private apiKey: string | null = null;
+  // public isBeta: boolean | null = null;
   private helperClient: HelperClient;
   private LMSDKCallbacks: LMSDKCallbacks;
   private pollFeedClient: PollFeedClient;
@@ -471,4 +474,7 @@ export {
   UploadMedia,
   Widget,
   FilterComment,
+
+  Like,
+  MemberRight,
 };

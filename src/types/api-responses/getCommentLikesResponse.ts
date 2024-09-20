@@ -8,7 +8,7 @@ export interface GetCommentLikes {
   users: User[];
 }
 
-interface Like {
+export interface Like {
   Id: string;
   createdAt: number;
   updatedAt: number;
