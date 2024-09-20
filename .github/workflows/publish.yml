@@ -40,7 +40,6 @@ jobs:
   create_tag:
     name: Create Git Tag
     needs: publish
-    if: github.ref == 'refs/heads/master'  # Only run for master branch
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
@@ -65,7 +64,6 @@ jobs:
   create-github-release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'  # Only run for master branch
     needs: create_tag
     permissions: write-all
     steps:
