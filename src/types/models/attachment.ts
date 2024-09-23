@@ -12,4 +12,7 @@ export interface AttachmentMeta {
   ogTags?: OgTag;
   size?: number;
   url: string;
+  duration?: number;
+  pageCount?: number;
+  thumbnailUrl?: string;
 }

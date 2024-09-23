@@ -1,4 +1,4 @@
-import { Attachment } from "../../types/models/attachment";
+import Attachment from "./Attachment";
 
 class EditPostRequest {
   // Properties of the request class

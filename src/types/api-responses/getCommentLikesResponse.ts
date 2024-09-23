@@ -9,7 +9,7 @@ export interface GetCommentLikes {
 }
 
 export interface Like {
-  Id: string;
+  id: string;
   createdAt: number;
   updatedAt: number;
   userId: string;
