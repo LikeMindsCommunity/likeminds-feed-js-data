@@ -5,7 +5,7 @@ import NetworkLibrary from "../core/services/networklibrary";
 // import { InitiateUserResponse } from "../initiateUser/model/InitiateUserResponse";
 import GetFeedRequest from "./model/GetFeedRequest";
 
-import { GetUniversalFeed } from "../types/api-responses/getUniversalFeed";
+import { GetUniversalFeed } from "../types/api-responses/getUniversalFeedResponse";
 
 class UniversalFeedClient {
   private networkLibrary: NetworkLibrary;

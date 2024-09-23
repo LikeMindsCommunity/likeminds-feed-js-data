@@ -61,7 +61,7 @@ import { GetNotification } from "./types/api-responses/getNotificationResponse";
 import { GetPinPost } from "./types/api-responses/getPinPostResponse";
 import { GetPostDetails } from "./types/api-responses/getPostDetailsResponse";
 import { GetTopics } from "./types/api-responses/getTopicsResponse";
-import { GetUniversalFeed } from "./types/api-responses/getUniversalFeed";
+import { GetUniversalFeed } from "./types/api-responses/getUniversalFeedResponse";
 import { LikeComment } from "./types/api-responses/likeCommentResponse";
 import { LikePost } from "./types/api-responses/likePostResponse";
 import { EditProfile } from "./pages/user/types";
