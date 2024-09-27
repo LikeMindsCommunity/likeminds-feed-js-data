@@ -24,12 +24,12 @@ export class GetTaggingListRequestBuilder {
   private searchName: string | undefined;
   // Add other properties as needed
 
-  public setpage(page: number): GetTaggingListRequestBuilder {
+  public setPage(page: number): GetTaggingListRequestBuilder {
     this.page = page;
     return this;
   }
 
-  public setpageSize(pageSize: number): GetTaggingListRequestBuilder {
+  public setPageSize(pageSize: number): GetTaggingListRequestBuilder {
     this.pageSize = pageSize;
     return this;
   }

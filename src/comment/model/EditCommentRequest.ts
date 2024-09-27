@@ -24,17 +24,17 @@ export class EditCommentRequestBuilder {
   private text: string | undefined;
   // Add other properties as needed
 
-  public setpostId(postId: string): EditCommentRequestBuilder {
+  public setPostId(postId: string): EditCommentRequestBuilder {
     this.postId = postId;
     return this;
   }
 
-  public setcommentId(commentId: string): EditCommentRequestBuilder {
+  public setCommentId(commentId: string): EditCommentRequestBuilder {
     this.commentId = commentId;
     return this;
   }
 
-  public settext(text: string): EditCommentRequestBuilder {
+  public setText(text: string): EditCommentRequestBuilder {
     this.text = text;
     return this;
   }

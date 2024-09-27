@@ -1,6 +1,6 @@
 import { User } from "../models/member";
 
-interface MemberRight {
+export interface MemberRight {
   id: number;
   isLocked: boolean;
   isSelected: boolean;
@@ -9,15 +9,11 @@ interface MemberRight {
   title: string;
 }
 
-export interface GetMemberStateResponse {
-  success: boolean;
-  data?: {
-    createdAt: string;
-    editRequired: boolean;
-    member: User;
-    memberRights: MemberRight[];
-    state: number;
-    toolState: number;
-  };
-  error?: any;
+export interface GetMemberState {
+  createdAt: string;
+  editRequired: boolean;
+  member: User;
+  memberRights: MemberRight[];
+  state: number;
+  toolState: number;
 }

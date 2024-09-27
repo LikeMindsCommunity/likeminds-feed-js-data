@@ -1,16 +1,16 @@
-import { ITopic } from "src/shared/models/topic";
-import { IUser } from "src/shared/models/user";
-import { IWidget } from "src/shared/models/widget";
+import { Topic } from "../../types/models/topic";
+import { User } from "../../types/models/member";
+import { Widget } from "../../types/models/widget";
 
-export interface IVote {
+export interface Vote {
   id: string;
   users: string[];
 }
 
 export interface GetPollVotesResponse {
-  topics: { [key: string]: ITopic };
-  userTopics?: { [key: string]: string[] };
-  users: { [key: string]: IUser };
-  widget: { [key: string]: IWidget };
-  votes: IVote[];
+  topics: Record<string, Topic>;
+  userTopics?: Record<string, string[]>;
+  users: Record<string, User>;
+  widget: Record<string, Widget>;
+  votes: Vote[];
 }

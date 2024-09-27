@@ -24,17 +24,17 @@ export class GetPostRequestBuilder {
   private pageSize: number | undefined;
   // Add other properties as needed
 
-  public setpostId(postId: string): GetPostRequestBuilder {
+  public setPostId(postId: string): GetPostRequestBuilder {
     this.postId = postId;
     return this;
   }
 
-  public setpage(page: number): GetPostRequestBuilder {
+  public setPage(page: number): GetPostRequestBuilder {
     this.page = page;
     return this;
   }
 
-  public setpageSize(pageSize: number): GetPostRequestBuilder {
+  public setPageSize(pageSize: number): GetPostRequestBuilder {
     this.pageSize = pageSize;
     return this;
   }

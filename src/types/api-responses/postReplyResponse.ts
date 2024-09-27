@@ -1,16 +1,9 @@
 import { User } from "../models/member";
 import { Reply } from "../models/replies";
 
-interface Users {
-  [key: string]: User;
-}
+// TODO
+export interface Post {
+  comment: Reply;
 
-export interface PostResponse {
-  success: boolean;
-  data?: {
-    comment: Reply;
-
-    users: Users;
-  };
-  error?: any;
+  users: Record<string, User>;
 }

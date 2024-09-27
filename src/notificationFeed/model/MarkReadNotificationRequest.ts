@@ -18,7 +18,7 @@ export class MarkReadNotificationRequestBuilder {
   private activityId: string | undefined;
   // Add other properties as needed
 
-  public setactivityId(activityId: string): MarkReadNotificationRequestBuilder {
+  public setActivityId(activityId: string): MarkReadNotificationRequestBuilder {
     this.activityId = activityId;
     return this;
   }

@@ -1,16 +1,13 @@
-import { Member } from "../models/member";
+import { Community } from "../models/community";
+import { User } from "../models/member";
 
-export interface GetAllMembersResponse {
-  success: boolean;
-  data?: {
-    // admins_count: number;
-    members: Member[];
-    membersCount: number;
-    // pending_members_count: number;
-    // total_filtered_members: number;
-    // total_members?: number;
-    totalMembers: number;
-    // total_only_members: number;
-  };
-  error?: any;
+export interface GetAllMembers {
+  adminsCount: number;
+  members: User[];
+  community: Community;
+  membersCount: number;
+  pendingMembersCount: number;
+  totalFilteredMembers: number;
+  totalMembers: number;
+  totalOnlyMembers: number;
 }

@@ -18,7 +18,7 @@ export class DecodeUrlRequestBuilder {
   private url: string | undefined;
   // Add other properties as needed
 
-  public seturl(url: string): DecodeUrlRequestBuilder {
+  public setUrl(url: string): DecodeUrlRequestBuilder {
     this.url = url;
     return this;
   }

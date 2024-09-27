@@ -2,7 +2,6 @@ import { Attachment } from "./attachment";
 import { Reply } from "./replies";
 
 export interface Post {
-  Id: string;
   id: string;
   attachments: Attachment[];
   commentsCount: number;
@@ -16,10 +15,7 @@ export interface Post {
   isRepostedByUser: boolean;
   isSaved: boolean;
   likesCount: number;
-  menuItems: {
-    id: number;
-    title: string;
-  }[];
+  menuItems: MenuItem[];
   repostCount: number;
   tempId: null | string;
   text: string;
@@ -28,4 +24,10 @@ export interface Post {
   userId: string;
   uuid: string;
   replies?: Reply[];
+  commentIds?: string[];
+}
+
+export interface MenuItem {
+  id: number;
+  title: string;
 }

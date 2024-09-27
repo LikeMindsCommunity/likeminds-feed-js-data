@@ -24,12 +24,12 @@ export class AddCommentRequestBuilder {
   private tempId: string;
   // Add other properties as needed
 
-  public setpostId(postId: string): AddCommentRequestBuilder {
+  public setPostId(postId: string): AddCommentRequestBuilder {
     this.postId = postId;
     return this;
   }
 
-  public settext(text: string): AddCommentRequestBuilder {
+  public setText(text: string): AddCommentRequestBuilder {
     this.text = text;
     return this;
   }

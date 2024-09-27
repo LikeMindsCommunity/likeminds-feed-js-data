@@ -1,6 +1,6 @@
 {
   "name": "@likeminds.community/feed-js",
-  "version": "1.12.1",
+  "version": "1.13.0",
   "description": "LikeMinds Javascript SDK for chat APIs",
   "main": "dist/index.js",
   "module": "dist/index.m.js",
@@ -12,7 +12,8 @@
     "eslint": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write ."
+    "prettier:fix": "prettier --write .",
+    "lint": "tsc"
   },
   "keywords": [
     "feed",

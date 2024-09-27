@@ -1,7 +1,9 @@
+import { Attachment } from "./attachment";
 import { MenuItem } from "./post";
 
-export interface Reply {
+export interface FilterComment {
   id: string;
+  attachments: Attachment[];
   commentsCount: number;
   communityId: number;
   createdAt: number;
@@ -11,11 +13,9 @@ export interface Reply {
   likesCount: number;
   menuItems: MenuItem[];
   postId: string;
-  replies: Reply[];
-  tempId: string;
+  tempId: string | null;
   text: string;
   updatedAt: number;
   userId: string;
   uuid: string;
-  parentComment?: Reply;
 }

@@ -1,4 +1,4 @@
-export interface ReportObject {
+export interface ReportTag {
   id: number;
   name: string;
 }
