@@ -89,10 +89,12 @@ class TokenManager {
         );
       }
 
-      this.lmSdkCallback.onAccessTokenExpiredAndRefreshed(
-        this.accessToken,
-        this.refreshToken
-      );
+      if (this.lmSdkCallback?.onAccessTokenExpiredAndRefreshed) {
+        this.lmSdkCallback.onAccessTokenExpiredAndRefreshed(
+          this.accessToken,
+          this.refreshToken
+        );
+      }
       return accessToken.access_token;
     } catch (error) {
       console.error("Failed to refresh access token:", error);

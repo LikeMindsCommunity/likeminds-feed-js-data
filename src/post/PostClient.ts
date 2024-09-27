@@ -54,7 +54,7 @@ class PostClient {
     );
   }
 
-  public async savePost(savePost: SavePostRequest): Promise<any> {
+  public async savePost(savePost: SavePostRequest) {
     const params = savePost;
     return await this.networkLibrary.makeAuthenticatedRequest<SavePost>(
       `${API.FEED_POST}/${savePost.postId}/save`,

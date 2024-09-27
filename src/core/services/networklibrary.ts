@@ -153,8 +153,6 @@ class NetworkLibrary {
 
     try {
       const response = await this.makeRequest<T>(url, requestConfig);
-      console.log(`The response is`);
-      console.log(response.data);
       return new LMResponse<T>(response.data as LMResponseType<T>, null, true);
     } catch (error) {
       if (error?.response && error?.response?.status === 401) {
@@ -162,12 +160,10 @@ class NetworkLibrary {
         if (url.includes("user/refresh")) {
           const { accessToken, refreshToken } =
             await this.lmSdkCallbacks.onRefreshTokenExpired();
-          // TODO expose functions for storing tokens from DL
-          // done
+
           this.tokenManager.setAccessToken(accessToken);
           this.tokenManager.setRefreshToken(refreshToken);
-          // TODO add tokens in local storage too
-          // done
+
           this.setAccessTokenInLocalStorage(accessToken);
           this.setRefreshTokenInLocalStorage(refreshToken);
         } else {

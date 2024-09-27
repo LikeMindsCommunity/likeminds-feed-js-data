@@ -43,9 +43,7 @@ class InitiateUserClient {
 
   public async initiateUser(request: InitiateUserRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
-
     this.networkLibrary.setApiKey(request.apikey);
-
     return this.networkLibrary
       .makeAuthenticatedRequest<InitiateUser>(`${API.SDK_INITIATE}`, {
         method: "POST",
@@ -66,7 +64,6 @@ class InitiateUserClient {
       .makeAuthenticatedRequest(`${API.COMMUNITY_CONFIGURATIONS}`)
       .then((resData) => {
         // Handle the response and return the LMResponse object
-
         return resData;
       })
       .catch((error) => {
@@ -99,7 +96,6 @@ class InitiateUserClient {
       })
       .then((resData) => {
         // Handle the response and return the LMResponse object
-
         return resData;
       })
       .catch((error) => {

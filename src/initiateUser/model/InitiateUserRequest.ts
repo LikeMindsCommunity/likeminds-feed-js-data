@@ -10,7 +10,7 @@ class InitiateUserRequest {
     userName: string | undefined,
     uuid: string | undefined,
     isGuest: boolean,
-    apiKey: string,
+    apiKey: string
   ) {
     this.userName = userName;
     this.uuid = uuid;
@@ -62,7 +62,7 @@ export class InitiateUserRequestBuilder {
       this.userName,
       this.uuid,
       this.isGuest || false,
-      this.apiKey,
+      this.apiKey
     );
   }
 }

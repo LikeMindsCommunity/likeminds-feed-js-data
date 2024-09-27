@@ -4,7 +4,8 @@ import InitiateUserRequest from "./initiateUser/model/InitiateUserRequest";
 import PostClient from "./post/PostClient";
 import AddPostRequest from "./post/model/AddPostRequest";
 import UniversalFeedClient from "./universalfeed/UniversalFeedClient";
-
+import LMFeedPostAttachment from "./post/model/Attachment";
+import LMFeedPostAttachmentMeta from "./post/model/AttachmentMeta";
 import DecodeURLRequest from "./post/model/DecodeUrlRequest";
 import DeletePostRequest from "./post/model/DeletePostRequest";
 import EditPostRequest from "./post/model/EditPostRequest";
@@ -92,6 +93,8 @@ import { GetMemberState } from "./types/api-responses/getMemberStateResponse";
 import { GetCommentLikes } from "./types/api-responses/getCommentLikesResponse";
 import { DecodeURL } from "./types/api-responses/decodeUrlResponse";
 import { FilterComment } from "./types/models/filterComment";
+import { Like } from "./types/api-responses/getCommentLikesResponse";
+import { MemberRight } from "./types/api-responses/getMemberStateResponse";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -104,6 +107,7 @@ class LMFeedClient {
   private platformCode: string | null = null;
   private versionCode: number | null = null;
   private apiKey: string | null = null;
+  // public isBeta: boolean | null = null;
   private helperClient: HelperClient;
   private LMSDKCallbacks: LMSDKCallbacks;
   private pollFeedClient: PollFeedClient;
@@ -302,10 +306,10 @@ class LMFeedClient {
   ) {
     const getCommentResponse = await this.commentClient.getComment(
       GetCommentRequest.builder()
-        .setcommentId(commentId)
-        .setpage(pageNo)
-        .setpageSize(10)
-        .setpostId(postId)
+        .setCommentId(commentId)
+        .setPage(pageNo)
+        .setPageSize(10)
+        .setPostId(postId)
         .build(),
       postId,
       commentId
@@ -452,7 +456,8 @@ export {
   AddPost,
   EditPost,
   GetNotificationCount,
-
+  LMFeedPostAttachment,
+  LMFeedPostAttachmentMeta,
   // Models
   Activity,
   ActivityEntityData,
@@ -471,4 +476,6 @@ export {
   UploadMedia,
   Widget,
   FilterComment,
+  Like,
+  MemberRight,
 };

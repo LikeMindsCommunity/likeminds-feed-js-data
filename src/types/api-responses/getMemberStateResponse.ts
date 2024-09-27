@@ -1,6 +1,6 @@
 import { User } from "../models/member";
 
-interface MemberRight {
+export interface MemberRight {
   id: number;
   isLocked: boolean;
   isSelected: boolean;

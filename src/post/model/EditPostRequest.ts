@@ -1,4 +1,4 @@
-import { Attachment } from "../../types/models/attachment";
+import Attachment from "./Attachment";
 
 class EditPostRequest {
   // Properties of the request class
@@ -38,12 +38,12 @@ export class EditPostRequestBuilder {
   private topic_ids: string[] | null;
   // Add other properties as needed
 
-  public setpostId(postId: string): EditPostRequestBuilder {
+  public setPostId(postId: string): EditPostRequestBuilder {
     this.postId = postId;
     return this;
   }
 
-  public settext(text: string): EditPostRequestBuilder {
+  public setText(text: string): EditPostRequestBuilder {
     this.text = text;
     return this;
   }
@@ -55,7 +55,7 @@ export class EditPostRequestBuilder {
     this.topic_ids = topicIds;
     return this;
   }
-  public setattachments(attachments: Attachment[]): EditPostRequestBuilder {
+  public setAttachments(attachments: Attachment[]): EditPostRequestBuilder {
     this.attachments = attachments;
     return this;
   }

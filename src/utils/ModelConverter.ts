@@ -43,7 +43,7 @@ export class ModelConverter<S> {
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         const camelKey =
-          key == "_id" && this.versionCode == "rn"
+          key == "_id"
             ? "id"
             : key.replace(/_([a-z])/g, (match, letter) => letter.toUpperCase());
 

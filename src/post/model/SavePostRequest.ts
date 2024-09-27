@@ -18,7 +18,7 @@ export class SavePostRequestBuilder {
 
   // Add other properties as needed
 
-  public setpostId(postId: string): SavePostRequestBuilder {
+  public setPostId(postId: string): SavePostRequestBuilder {
     this.postId = postId;
     return this;
   }

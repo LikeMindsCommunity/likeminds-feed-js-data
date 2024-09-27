@@ -21,12 +21,12 @@ export class DeletePostRequestBuilder {
   private deleteReason?: string | undefined;
   // Add other properties as needed
 
-  public setpostId(postId: string): DeletePostRequestBuilder {
+  public setPostId(postId: string): DeletePostRequestBuilder {
     this.postId = postId;
     return this;
   }
 
-  public setdeleteReason(deleteReason: string): DeletePostRequestBuilder {
+  public setDeleteReason(deleteReason: string): DeletePostRequestBuilder {
     this.deleteReason = deleteReason;
     return this;
   }
