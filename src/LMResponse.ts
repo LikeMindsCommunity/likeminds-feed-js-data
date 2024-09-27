@@ -1,7 +1,7 @@
-interface LMResponse<T> {
+interface LMResponseType<T> {
   success: boolean;
-  errorMessage?: string | null;
-  data?: T | null;
+  errorMessage: string | null;
+  data: T;
 }
 
-export default LMResponse;
+export default LMResponseType;

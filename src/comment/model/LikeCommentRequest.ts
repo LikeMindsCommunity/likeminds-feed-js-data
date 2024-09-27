@@ -21,12 +21,12 @@ export class LikeCommentRequestBuilder {
   private commentId: string | undefined;
   // Add other properties as needed
 
-  public setpostId(postId: string): LikeCommentRequestBuilder {
+  public setPostId(postId: string): LikeCommentRequestBuilder {
     this.postId = postId;
     return this;
   }
 
-  public setcommentId(commentId: string): LikeCommentRequestBuilder {
+  public setCommentId(commentId: string): LikeCommentRequestBuilder {
     this.commentId = commentId;
     return this;
   }

@@ -1,7 +1,7 @@
 import { Attachment } from "./attachment";
+import { MenuItem } from "./post";
 
 export interface Activity {
-  Id: string;
   id: string;
   action: number;
   actionBy: string[];
@@ -18,7 +18,6 @@ export interface Activity {
   uuid: string;
 }
 export interface ActivityEntityData {
-  Id: string;
   id: string;
   attachments: Attachment[];
   commentIds: null;
@@ -37,10 +36,7 @@ export interface ActivityEntityData {
   isRepostedByUser: boolean;
   isSaved: boolean;
   likesCount: number;
-  menuItems: {
-    id: number;
-    title: string;
-  }[];
+  menuItems: MenuItem[];
   repostCount: number;
   tempId: string | null;
   text: string;

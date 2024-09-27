@@ -26,17 +26,17 @@ export class GetPostLikesRequestBuilder {
   private pageSize: number | undefined;
   // Add other properties as needed
 
-  public setpostId(postId: string): GetPostLikesRequestBuilder {
+  public setPostId(postId: string): GetPostLikesRequestBuilder {
     this.postId = postId;
     return this;
   }
 
-  public setpage(page: number): GetPostLikesRequestBuilder {
+  public setPage(page: number): GetPostLikesRequestBuilder {
     this.page = page;
     return this;
   }
 
-  public setpageSize(pageSize: number): GetPostLikesRequestBuilder {
+  public setPageSize(pageSize: number): GetPostLikesRequestBuilder {
     this.pageSize = pageSize;
     return this;
   }

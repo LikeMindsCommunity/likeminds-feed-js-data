@@ -19,7 +19,7 @@ export class GetAllMembersRequestBuilder {
 
   // Add other properties as needed
 
-  public setpage(page: number): GetAllMembersRequestBuilder {
+  public setPage(page: number): GetAllMembersRequestBuilder {
     this.page = page;
     return this;
   }

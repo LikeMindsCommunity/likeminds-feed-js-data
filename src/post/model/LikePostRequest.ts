@@ -18,7 +18,7 @@ export class LikePostRequestBuilder {
 
   // Add other properties as needed
 
-  public setpostId(postId: string): LikePostRequestBuilder {
+  public setPostId(postId: string): LikePostRequestBuilder {
     this.postId = postId;
     return this;
   }

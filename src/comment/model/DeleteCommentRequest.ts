@@ -24,17 +24,17 @@ export class DeleteCommentRequestBuilder {
   private reason?: string | undefined;
   // Add other properties as needed
 
-  public setpostId(postId: string): DeleteCommentRequestBuilder {
+  public setPostId(postId: string): DeleteCommentRequestBuilder {
     this.postId = postId;
     return this;
   }
 
-  public setcommentId(commentId: string): DeleteCommentRequestBuilder {
+  public setCommentId(commentId: string): DeleteCommentRequestBuilder {
     this.commentId = commentId;
     return this;
   }
 
-  public setreason(reason: string): DeleteCommentRequestBuilder {
+  public setReason(reason: string): DeleteCommentRequestBuilder {
     this.reason = reason;
     return this;
   }

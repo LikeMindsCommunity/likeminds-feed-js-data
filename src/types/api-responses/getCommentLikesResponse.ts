@@ -1,14 +1,14 @@
 import { User } from "../models/member";
-// TODO change unknowns
-export interface GetPostLikes {
+
+export interface GetCommentLikes {
   likes: Like[];
-  topics: Record<string, unknown>;
+
   totalCount: number;
-  userTopics: Record<string, unknown>;
+
   users: User[];
 }
 
-interface Like {
+export interface Like {
   id: string;
   createdAt: number;
   updatedAt: number;

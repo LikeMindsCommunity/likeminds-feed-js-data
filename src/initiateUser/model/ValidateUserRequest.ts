@@ -23,12 +23,12 @@ export class ValidateUserRequestBuilder {
   private accessToken: string | undefined;
   private refreshToken: string | undefined;
 
-  public setaccessToken(accessToken: string): ValidateUserRequestBuilder {
+  public setAccessToken(accessToken: string): ValidateUserRequestBuilder {
     this.accessToken = accessToken;
     return this;
   }
 
-  public setrefreshToken(refreshToken: string): ValidateUserRequestBuilder {
+  public setRefreshToken(refreshToken: string): ValidateUserRequestBuilder {
     this.refreshToken = refreshToken;
     return this;
   }

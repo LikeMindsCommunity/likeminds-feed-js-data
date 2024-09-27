@@ -3,10 +3,9 @@ import { API } from "../../src/shared/constants/api.constant";
 import NetworkLibrary from "../../src/core/services/networklibrary";
 import { ModelConverter } from "../../src/utils/ModelConverter";
 
-import { DecodeUrlResponse } from "./model/DecodeUrlResponse";
-
-import { GetTaggingListResponse } from "../types/api-responses/getTaggingListResponse";
+import { GetTaggingList } from "../types/api-responses/getTaggingListResponse";
 import RegisterDeviceRequest from "./model/RegisterDeviceRequest";
+import { DecodeURL } from "../types/api-responses/decodeUrlResponse";
 
 class HelperClient {
   public networkLibrary: NetworkLibrary;
@@ -15,36 +14,16 @@ class HelperClient {
     this.networkLibrary = instance;
   }
 
-  public async decodeUrl(): Promise<LMResponse<DecodeUrlResponse>> {
-    return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.HELPER_URL}`)
-      .then((resData: any) => {
-        const responseData: DecodeUrlResponse =
-          ModelConverter.responseBodyParser(resData);
-        return new LMResponse<DecodeUrlResponse>(responseData, null, true);
-      })
-      .catch((error) => {
-        return new LMResponse<DecodeUrlResponse>(
-          null,
-          error.message || "An error occurred",
-          false
-        );
-      });
+  public async decodeUrl() {
+    return this.networkLibrary.makeAuthenticatedRequest<DecodeURL>(
+      `${API.HELPER_URL}`
+    );
   }
-  public async getTaggingList(): Promise<GetTaggingListResponse> {
-    return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.COMMUNITY_TAG}`)
-      .then((resData: any) => {
-        const responseData: GetTaggingListResponse =
-          ModelConverter.responseBodyParser(resData);
-        return responseData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+
+  public async getTaggingList() {
+    return this.networkLibrary.makeAuthenticatedRequest<GetTaggingList>(
+      `${API.COMMUNITY_TAG}`
+    );
   }
 
   public async registerDevice(): Promise<LMResponse<any>> {

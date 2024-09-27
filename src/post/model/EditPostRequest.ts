@@ -14,13 +14,13 @@ class EditPostRequest {
     text: string,
     attachments: Attachment[],
     heading: string,
-    topic_ids: string[]
+    topicIds: string[]
   ) {
     this.postId = postId;
     this.text = text;
     this.attachments = attachments;
     this.heading = heading;
-    this.topic_ids = topic_ids;
+    this.topic_ids = topicIds;
   }
 
   // Static builder method to create the request object
@@ -38,12 +38,12 @@ export class EditPostRequestBuilder {
   private topic_ids: string[] | null;
   // Add other properties as needed
 
-  public setpostId(postId: string): EditPostRequestBuilder {
+  public setPostId(postId: string): EditPostRequestBuilder {
     this.postId = postId;
     return this;
   }
 
-  public settext(text: string): EditPostRequestBuilder {
+  public setText(text: string): EditPostRequestBuilder {
     this.text = text;
     return this;
   }
@@ -55,7 +55,7 @@ export class EditPostRequestBuilder {
     this.topic_ids = topicIds;
     return this;
   }
-  public setattachments(attachments: Attachment[]): EditPostRequestBuilder {
+  public setAttachments(attachments: Attachment[]): EditPostRequestBuilder {
     this.attachments = attachments;
     return this;
   }

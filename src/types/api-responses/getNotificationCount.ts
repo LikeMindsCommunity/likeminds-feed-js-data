@@ -1,7 +1,3 @@
-export interface GetNotificationCountResponse {
-  success: boolean;
-  data?: {
-    count: number;
-  };
-  error?: any;
+export interface GetNotificationCount {
+  count: number;
 }

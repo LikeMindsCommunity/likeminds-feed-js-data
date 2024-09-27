@@ -18,7 +18,7 @@ export class PinPostRequestBuilder {
 
   // Add other properties as needed
 
-  public setpostId(postId: string): PinPostRequestBuilder {
+  public setPostId(postId: string): PinPostRequestBuilder {
     this.postId = postId;
     return this;
   }

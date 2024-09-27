@@ -15,25 +15,28 @@ export interface Community {
   feeMembership: number;
   feeEvent: number;
   feePaymentPages: number;
-  branding: {
-    basic: {
-      primaryColour: string;
-    };
-    advanced: {
-      headerColour: string;
-      buttonsIconsColour: string;
-      textLinksColour: string;
-    };
-  };
+  branding: CommunityBranding;
   isWhitelabel: boolean;
-  whitelabelInfo: unknown;
   hideDmTab: boolean;
   isFreemiumCommunity: boolean;
-  communitySettingRights: {
-    id: number;
-    title: string;
-    state: number;
-    isSelected: boolean;
-    isLocked: boolean;
-  }[];
+  communitySettingRights: CommunitySettingRights[];
+}
+
+interface CommunitySettingRights {
+  id: number;
+  title: string;
+  state: number;
+  isSelected: boolean;
+  isLocked: boolean;
+}
+
+interface CommunityBranding {
+  basic: {
+    primaryColour: string;
+  };
+  advanced: {
+    headerColour: string;
+    buttonsIconsColour: string;
+    textLinksColour: string;
+  };
 }

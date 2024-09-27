@@ -21,12 +21,12 @@ export class GetNotificationFeedRequestBuilder {
   private pageSize: number | undefined;
   // Add other properties as needed
 
-  public setpage(page: number): GetNotificationFeedRequestBuilder {
+  public setPage(page: number): GetNotificationFeedRequestBuilder {
     this.page = page;
     return this;
   }
 
-  public setpageSize(pageSize: number): GetNotificationFeedRequestBuilder {
+  public setPageSize(pageSize: number): GetNotificationFeedRequestBuilder {
     this.pageSize = pageSize;
     return this;
   }

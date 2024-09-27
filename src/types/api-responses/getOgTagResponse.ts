@@ -1,9 +1,5 @@
 import { OgTag } from "../models/ogTag";
-
-export interface GetOgTagResponse {
-  success: boolean;
-  data?: {
-    og_tags: OgTag;
-  };
-  error?: any;
+// TODO change to camel
+export interface GetOgTag {
+  og_tags: OgTag;
 }
