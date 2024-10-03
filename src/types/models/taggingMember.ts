@@ -1,14 +1,13 @@
 import { SdkClientInfo } from "./member";
 
-export interface TaggingMember {
-  custom_title: string | null;
+export interface TaggingUser {
+  customTitle: string | null;
   id: number;
-  image_url: string;
-  is_deleted: boolean;
-  is_guest: boolean;
+  imageUrl: string;
+  isDeleted: boolean;
+  isGuest: boolean;
   name: string;
-  question_answers: null;
-  sdk_client_info: SdkClientInfo;
-  user_unique_id: string;
+  sdkClientInfo: SdkClientInfo;
+  userUniqueId: string;
   uuid: string;
 }

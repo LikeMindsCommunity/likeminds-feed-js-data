@@ -24,7 +24,7 @@ export class GetFeedRequestBuilder {
   topicIds: string[] | undefined;
   // Add other properties as needed
 
-  public setpage(page: number): GetFeedRequestBuilder {
+  public setPage(page: number): GetFeedRequestBuilder {
     this.page = page;
     return this;
   }
@@ -34,7 +34,7 @@ export class GetFeedRequestBuilder {
     return this;
   }
 
-  public setpageSize(pageSize: number): GetFeedRequestBuilder {
+  public setPageSize(pageSize: number): GetFeedRequestBuilder {
     this.pageSize = pageSize;
     return this;
   }

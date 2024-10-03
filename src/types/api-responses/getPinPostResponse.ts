@@ -1,4 +1,1 @@
-export interface GetPinPostResponse {
-  success: boolean;
-  errorMessage?: string | null;
-}
+export interface GetPinPost {}

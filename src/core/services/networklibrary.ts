@@ -6,6 +6,7 @@ import TokenManager from "./tokenmanager";
 import { environment } from "src/environment";
 import { LMSDKCallbacks } from "../../LMCallback";
 import { TokenValues } from "../../shared/tokens";
+import LMResponseType from "../../LMResponse";
 
 class NetworkLibrary {
   private tokenManager: TokenManager;
@@ -34,8 +35,8 @@ class NetworkLibrary {
     return this.tokenManager.getRefreshToken();
   }
 
-  public onRefreshAccessToken(){
-    return this.tokenManager.refreshAccessToken()
+  public onRefreshAccessToken() {
+    return this.tokenManager.refreshAccessToken();
   }
 
   public setUserInLocalStorage(user: string) {
@@ -151,21 +152,18 @@ class NetworkLibrary {
     }
 
     try {
-      const response = await this.makeRequest<{ data: T }>(url, requestConfig);
-
-      return new LMResponse<T>(response?.data?.data, null, true);
+      const response = await this.makeRequest<T>(url, requestConfig);
+      return new LMResponse<T>(response.data as LMResponseType<T>, null, true);
     } catch (error) {
       if (error?.response && error?.response?.status === 401) {
         // Access token expired, refresh the token and retry the request
         if (url.includes("user/refresh")) {
           const { accessToken, refreshToken } =
             await this.lmSdkCallbacks.onRefreshTokenExpired();
-          // TODO expose functions for storing tokens from DL
-          // done
+
           this.tokenManager.setAccessToken(accessToken);
           this.tokenManager.setRefreshToken(refreshToken);
-          // TODO add tokens in local storage too
-          // done
+
           this.setAccessTokenInLocalStorage(accessToken);
           this.setRefreshTokenInLocalStorage(refreshToken);
         } else {
@@ -178,20 +176,26 @@ class NetworkLibrary {
           `Bearer ${this.tokenManager.getAccessToken()}`;
 
         // Retry the request
-        return this.makeRequest<{ data: T }>(url, updatedConfig)
+        return this.makeRequest<T>(url, updatedConfig)
           .then((refreshedResponse) => {
-            return new LMResponse<T>(refreshedResponse.data.data, null, true);
+            return new LMResponse<T>(
+              refreshedResponse.data as LMResponseType<T>,
+              null,
+              true
+            );
           })
           .catch((error) => {
+            console.log(error);
             if (error?.response && error?.response?.status >= 500) {
-              return new LMResponse<T>(null, error.message, false);
+              return new LMResponse<T>(undefined, error.message, false);
             }
           });
       }
 
       if (error?.response && error?.response?.status >= 500) {
-        return new LMResponse<T>(null, error.message, false);
+        return new LMResponse<T>(undefined, error.message, false);
       }
+      throw error;
     }
   }
 }

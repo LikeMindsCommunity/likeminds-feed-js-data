@@ -18,7 +18,7 @@ export class GetReportTagsBuilder {
   private type: number | undefined;
   // Add other properties as needed
 
-  public settype(type: number): GetReportTagsBuilder {
+  public setType(type: number): GetReportTagsBuilder {
     this.type = type;
     return this;
   }

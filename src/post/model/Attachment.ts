@@ -1,13 +1,16 @@
-import AttachmentMeta from "./AttachmentMeta";
+import { Attachment } from "../../types/models/attachment";
+import LMFeedPostAttachmentMeta from "./AttachmentMeta";
 
-class Attachment {
+class LMFeedPostAttachment implements Attachment {
   // Properties of the request class
-  attachmentType: number;
-  attachmentMeta: AttachmentMeta;
-  //   attachmentMeta: List<Attachment>;
+  public attachmentType: number;
+  public attachmentMeta: LMFeedPostAttachmentMeta;
 
   // Public constructor to create the request object
-  constructor(attachmentType: number, attachmentMeta: AttachmentMeta) {
+  constructor(
+    attachmentType: number,
+    attachmentMeta: LMFeedPostAttachmentMeta
+  ) {
     this.attachmentType = attachmentType;
     this.attachmentMeta = attachmentMeta;
   }
@@ -21,7 +24,7 @@ class Attachment {
 // Builder class for Attachment
 export class AttachmentBuilder {
   private attachmentType: number | undefined;
-  private attachmentMeta: AttachmentMeta | undefined;
+  private attachmentMeta: LMFeedPostAttachmentMeta | undefined;
   // Add other properties as needed
 
   public setAttachmentType(attachmentType: number): AttachmentBuilder {
@@ -29,19 +32,21 @@ export class AttachmentBuilder {
     return this;
   }
 
-  public setAttachmentMeta(attachmentMeta: AttachmentMeta): AttachmentBuilder {
+  public setAttachmentMeta(
+    attachmentMeta: LMFeedPostAttachmentMeta
+  ): AttachmentBuilder {
     this.attachmentMeta = attachmentMeta;
     return this;
   }
 
   // Build method to create the final Attachment object
-  public build(): Attachment {
+  public build(): LMFeedPostAttachment {
     if (!this.attachmentType || !this.attachmentMeta) {
       throw new Error("attachmentType and attachmentMeta are required.");
     }
 
-    return new Attachment(this.attachmentType, this.attachmentMeta);
+    return new LMFeedPostAttachment(this.attachmentType, this.attachmentMeta);
   }
 }
 
-export default Attachment;
+export default LMFeedPostAttachment;

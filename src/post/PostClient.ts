@@ -1,4 +1,3 @@
-import LMResponse from "../core/services/lmresponse";
 import { API } from "../shared/constants/api.constant";
 import NetworkLibrary from "../core/services/networklibrary";
 import AddPostRequest from "./model/AddPostRequest";
@@ -8,21 +7,23 @@ import GetPostRequest from "./model/GetPostRequest";
 // import { GetPostResponse } from "./model/GetPostResponse";
 import SavePostRequest from "./model/SavePostRequest";
 import GetPostLikesRequest from "./model/GetPostLikesRequest";
-import { GetPostLikesResponse } from "../types/api-responses/getPostLikesResponse";
+import { GetPostLikes } from "../types/api-responses/getPostLikesResponse";
 import LikePostRequest from "./model/LikePostRequest";
 import PinPostRequest from "./model/PinPostRequest";
 import EditPostRequest from "./model/EditPostRequest";
-import { EditPostResponse } from "../types/api-responses/addPostResponse";
+import { EditPost } from "../types/api-responses/addPostResponse";
 import DecodeURLRequest from "./model/DecodeUrlRequest";
 import GetTaggingListRequest from "./model/GetTaggingListRequest";
 import GetTopicsRequest from "./model/GetTopicsRequest";
-import { AddPostResponse } from "../types/api-responses/addPostResponse";
-import { GetPostDetailsResponse } from "../types/api-responses/getPostDetailsResponse";
-import { LikePostResponse } from "../types/api-responses/likePostResponse";
-import { GetPinPostResponse } from "../types/api-responses/getPinPostResponse";
-import { DeletePostResponse } from "../types/api-responses/deletePostResponse";
-import { GetTaggingListResponse } from "../types/api-responses/getTaggingListResponse";
-import { GetTopicsResponse } from "../types/api-responses/getTopicsResponse";
+import { AddPost } from "../types/api-responses/addPostResponse";
+import { GetPostDetails } from "../types/api-responses/getPostDetailsResponse";
+import { LikePost } from "../types/api-responses/likePostResponse";
+import { GetPinPost } from "../types/api-responses/getPinPostResponse";
+import { DeletePost } from "../types/api-responses/deletePostResponse";
+import { GetTaggingList } from "../types/api-responses/getTaggingListResponse";
+import { GetTopics } from "../types/api-responses/getTopicsResponse";
+import { DecodeURL } from "../types/api-responses/decodeUrlResponse";
+import { SavePost } from "../types/api-responses/savePostResponse";
 
 class PostClient {
   private networkLibrary: NetworkLibrary;
@@ -31,219 +32,125 @@ class PostClient {
     this.networkLibrary = instance;
   }
 
-  async addPost(request: AddPostRequest): Promise<AddPostResponse> {
+  async addPost(request: AddPostRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
-    return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.FEED_POST}`, {
+    const resData = await this.networkLibrary.makeAuthenticatedRequest<AddPost>(
+      `${API.FEED_POST}`,
+      {
         method: "POST",
         data: params,
-      })
-      .then((resData: any) => {
-        // Handle the response and return the LMResponse object
-        const responseData: AddPostResponse =
-          ModelConverter.responseBodyParser(resData);
+      }
+    );
 
-        return responseData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+    // Handle the response and return the LMResponse object
+    // const responseData: AddPostResponse =
+    //   ModelConverter.responseBodyParser(resData);
+
+    return resData;
+  }
+  public async getPost(getPost: GetPostRequest) {
+    return await this.networkLibrary.makeAuthenticatedRequest<GetPostDetails>(
+      `${API.FEED_POST}/${getPost.postId}?page=${getPost.page}&page_size=${getPost.pageSize}`
+    );
   }
 
-  public async getPost(
-    getPost: GetPostRequest
-  ): Promise<GetPostDetailsResponse> {
-    return this.networkLibrary
-      .makeAuthenticatedRequest(
-        `${API.FEED_POST}/${getPost.postId}?page=${getPost.page}&page_size=${getPost.pageSize}`
-      )
-      .then((resData: any) => {
-        const responseData: GetPostDetailsResponse =
-          ModelConverter.responseBodyParser(resData);
-        return responseData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
-  }
-
-  //   FEED_POST
-  // TBD
-  public async savePost(savePost: SavePostRequest): Promise<any> {
+  public async savePost(savePost: SavePostRequest) {
     const params = savePost;
-    return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.FEED_POST}/${savePost.postId}/save`, {
+    return await this.networkLibrary.makeAuthenticatedRequest<SavePost>(
+      `${API.FEED_POST}/${savePost.postId}/save`,
+      {
         method: "PUT",
         data: params,
-      })
-      .then(() => {
-        return new LMResponse<any>(null, null, true);
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+      }
+    );
   }
 
-  public async getPostLikes(
-    request: GetPostLikesRequest
-  ): Promise<GetPostLikesResponse> {
-    return this.networkLibrary
-      .makeAuthenticatedRequest(
-        `${API.FEED_POST}/${request.postId}/like?page=${request.page}&page_size=${request.pageSize}`
-      )
-      .then((resData: any) => {
-        const responseData: GetPostLikesResponse =
-          ModelConverter.responseBodyParser(resData);
-        return responseData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+  public async getPostLikes(request: GetPostLikesRequest) {
+    return await this.networkLibrary.makeAuthenticatedRequest<GetPostLikes>(
+      `${API.FEED_POST}/${request.postId}/like?page=${request.page}&page_size=${request.pageSize}`
+    );
   }
 
-  public async likePost(likePost: LikePostRequest): Promise<LikePostResponse> {
+  public async likePost(likePost: LikePostRequest) {
     const params = ModelConverter.requestBodyGenerator(likePost);
-    return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.FEED_POST}/${likePost.postId}/like`, {
+    return await this.networkLibrary.makeAuthenticatedRequest<LikePost>(
+      `${API.FEED_POST}/${likePost.postId}/like`,
+      {
         method: "PUT",
         data: params,
-      })
-      .then((res: any) => {
-        return ModelConverter.responseBodyParser(res);
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+      }
+    );
   }
 
-  public async pinPost(pinPost: PinPostRequest): Promise<GetPinPostResponse> {
+  public async pinPost(pinPost: PinPostRequest) {
     const params = ModelConverter.requestBodyGenerator(pinPost);
-    return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.FEED_POST}/${pinPost.postId}/pin`, {
+    return await this.networkLibrary.makeAuthenticatedRequest<GetPinPost>(
+      `${API.FEED_POST}/${pinPost.postId}/pin`,
+      {
         method: "PUT",
         data: params,
-      })
-      .then((res: any) => {
-        return ModelConverter.responseBodyParser(res);
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+      }
+    );
   }
 
-  editPost(editPost: EditPostRequest): Promise<EditPostResponse> {
+  public async editPost(editPost: EditPostRequest) {
     const params = ModelConverter.requestBodyGenerator(editPost);
-    return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.FEED_POST}/${editPost.postId}`, {
+    return await this.networkLibrary.makeAuthenticatedRequest<EditPost>(
+      `${API.FEED_POST}/${editPost.postId}`,
+      {
         method: "PUT",
         data: params,
-      })
-      .then((resData: any) => {
-        const responseData: EditPostResponse =
-          ModelConverter.responseBodyParser(resData);
-        return responseData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+      }
+    );
   }
 
-  deletePost(deletePost: DeletePostRequest): Promise<DeletePostResponse> {
+  public async deletePost(deletePost: DeletePostRequest) {
     const params = ModelConverter.requestBodyGenerator(deletePost);
-    return this.networkLibrary
-      .makeAuthenticatedRequest(`${API.FEED_POST}/${deletePost.postId}`, {
+    return await this.networkLibrary.makeAuthenticatedRequest<DeletePost>(
+      `${API.FEED_POST}/${deletePost.postId}`,
+      {
         method: "DELETE",
         data: params,
-      })
-      .then((res: any) => {
-        return ModelConverter.responseBodyParser(res);
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+      }
+    );
   }
 
-  decodeUrl(decodeUrl: DecodeURLRequest): Promise<any> {
-    return this.networkLibrary.makeAuthenticatedRequest(
+  public async decodeUrl(decodeUrl: DecodeURLRequest) {
+    return await this.networkLibrary.makeAuthenticatedRequest<DecodeURL>(
       `${API.HELPER_URL}?url=${decodeUrl.url}`
     );
   }
-  getTaggingList(
-    taggingList: GetTaggingListRequest
-  ): Promise<GetTaggingListResponse> {
-    return this.networkLibrary
-      .makeAuthenticatedRequest(
-        `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
-      )
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return responseData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
-  }
-  getPostComments(taggingList: GetTaggingListRequest): Promise<any> {
-    return this.networkLibrary
-      .makeAuthenticatedRequest(
-        `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
-      )
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return new LMResponse<any>(responseData, null, true);
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+
+  public async getTaggingList(taggingList: GetTaggingListRequest) {
+    return await this.networkLibrary.makeAuthenticatedRequest<GetTaggingList>(
+      `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
+    );
   }
 
-  getTopics(request: GetTopicsRequest): Promise<GetTopicsResponse> {
-    return this.networkLibrary
-      .makeAuthenticatedRequest(
-        request.isEnabled === null
-          ? `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}`
-          : `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}&is_enabled=${request.isEnabled}`
-      )
-      .then((resData: any) => {
-        const responseData = ModelConverter.responseBodyParser(resData);
-        return responseData;
-      })
-      .catch((error) => {
-        return {
-          success: false,
-          errorMessage: error,
-        };
-      });
+  // Check
+  // getPostComments(taggingList: GetTaggingListRequest) {
+  //   return this.networkLibrary
+  //     .makeAuthenticatedRequest(
+  //       `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
+  //     )
+  //     .then((resData: any) => {
+  //       const responseData = ModelConverter.responseBodyParser(resData);
+  //       return new LMResponse<any>(responseData, null, true);
+  //     })
+  //     .catch((error) => {
+  //       return {
+  //         success: false,
+  //         errorMessage: error,
+  //       };
+  //     });
+  // }
+
+  getTopics(request: GetTopicsRequest) {
+    return this.networkLibrary.makeAuthenticatedRequest<GetTopics>(
+      request.isEnabled === null
+        ? `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}`
+        : `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}&is_enabled=${request.isEnabled}`
+    );
   }
 }
 

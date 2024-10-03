@@ -1,9 +1,7 @@
-import { TaggingMember } from "../models/taggingMember";
+import { TaggingUser } from "../models/taggingMember";
+import { Widget } from "../models/widget";
 
-export interface GetTaggingListResponse {
-  success: boolean;
-  data?: {
-    members: TaggingMember[];
-  };
-  error?: any;
+export interface GetTaggingList {
+  members: TaggingUser[];
+  widgets: Record<string, Widget>;
 }

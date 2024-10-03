@@ -10,7 +10,7 @@ class GetCommentLikesRequest {
     postId: string,
     commentId: string,
     page: number,
-    pageSize: number,
+    pageSize: number
   ) {
     this.postId = postId;
     this.commentId = commentId;
@@ -32,22 +32,22 @@ export class GetCommentLikesRequestBuilder {
   private pageSize: number | undefined;
   // Add other properties as needed
 
-  public setpostId(postId: string): GetCommentLikesRequestBuilder {
+  public setPostId(postId: string): GetCommentLikesRequestBuilder {
     this.postId = postId;
     return this;
   }
 
-  public setcommentId(commentId: string): GetCommentLikesRequestBuilder {
+  public setCommentId(commentId: string): GetCommentLikesRequestBuilder {
     this.commentId = commentId;
     return this;
   }
 
-  public setpage(page: number): GetCommentLikesRequestBuilder {
+  public setPage(page: number): GetCommentLikesRequestBuilder {
     this.page = page;
     return this;
   }
 
-  public setpageSize(pageSize: number): GetCommentLikesRequestBuilder {
+  public setPageSize(pageSize: number): GetCommentLikesRequestBuilder {
     this.pageSize = pageSize;
     return this;
   }
@@ -62,7 +62,7 @@ export class GetCommentLikesRequestBuilder {
       this.postId,
       this.commentId,
       this.page,
-      this.pageSize,
+      this.pageSize
     );
   }
 }

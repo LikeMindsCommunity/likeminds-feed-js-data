@@ -1,6 +1,7 @@
 import { PollMultipleSelectState, PollType } from "src/poll/enums";
+import { AttachmentMeta } from "../../types/models/attachment";
 
-class AttachmentMeta {
+class LMFeedPostAttachmentMeta implements AttachmentMeta {
   // Properties of the request class
   name?: string;
   url?: string;
@@ -8,7 +9,7 @@ class AttachmentMeta {
   size?: number;
   duration?: number;
   pageCount?: number;
-  ogTags: any;
+  ogTags?: any;
   coverImageUrl?: string;
   title?: string;
   body?: string;
@@ -24,28 +25,25 @@ class AttachmentMeta {
   entityId?: string;
   meta?: Record<string, any> | null;
 
-  // ogTags: LinkOGTags
-  // attachmentMeta: List<Attachment>;
-
   // Public constructor to create the request object
   constructor(
-    name: string,
-    url: string,
-    format: string,
-    size: number,
-    duration: number,
-    pageCount: number,
-    ogTags: any,
-    coverImageUrl: string,
-    title: string,
-    pollQuestion: string,
-    expiryTime: number,
-    options: string[],
-    multipleSelectState: PollMultipleSelectState,
-    pollType: PollType,
-    multipleSelectNumber: number,
-    isAnonymous: boolean,
-    allowAddOption: boolean,
+    name?: string,
+    url?: string,
+    format?: string,
+    size?: number,
+    duration?: number,
+    pageCount?: number,
+    ogTags?: any,
+    coverImageUrl?: string,
+    title?: string,
+    pollQuestion?: string,
+    expiryTime?: number,
+    options?: string[],
+    multipleSelectState?: PollMultipleSelectState,
+    pollType?: PollType,
+    multipleSelectNumber?: number,
+    isAnonymous?: boolean,
+    allowAddOption?: boolean,
     body?: string,
     thumbnailUrl?: string,
     entityId?: string,
@@ -105,7 +103,7 @@ export class AttachmentMetaBuilder {
   meta?: Record<string, any> | null;
   // Add other properties as needed
 
-  public setname(name: string): AttachmentMetaBuilder {
+  public setName(name: string): AttachmentMetaBuilder {
     this.name = name;
     return this;
   }
@@ -115,32 +113,32 @@ export class AttachmentMetaBuilder {
     return this;
   }
 
-  public seturl(url: string): AttachmentMetaBuilder {
+  public setUrl(url: string): AttachmentMetaBuilder {
     this.url = url;
     return this;
   }
 
-  public setformat(format: string): AttachmentMetaBuilder {
+  public setFormat(format: string): AttachmentMetaBuilder {
     this.format = format;
     return this;
   }
 
-  public setsize(size: number): AttachmentMetaBuilder {
+  public setSize(size: number): AttachmentMetaBuilder {
     this.size = size;
     return this;
   }
 
-  public setduration(duration: number): AttachmentMetaBuilder {
+  public setDuration(duration: number): AttachmentMetaBuilder {
     this.duration = duration;
     return this;
   }
 
-  public setpageCount(pageCount: number): AttachmentMetaBuilder {
+  public setPageCount(pageCount: number): AttachmentMetaBuilder {
     this.pageCount = pageCount;
     return this;
   }
 
-  public setogTags(ogTags: any): AttachmentMetaBuilder {
+  public setOgTags(ogTags: any): AttachmentMetaBuilder {
     this.ogTags = ogTags;
     return this;
   }
@@ -218,7 +216,7 @@ export class AttachmentMetaBuilder {
     // if (!this.ogTags) {
     //   throw new Error("attachmentType and attachmentMeta are required.");
     // }
-    return new AttachmentMeta(
+    return new LMFeedPostAttachmentMeta(
       this.name,
       this.url,
       this.format,
@@ -244,4 +242,4 @@ export class AttachmentMetaBuilder {
   }
 }
 
-export default AttachmentMeta;
+export default LMFeedPostAttachmentMeta;

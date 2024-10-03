@@ -1,5 +1,5 @@
-import { IWidget } from "src/shared/models/widget";
+import { Widget } from "../../types/models/widget";
 
 export interface AddPollOptionResponse {
-  widget: { [key: string]: IWidget };
+  widget: Record<string, Widget>;
 }

@@ -1,6 +1,6 @@
 export class ModelConverter<S> {
   convertedModel: S | null;
-  static versionCode = "rt"
+  static versionCode = "rt";
   constructor() {
     // this.convertedModel = this.camelToSnake(objectInSnakeCase);
   }
@@ -31,25 +31,26 @@ export class ModelConverter<S> {
   }
 
   //   this will convert the snake case response object to camel case
-  static responseBodyParser(obj) {
+  static responseBodyParser<T>(obj): T {
     if (typeof obj !== "object" || obj === null) {
       return obj;
     }
-
     if (Array.isArray(obj)) {
-      return obj.map((item) => this.responseBodyParser(item));
+      return obj.map((item) => this.responseBodyParser(item)) as T;
     }
 
-    const result: any = {};
+    const result = {} as T;
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        const camelKey = (key == '_id' && this.versionCode == "rn")
-          ? 'id'
-          : key.replace(/_([a-z])/g, (match, letter) => letter.toUpperCase());
+        const camelKey =
+          key == "_id"
+            ? "id"
+            : key.replace(/_([a-z])/g, (match, letter) => letter.toUpperCase());
+
         result[camelKey] = this.responseBodyParser(obj[key]);
       }
     }
 
-    return result;
+    return result as T;
   }
 }
