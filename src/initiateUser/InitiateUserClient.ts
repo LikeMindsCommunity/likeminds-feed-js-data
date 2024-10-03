@@ -50,7 +50,6 @@ class InitiateUserClient {
         data: params,
       })
       .then((resData) => {
-        console.log(resData);
         const accessToken = resData?.data?.accessToken;
         this.networkLibrary.setAccessToken(accessToken);
         const refreshToken = resData?.data?.refreshToken;
