@@ -95,6 +95,8 @@ import { DecodeURL } from "./types/api-responses/decodeUrlResponse";
 import { FilterComment } from "./types/models/filterComment";
 import { Like } from "./types/api-responses/getCommentLikesResponse";
 import { MemberRight } from "./types/api-responses/getMemberStateResponse";
+import { UpdateUserTopicsRequest } from "./post/model/UpdateUserTopicsRequest";
+import { GetUserTopicsRequest } from "./post/model/GetUserTopicsRequest";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -258,6 +260,16 @@ class LMFeedClient {
 
   async getTopics(request: GetTopicsRequest) {
     const getPostResponse = await this.postClient.getTopics(request);
+    return getPostResponse;
+  }
+
+  async updateUserTopics(request: UpdateUserTopicsRequest) {
+    const getPostResponse = await this.postClient.updateUserTopics(request);
+    return getPostResponse;
+  }
+
+  async getUserTopics(request: GetUserTopicsRequest) {
+    const getPostResponse = await this.postClient.getUserTopics(request);
     return getPostResponse;
   }
 
