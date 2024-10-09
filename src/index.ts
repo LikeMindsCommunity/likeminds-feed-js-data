@@ -431,6 +431,8 @@ export {
   GetAllMembersRequest,
   EditCommentRequest,
   GetTopicsRequest,
+  UpdateUserTopicsRequest,
+  GetUserTopicsRequest,
   ValidateUserRequest,
   RegisterDeviceRequest,
   LMSDKCallbacks,

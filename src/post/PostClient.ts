@@ -160,12 +160,12 @@ class PostClient {
     const { uuid, topicsIds } = request;
 
     return await this.networkLibrary
-      .makeAuthenticatedRequest(`feed/user/${uuid}/topics`, {
+      .makeAuthenticatedRequest(`/feed/user/${uuid}/topics`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        data: JSON.stringify({ topicsIds }),
+        data: JSON.stringify({ topic_ids: topicsIds }),
       })
       .then(() => {
         return {
@@ -183,13 +183,7 @@ class PostClient {
   async getUserTopics(request: GetUserTopicsRequest) {
     const { uuids } = request;
     return await this.networkLibrary.makeAuthenticatedRequest<GetUserTopicsResponse>(
-      `feed/user/topics?uuid=${uuids}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      `/feed/user/topics?uuids=${JSON.stringify(uuids)}`
     );
   }
 }
