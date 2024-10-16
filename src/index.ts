@@ -95,6 +95,7 @@ import { DecodeURL } from "./types/api-responses/decodeUrlResponse";
 import { FilterComment } from "./types/models/filterComment";
 import { Like } from "./types/api-responses/getCommentLikesResponse";
 import { MemberRight } from "./types/api-responses/getMemberStateResponse";
+import HidePostRequest from "./post/model/HidePostRequest";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -218,6 +219,11 @@ class LMFeedClient {
     const initiateUserResponse =
       await this.initiateUserClient.initiateUser(initiateUserRequest);
     return initiateUserResponse;
+  }
+
+  async hidePost(hidePostRequest: HidePostRequest) {
+    const hidePostResponse = await this.postClient.hidePost(hidePostRequest);
+    return hidePostResponse;
   }
 
   async editProfile(editProfile: EditProfile) {

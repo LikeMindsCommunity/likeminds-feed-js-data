@@ -24,6 +24,7 @@ import { GetTaggingList } from "../types/api-responses/getTaggingListResponse";
 import { GetTopics } from "../types/api-responses/getTopicsResponse";
 import { DecodeURL } from "../types/api-responses/decodeUrlResponse";
 import { SavePost } from "../types/api-responses/savePostResponse";
+import HidePostRequest from "./model/HidePostRequest";
 
 class PostClient {
   private networkLibrary: NetworkLibrary;
@@ -114,7 +115,14 @@ class PostClient {
       }
     );
   }
-
+  public async hidePost(hidePostRequest: HidePostRequest) {
+    return await this.networkLibrary.makeAuthenticatedRequest<undefined>(
+      `${API.FEED_POST}/${hidePostRequest.postId}/hide`,
+      {
+        method: "PUT",
+      }
+    );
+  }
   public async decodeUrl(decodeUrl: DecodeURLRequest) {
     return await this.networkLibrary.makeAuthenticatedRequest<DecodeURL>(
       `${API.HELPER_URL}?url=${decodeUrl.url}`

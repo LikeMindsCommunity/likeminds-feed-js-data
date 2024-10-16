@@ -8,7 +8,7 @@ class AddPostRequest {
   topicIds: string[] | null;
   tempId?: string;
   onBehalfOfUuid?: string;
-
+  isAnonymous: boolean;
   // Public constructor to create the request object
   constructor(
     text: string,
@@ -16,6 +16,7 @@ class AddPostRequest {
     heading: string,
     topicIds: string[],
     tempId: string,
+    isAnonymous: boolean,
     onBehalfOfUUID?: string
   ) {
     this.text = text;
@@ -23,6 +24,7 @@ class AddPostRequest {
     this.heading = heading;
     this.topicIds = topicIds;
     this.tempId = tempId;
+    this.isAnonymous = isAnonymous;
     this.onBehalfOfUuid = onBehalfOfUUID;
   }
 
@@ -39,6 +41,7 @@ export class AddPostRequestBuilder {
   private heading: string | undefined;
   private topicIds: string[] | null;
   private tempId: string;
+  private isAnonymous: boolean = false;
   private onBehalfOfUUID?: string | undefined;
   // Add other properties as needed
 
@@ -69,6 +72,10 @@ export class AddPostRequestBuilder {
     return this;
   }
 
+  public setIsAnonymous(isAnonymous: boolean): AddPostRequestBuilder {
+    this.isAnonymous = isAnonymous;
+    return this;
+  }
   // Build method to create the final AddPostRequest object
   public build(): AddPostRequest {
     if (!this.text && !this.attachments) {
@@ -81,6 +88,7 @@ export class AddPostRequestBuilder {
       this.heading,
       this.topicIds,
       this.tempId,
+      this.isAnonymous,
       this.onBehalfOfUUID
     );
   }
