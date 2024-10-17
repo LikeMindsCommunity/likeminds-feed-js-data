@@ -405,6 +405,7 @@ export {
   DecodeURLRequest,
   DeletePostRequest,
   EditPostRequest,
+  HidePostRequest,
   GetPostLikesRequest,
   GetPostRequest,
   LikePostRequest,
