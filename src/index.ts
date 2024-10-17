@@ -96,6 +96,7 @@ import { FilterComment } from "./types/models/filterComment";
 import { Like } from "./types/api-responses/getCommentLikesResponse";
 import { MemberRight } from "./types/api-responses/getMemberStateResponse";
 import HidePostRequest from "./post/model/HidePostRequest";
+import { HidePost } from "./types/api-responses/HidePostResponse";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -462,6 +463,7 @@ export {
   DecodeURL,
   AddPost,
   EditPost,
+  HidePost,
   GetNotificationCount,
   LMFeedPostAttachment,
   LMFeedPostAttachmentMeta,
