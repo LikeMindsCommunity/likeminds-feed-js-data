@@ -25,6 +25,8 @@ export interface Post {
   uuid: string;
   replies?: Reply[];
   commentIds?: string[];
+  isAnonymous: boolean;
+  isHidden: boolean;
 }
 
 export interface MenuItem {

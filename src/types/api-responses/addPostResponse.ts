@@ -1,6 +1,7 @@
 import { User } from "../models/member";
 import { Post } from "../models/post";
 import { Topic } from "../models/topic";
+import { Widget } from "../models/widget";
 
 export interface AddPost {
   post: Post;
@@ -8,6 +9,8 @@ export interface AddPost {
   topics: Record<string, Topic>;
 
   users: Record<string, User>;
+
+  widgets: Record<string, Widget>;
 }
 export interface EditPost {
   post: Post;
@@ -15,4 +18,6 @@ export interface EditPost {
   topics: Record<string, Topic>;
 
   users: Record<string, User>;
+
+  widgets: Record<string, Widget>;
 }
