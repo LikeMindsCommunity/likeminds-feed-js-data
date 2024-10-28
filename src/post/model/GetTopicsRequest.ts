@@ -5,6 +5,8 @@ class GetTopicsRequest {
   searchType: string | undefined;
   page: number | undefined;
   pageSize: number | undefined;
+  parentIds?: string[] | null;
+  orderBy?: string[] | null;
 
   // Public constructor to create the request object
   constructor(
@@ -12,13 +14,17 @@ class GetTopicsRequest {
     search: string,
     searchType: string,
     page: number,
-    pageSize: number
+    pageSize: number,
+    parentIds?: string[] | null,
+    orderBy?: string[] | null
   ) {
     this.isEnabled = isEnabled;
     this.search = search;
     this.page = page;
     this.pageSize = pageSize;
     this.searchType = searchType;
+    this.parentIds = parentIds;
+    this.orderBy = orderBy;
   }
 
   // Static builder method to create the request object
@@ -34,6 +40,8 @@ export class GetTopicsRequestBuilder {
   searchType: string | undefined;
   page: number | undefined;
   pageSize: number | undefined;
+  parentIds?: string[] | null;
+  orderBy?: string[] | null;
   // Add other properties as needed
 
   public setIsEnabled(isEnabled: boolean | null): GetTopicsRequestBuilder {
@@ -56,6 +64,14 @@ export class GetTopicsRequestBuilder {
     this.pageSize = pageSize;
     return this;
   }
+  public setParentIds(parentIds: string[] | null): GetTopicsRequestBuilder {
+    this.parentIds = parentIds;
+    return this;
+  }
+  public setOrderBy(orderBy: string[] | null): GetTopicsRequestBuilder {
+    this.orderBy = orderBy;
+    return this;
+  }
 
   // Build method to create the final GetTopicsRequest object
   public build(): GetTopicsRequest {
@@ -75,7 +91,9 @@ export class GetTopicsRequestBuilder {
       this.search,
       this.searchType,
       this.page,
-      this.pageSize
+      this.pageSize,
+      this.parentIds,
+      this.orderBy
     );
   }
 }
