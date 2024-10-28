@@ -25,6 +25,9 @@ import { GetTopics } from "../types/api-responses/getTopicsResponse";
 import { DecodeURL } from "../types/api-responses/decodeUrlResponse";
 import { SavePost } from "../types/api-responses/savePostResponse";
 import HidePostRequest from "./model/HidePostRequest";
+import { UpdateUserTopicsRequest } from "./model/UpdateUserTopicsRequest";
+import { GetUserTopicsRequest } from "./model/GetUserTopicsRequest";
+import { GetUserTopicsResponse } from "src/types/api-responses/getUserTopicsResponse";
 
 class PostClient {
   private networkLibrary: NetworkLibrary;
@@ -158,6 +161,37 @@ class PostClient {
       request.isEnabled === null
         ? `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}`
         : `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}&is_enabled=${request.isEnabled}`
+    );
+  }
+
+  async updateUserTopics(request: UpdateUserTopicsRequest) {
+    const { uuid, topicsIds } = request;
+
+    return await this.networkLibrary
+      .makeAuthenticatedRequest(`/feed/user/${uuid}/topics`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify({ topic_ids: topicsIds }),
+      })
+      .then(() => {
+        return {
+          success: true,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          errorMessage: error,
+        };
+      });
+  }
+
+  async getUserTopics(request: GetUserTopicsRequest) {
+    const { uuids } = request;
+    return await this.networkLibrary.makeAuthenticatedRequest<GetUserTopicsResponse>(
+      `/feed/user/topics?uuids=${JSON.stringify(uuids)}`
     );
   }
 }
