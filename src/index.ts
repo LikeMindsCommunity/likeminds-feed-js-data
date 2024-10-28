@@ -97,6 +97,8 @@ import { Like } from "./types/api-responses/getCommentLikesResponse";
 import { MemberRight } from "./types/api-responses/getMemberStateResponse";
 import HidePostRequest from "./post/model/HidePostRequest";
 import { HidePost } from "./types/api-responses/HidePostResponse";
+import { UpdateUserTopicsRequest } from "./post/model/UpdateUserTopicsRequest";
+import { GetUserTopicsRequest } from "./post/model/GetUserTopicsRequest";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -268,6 +270,16 @@ class LMFeedClient {
     return getPostResponse;
   }
 
+  async updateUserTopics(request: UpdateUserTopicsRequest) {
+    const getPostResponse = await this.postClient.updateUserTopics(request);
+    return getPostResponse;
+  }
+
+  async getUserTopics(request: GetUserTopicsRequest) {
+    const getPostResponse = await this.postClient.getUserTopics(request);
+    return getPostResponse;
+  }
+
   async likePost(likePostRequest: LikePostRequest) {
     const likePostResponse = await this.postClient.likePost(likePostRequest);
     return likePostResponse;
@@ -427,6 +439,8 @@ export {
   GetAllMembersRequest,
   EditCommentRequest,
   GetTopicsRequest,
+  UpdateUserTopicsRequest,
+  GetUserTopicsRequest,
   ValidateUserRequest,
   RegisterDeviceRequest,
   LMSDKCallbacks,
