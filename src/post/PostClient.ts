@@ -138,33 +138,25 @@ class PostClient {
     );
   }
 
-  // Check
-  // getPostComments(taggingList: GetTaggingListRequest) {
-  //   return this.networkLibrary
-  //     .makeAuthenticatedRequest(
-  //       `${API.CHATROOM_GET_TAGGINNG_LIST}?page=${taggingList.page}&page_size=${taggingList.pageSize}&search_name=${taggingList.searchName}`
-  //     )
-  //     .then((resData: any) => {
-  //       const responseData = ModelConverter.responseBodyParser(resData);
-  //       return new LMResponse<any>(responseData, null, true);
-  //     })
-  //     .catch((error) => {
-  //       return {
-  //         success: false,
-  //         errorMessage: error,
-  //       };
-  //     });
-  // }
-
-  getTopics(request: GetTopicsRequest) {
-    return this.networkLibrary.makeAuthenticatedRequest<GetTopics>(
-      request.isEnabled === null
-        ? `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}`
-        : `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}&is_enabled=${request.isEnabled}`
-    );
+  public async getTopics(request: GetTopicsRequest) {
+    let requestUrl = `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}`;
+    if (request.isEnabled) {
+      requestUrl = requestUrl.concat(`&is_enabled=${request.isEnabled}`);
+    }
+    if (request.parentIds && request.parentIds.length > 0) {
+      requestUrl = requestUrl.concat(
+        `&parent_ids=${JSON.stringify(request.parentIds)}`
+      );
+    }
+    if (request.orderBy && request.orderBy.length > 0) {
+      requestUrl = requestUrl.concat(
+        `&order_by=${JSON.stringify(request.orderBy)}`
+      );
+    }
+    return this.networkLibrary.makeAuthenticatedRequest<GetTopics>(requestUrl);
   }
 
-  async updateUserTopics(request: UpdateUserTopicsRequest) {
+  public async updateUserTopics(request: UpdateUserTopicsRequest) {
     const { uuid, topicsIds } = request;
 
     return await this.networkLibrary
@@ -188,7 +180,7 @@ class PostClient {
       });
   }
 
-  async getUserTopics(request: GetUserTopicsRequest) {
+  public async getUserTopics(request: GetUserTopicsRequest) {
     const { uuids } = request;
     return await this.networkLibrary.makeAuthenticatedRequest<GetUserTopicsResponse>(
       `/feed/user/topics?uuids=${JSON.stringify(uuids)}`
