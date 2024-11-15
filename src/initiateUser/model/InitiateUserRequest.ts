@@ -4,18 +4,21 @@ class InitiateUserRequest {
   uuid?: string;
   isGuest: boolean;
   apikey: string;
+  imageUrl?: string;
 
   // Public constructor to create the request object
   constructor(
     userName: string | undefined,
     uuid: string | undefined,
     isGuest: boolean,
-    apiKey: string
+    apiKey: string,
+    imageUrl: string | undefined
   ) {
     this.userName = userName;
     this.uuid = uuid;
     this.isGuest = isGuest;
     this.apikey = apiKey;
+    this.imageUrl = imageUrl;
   }
 
   // Static builder method to create the request object
@@ -30,6 +33,7 @@ export class InitiateUserRequestBuilder {
   private uuid: string | undefined;
   private isGuest: boolean | undefined;
   private apiKey: string;
+  private imageUrl: string | undefined;
   // Add other properties as needed
 
   public setUserName(userName: string): InitiateUserRequestBuilder {
@@ -49,6 +53,10 @@ export class InitiateUserRequestBuilder {
     this.isGuest = isGuest;
     return this;
   }
+  public setImageUrl(imageUrl: string): InitiateUserRequestBuilder {
+    this.imageUrl = imageUrl;
+    return this;
+  }
 
   // Add other methods to set other properties as needed
 
@@ -62,7 +70,8 @@ export class InitiateUserRequestBuilder {
       this.userName,
       this.uuid,
       this.isGuest || false,
-      this.apiKey
+      this.apiKey,
+      this.imageUrl
     );
   }
 }
