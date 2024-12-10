@@ -25,8 +25,8 @@ import { GetTopics } from "../types/api-responses/getTopicsResponse";
 import { DecodeURL } from "../types/api-responses/decodeUrlResponse";
 import { SavePost } from "../types/api-responses/savePostResponse";
 import HidePostRequest from "./model/HidePostRequest";
-import { UpdateUserTopicsRequest } from "./model/UpdateUserTopicsRequest";
-import { GetUserTopicsRequest } from "./model/GetUserTopicsRequest";
+import UpdateUserTopicsRequest from "./model/UpdateUserTopicsRequest";
+import GetUserTopicsRequest from "./model/GetUserTopicsRequest";
 import { GetUserTopicsResponse } from "src/types/api-responses/getUserTopicsResponse";
 
 class PostClient {
@@ -139,9 +139,15 @@ class PostClient {
   }
 
   public async getTopics(request: GetTopicsRequest) {
-    let requestUrl = `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}&search=${request.search}&search_type=${request.searchType}`;
+    let requestUrl = `${API.FEED_TOPIC}?page=${request.page}&page_size=${request.pageSize}`;
     if (request.isEnabled) {
       requestUrl = requestUrl.concat(`&is_enabled=${request.isEnabled}`);
+    }
+    if (request.search) {
+      requestUrl = requestUrl.concat(`&search=${request.search}`);
+    }
+    if (request.searchType) {
+      requestUrl = requestUrl.concat(`&search_type=${request.searchType}`);
     }
     if (request.parentIds && request.parentIds.length > 0) {
       requestUrl = requestUrl.concat(
