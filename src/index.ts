@@ -97,8 +97,8 @@ import { Like } from "./types/api-responses/getCommentLikesResponse";
 import { MemberRight } from "./types/api-responses/getMemberStateResponse";
 import HidePostRequest from "./post/model/HidePostRequest";
 import { HidePost } from "./types/api-responses/HidePostResponse";
-import { UpdateUserTopicsRequest } from "./post/model/UpdateUserTopicsRequest";
-import { GetUserTopicsRequest } from "./post/model/GetUserTopicsRequest";
+import UpdateUserTopicsRequest from "./post/model/UpdateUserTopicsRequest";
+import GetUserTopicsRequest from "./post/model/GetUserTopicsRequest";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
