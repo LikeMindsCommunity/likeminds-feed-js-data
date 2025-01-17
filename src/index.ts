@@ -99,6 +99,7 @@ import HidePostRequest from "./post/model/HidePostRequest";
 import { HidePost } from "./types/api-responses/HidePostResponse";
 import UpdateUserTopicsRequest from "./post/model/UpdateUserTopicsRequest";
 import GetUserTopicsRequest from "./post/model/GetUserTopicsRequest";
+import SearchPostsRequest from "./universalfeed/model/SearchPostsRequest";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -409,6 +410,11 @@ class LMFeedClient {
   async getPollVotes(request: GetPollVotesRequest) {
     return await this.pollFeedClient.getPollVotes(request);
   }
+
+  async searchPosts(request: SearchPostsRequest) {
+    return await this.feedClient.searchPosts(request);
+  }
+
 }
 
 export {
@@ -443,6 +449,7 @@ export {
   GetUserTopicsRequest,
   ValidateUserRequest,
   RegisterDeviceRequest,
+  SearchPostsRequest,
   LMSDKCallbacks,
   NetworkLibrary,
   TokenValues,
