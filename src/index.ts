@@ -16,6 +16,7 @@ import PinPostRequest from "./post/model/PinPostRequest";
 import SavePostRequest from "./post/model/SavePostRequest";
 import GetTaggingListRequest from "./post/model/GetTaggingListRequest";
 import GetFeedRequest from "./universalfeed/model/GetFeedRequest";
+import SearchPostsRequest from "./universalfeed/model/SearchPostsRequest";
 import ModerationClient from "./moderation/ModerationClient";
 import GetReportTagsRequest from "./moderation/model/GetReportTagsRequest";
 import PostReportRequest from "./moderation/model/PostReportRequest";
@@ -99,7 +100,6 @@ import HidePostRequest from "./post/model/HidePostRequest";
 import { HidePost } from "./types/api-responses/HidePostResponse";
 import UpdateUserTopicsRequest from "./post/model/UpdateUserTopicsRequest";
 import GetUserTopicsRequest from "./post/model/GetUserTopicsRequest";
-import SearchPostsRequest from "./universalfeed/model/SearchPostsRequest";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
