@@ -42,14 +42,10 @@ class CommentClient {
       });
   }
 
-  public async getComment(
-    getComment: GetCommentRequest,
-    postId: string,
-    commentId: any
-  ) {
+  public async getComment(getComment: GetCommentRequest) {
     return this.networkLibrary
       .makeAuthenticatedRequest<GetCommentDetails>(
-        `${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`
+        `${API.FEED_POST}/${getComment.postId}/comment/${getComment.commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData);

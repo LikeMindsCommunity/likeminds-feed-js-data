@@ -99,6 +99,8 @@ import HidePostRequest from "./post/model/HidePostRequest";
 import { HidePost } from "./types/api-responses/HidePostResponse";
 import UpdateUserTopicsRequest from "./post/model/UpdateUserTopicsRequest";
 import GetUserTopicsRequest from "./post/model/GetUserTopicsRequest";
+import GetPersonalisedFeedRequest from "./universalfeed/model/GetPersonalisedFeedRequest";
+import PostSeenRequest from "./post/model/PostSeenRequest";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -306,6 +308,11 @@ class LMFeedClient {
     return getFeedResponse;
   }
 
+  async getPersonalisedFeed(request: GetPersonalisedFeedRequest) {
+    const getFeedResponse = await this.feedClient.getPersonalisedFeed(request);
+    return getFeedResponse;
+  }
+
   async getReportTags(request: GetReportTagsRequest) {
     const getReportTagsResponse =
       await this.moderationClient.getReportTags(request);
@@ -317,21 +324,14 @@ class LMFeedClient {
     return postReportResponse;
   }
 
-  async getComments(
-    postId: string,
-    comment: GetCommentRequest,
-    commentId: string,
-    pageNo: number
-  ) {
+  async getComments(comment: GetCommentRequest) {
     const getCommentResponse = await this.commentClient.getComment(
       GetCommentRequest.builder()
-        .setCommentId(commentId)
-        .setPage(pageNo)
-        .setPageSize(10)
-        .setPostId(postId)
-        .build(),
-      postId,
-      commentId
+        .setCommentId(comment.commentId)
+        .setPage(comment.page)
+        .setPageSize(comment.pageSize)
+        .setPostId(comment.postId)
+        .build()
     );
     return getCommentResponse;
   }
@@ -409,6 +409,10 @@ class LMFeedClient {
   async getPollVotes(request: GetPollVotesRequest) {
     return await this.pollFeedClient.getPollVotes(request);
   }
+
+  async postSeen(request: PostSeenRequest) {
+    return await this.postClient.postSeen(request);
+  }
 }
 
 export {
@@ -426,6 +430,7 @@ export {
   SavePostRequest,
   GetTaggingListRequest,
   GetFeedRequest,
+  GetPersonalisedFeedRequest,
   GetReportTagsRequest,
   PostReportRequest,
   AddCommentRequest,
@@ -501,4 +506,5 @@ export {
   FilterComment,
   Like,
   MemberRight,
+  PostSeenRequest,
 };
