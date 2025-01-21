@@ -324,13 +324,13 @@ class LMFeedClient {
     return postReportResponse;
   }
 
-  async getComments(comment: GetCommentRequest) {
+  async getComments(getCommentRequest: GetCommentRequest) {
     const getCommentResponse = await this.commentClient.getComment(
       GetCommentRequest.builder()
-        .setCommentId(comment.commentId)
-        .setPage(comment.page)
-        .setPageSize(comment.pageSize)
-        .setPostId(comment.postId)
+        .setCommentId(getCommentRequest.commentId)
+        .setPage(getCommentRequest.page)
+        .setPageSize(getCommentRequest.pageSize)
+        .setPostId(getCommentRequest.postId)
         .build()
     );
     return getCommentResponse;

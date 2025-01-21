@@ -29,6 +29,7 @@ import UpdateUserTopicsRequest from "./model/UpdateUserTopicsRequest";
 import GetUserTopicsRequest from "./model/GetUserTopicsRequest";
 import { GetUserTopicsResponse } from "src/types/api-responses/getUserTopicsResponse";
 import PostSeenRequest from "./model/PostSeenRequest";
+import { PostSeen } from "../types/api-responses/postSeenResponse";
 
 class PostClient {
   private networkLibrary: NetworkLibrary;
@@ -196,15 +197,16 @@ class PostClient {
 
   async postSeen(request: PostSeenRequest) {
     const params = ModelConverter.requestBodyGenerator(request);
-    const resData = await this.networkLibrary.makeAuthenticatedRequest<AddPost>(
-      `${API.POST_SEEN}`,
-      {
-        method: "POST",
-        data: params,
-      }
-    );
+    const responseData =
+      await this.networkLibrary.makeAuthenticatedRequest<PostSeen>(
+        `${API.POST_SEEN}`,
+        {
+          method: "POST",
+          data: params,
+        }
+      );
 
-    return resData;
+    return responseData;
   }
 }
 

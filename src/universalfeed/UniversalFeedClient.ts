@@ -7,6 +7,7 @@ import GetFeedRequest from "./model/GetFeedRequest";
 
 import { GetUniversalFeed } from "../types/api-responses/getUniversalFeedResponse";
 import GetPersonalisedFeedRequest from "./model/GetPersonalisedFeedRequest";
+import { GetPersonalisedFeed } from "../types/api-responses/getPersonalisedFeedResponse";
 
 class UniversalFeedClient {
   private networkLibrary: NetworkLibrary;
@@ -21,18 +22,20 @@ class UniversalFeedClient {
       ? `${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}&topic_ids=${JSON.stringify(feed.topicIds)}`
       : `${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}`;
 
-    const resData =
+    const responseData =
       await this.networkLibrary.makeAuthenticatedRequest<GetUniversalFeed>(url);
-    return resData;
+    return responseData;
   }
 
   // get personalised feed
   async getPersonalisedFeed(feed: GetPersonalisedFeedRequest) {
     const url = `${API.FEED_PERSONALISED}?page=${feed.page}&page_size=${feed.pageSize ? feed.pageSize : 20}&should_recompute=${feed.shouldRecompute ? feed.shouldRecompute : false}&should_reorder=${feed.shouldReorder ? feed.shouldReorder : false}`;
 
-    const resData =
-      await this.networkLibrary.makeAuthenticatedRequest<GetUniversalFeed>(url);
-    return resData;
+    const responseData =
+      await this.networkLibrary.makeAuthenticatedRequest<GetPersonalisedFeed>(
+        url
+      );
+    return responseData;
   }
 }
 
