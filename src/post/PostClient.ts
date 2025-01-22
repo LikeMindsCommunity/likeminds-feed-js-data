@@ -28,6 +28,8 @@ import HidePostRequest from "./model/HidePostRequest";
 import UpdateUserTopicsRequest from "./model/UpdateUserTopicsRequest";
 import GetUserTopicsRequest from "./model/GetUserTopicsRequest";
 import { GetUserTopicsResponse } from "src/types/api-responses/getUserTopicsResponse";
+import PostSeenRequest from "./model/PostSeenRequest";
+import { PostSeen } from "../types/api-responses/postSeenResponse";
 
 class PostClient {
   private networkLibrary: NetworkLibrary;
@@ -191,6 +193,20 @@ class PostClient {
     return await this.networkLibrary.makeAuthenticatedRequest<GetUserTopicsResponse>(
       `/feed/user/topics?uuids=${JSON.stringify(uuids)}`
     );
+  }
+
+  async postSeen(request: PostSeenRequest) {
+    const params = ModelConverter.requestBodyGenerator(request);
+    const responseData =
+      await this.networkLibrary.makeAuthenticatedRequest<PostSeen>(
+        `${API.POST_SEEN}`,
+        {
+          method: "POST",
+          data: params,
+        }
+      );
+
+    return responseData;
   }
 }
 
