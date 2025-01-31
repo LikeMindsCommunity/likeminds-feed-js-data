@@ -43,9 +43,9 @@ class UniversalFeedClient {
   async searchPosts(SearchPostsRequest: SearchPostsRequest) {
     const url = `${API.SEARCH}?page=${SearchPostsRequest.page}&page_size=${SearchPostsRequest.pageSize}&search=${SearchPostsRequest.search}&search_type=${SearchPostsRequest.searchType}`;
 
-    const resData =
+    const responseData =
       await this.networkLibrary.makeAuthenticatedRequest<SearchPostResponse>(url);
-    return resData;
+    return responseData;
 
   }
 }
