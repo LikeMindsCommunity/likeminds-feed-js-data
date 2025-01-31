@@ -45,7 +45,11 @@ export class ModelConverter<S> {
         const camelKey =
           key == "_id"
             ? "id"
-            : key.replace(/_([a-z])/g, (match, letter) => letter.toUpperCase());
+            : key == "_lm_meta"
+              ? "lmMeta"
+              : key.replace(/_([a-z])/g, (match, letter) =>
+                  letter.toUpperCase()
+                );
 
         result[camelKey] = this.responseBodyParser(obj[key]);
       }

@@ -3,6 +3,7 @@ export const API = {
   USER_LOGOUT: "/user/logout",
   COMMUNITY_MEMBER_STATE: "/community/member/state",
   FEED_UNIVERSAL: "/feed/universal",
+  FEED_PERSONALISED: "/feed/personalised",
   FEED_POST: "/feed/post",
   FEED_TOPIC: "/feed/topic",
   HELPER_URL: "/helper/url",
@@ -15,7 +16,7 @@ export const API = {
   GET_REPORT_TAGS: "/community/report/tag",
   POST_REPORT: "/community/report",
   NOTIFICATION_FEED: "/feed/user/activity",
-  COMMUNITY_MEMBER_PROFILE: '/community/member/profile',
+  COMMUNITY_MEMBER_PROFILE: "/community/member/profile",
 
   CHATROOM_SECRET_LEAVE: "/chatroom/secret/leave", //(Post)
   DM_ALL_MEMBERS: "/community/member", //(GET)
@@ -31,5 +32,6 @@ export const API = {
   CHANNEL_INVITE: "/channel/invite", // (PUT)
   USER_DEVICE_PUSH: "/user/device/push",
   POLL: "/poll",
-  SEARCH: "/search/post"
+  SEARCH: "/search/post",
+  POST_SEEN: "/feed/post/seen", // (POST)
 };
