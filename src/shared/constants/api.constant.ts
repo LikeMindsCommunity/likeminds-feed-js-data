@@ -32,5 +32,6 @@ export const API = {
   CHANNEL_INVITE: "/channel/invite", // (PUT)
   USER_DEVICE_PUSH: "/user/device/push",
   POLL: "/poll",
+  SEARCH: "/search/post",
   POST_SEEN: "/feed/post/seen", // (POST)
 };

@@ -16,6 +16,7 @@ import PinPostRequest from "./post/model/PinPostRequest";
 import SavePostRequest from "./post/model/SavePostRequest";
 import GetTaggingListRequest from "./post/model/GetTaggingListRequest";
 import GetFeedRequest from "./universalfeed/model/GetFeedRequest";
+import SearchPostsRequest from "./universalfeed/model/SearchPostsRequest";
 import ModerationClient from "./moderation/ModerationClient";
 import GetReportTagsRequest from "./moderation/model/GetReportTagsRequest";
 import PostReportRequest from "./moderation/model/PostReportRequest";
@@ -410,9 +411,14 @@ class LMFeedClient {
     return await this.pollFeedClient.getPollVotes(request);
   }
 
+  async searchPosts(request: SearchPostsRequest) {
+    return await this.feedClient.searchPosts(request);
+  }
+
   async postSeen(request: PostSeenRequest) {
     return await this.postClient.postSeen(request);
   }
+
 }
 
 export {
@@ -448,6 +454,7 @@ export {
   GetUserTopicsRequest,
   ValidateUserRequest,
   RegisterDeviceRequest,
+  SearchPostsRequest,
   LMSDKCallbacks,
   NetworkLibrary,
   TokenValues,
