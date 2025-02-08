@@ -6,6 +6,8 @@ import NetworkLibrary from "../core/services/networklibrary";
 import GetFeedRequest from "./model/GetFeedRequest";
 
 import { GetUniversalFeed } from "../types/api-responses/getUniversalFeedResponse";
+import SearchPostsRequest from "./model/SearchPostsRequest";
+import { SearchPostResponse } from "../types/api-responses/searchPostsResponse"
 import GetPersonalisedFeedRequest from "./model/GetPersonalisedFeedRequest";
 import { GetPersonalisedFeed } from "../types/api-responses/getPersonalisedFeedResponse";
 
@@ -36,6 +38,15 @@ class UniversalFeedClient {
         url
       );
     return responseData;
+  }
+
+  async searchPosts(SearchPostsRequest: SearchPostsRequest) {
+    const url = `${API.SEARCH}?page=${SearchPostsRequest.page}&page_size=${SearchPostsRequest.pageSize}&search=${SearchPostsRequest.search}&search_type=${SearchPostsRequest.searchType}`;
+
+    const responseData =
+      await this.networkLibrary.makeAuthenticatedRequest<SearchPostResponse>(url);
+    return responseData;
+
   }
 }
 
