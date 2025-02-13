@@ -31,11 +31,21 @@ class UniversalFeedClient {
 
   async getFeedWithSearchParams(feed: GetFeedRequest) {
 
-    const queryParams = new URLSearchParams({
-      page: feed.page.toString(),
-      page_size: feed.pageSize.toString(),
-      topic_ids: JSON.stringify(feed.topicIds), // Convert array to string
-    });
+    let queryParams;
+
+    if (feed?.topicIds?.length > 0) {
+      queryParams = new URLSearchParams({
+        page: feed.page.toString(),
+        page_size: feed.pageSize.toString(),
+        topic_ids: JSON.stringify(feed.topicIds)
+      });
+    } else {
+      queryParams = new URLSearchParams({
+        page: feed.page.toString(),
+        page_size: feed.pageSize.toString(),
+      });
+    }
+
 
     const url = `${API.FEED_UNIVERSAL}?${queryParams.toString()}`;
 
