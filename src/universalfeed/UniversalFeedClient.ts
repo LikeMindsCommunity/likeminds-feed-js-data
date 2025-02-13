@@ -29,6 +29,7 @@ class UniversalFeedClient {
     return responseData;
   }
 
+  // Specifically For React Native To Get Feed along with Topic Categorization
   async getFeedWithSearchParams(feed: GetFeedRequest) {
 
     let queryParams;
