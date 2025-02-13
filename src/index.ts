@@ -309,6 +309,11 @@ class LMFeedClient {
     return getFeedResponse;
   }
 
+  async getFeedWithSearchParams(request: GetFeedRequest) {
+    const getFeedResponse = await this.feedClient.getFeedWithSearchParams(request);
+    return getFeedResponse;
+  }
+
   async getPersonalisedFeed(request: GetPersonalisedFeedRequest) {
     const getFeedResponse = await this.feedClient.getPersonalisedFeed(request);
     return getFeedResponse;
