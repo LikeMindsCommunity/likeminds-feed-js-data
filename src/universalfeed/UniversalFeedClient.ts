@@ -29,6 +29,25 @@ class UniversalFeedClient {
     return responseData;
   }
 
+  async getFeedWithSearchParams(feed: GetFeedRequest) {
+
+    const queryParams = new URLSearchParams({
+      page: feed.page.toString(),
+      page_size: feed.pageSize.toString(),
+      topic_ids: JSON.stringify(feed.topicIds), // Convert array to string
+    });
+
+    const url = `${API.FEED_UNIVERSAL}?${queryParams.toString()}`;
+
+
+    const responseData = await this.networkLibrary.makeAuthenticatedRequest<GetUniversalFeed>(
+      url
+    );
+
+
+    return responseData;
+  }
+
   // get personalised feed
   async getPersonalisedFeed(feed: GetPersonalisedFeedRequest) {
     const url = `${API.FEED_PERSONALISED}?page=${feed.page}&page_size=${feed.pageSize ? feed.pageSize : 20}&should_recompute=${feed.shouldRecompute ? feed.shouldRecompute : false}&should_reorder=${feed.shouldReorder ? feed.shouldReorder : false}`;
