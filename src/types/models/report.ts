@@ -27,5 +27,7 @@ export interface Tag{
     reportedOn: number;
     type: string;
     tag : Tag;
+    closedBy?: User;
+    closedOn?: number;
   }
   

@@ -22,6 +22,10 @@ import GetReportTagsRequest from "./moderation/model/GetReportTagsRequest";
 import PostReportRequest from "./moderation/model/PostReportRequest";
 import GetReportsRequest from "./moderation/model/GetReportsRequest";
 import GetPendingPostModerationRequest from "./moderation/model/GetPendingPostModerationRequest";
+import GetPostCommentReportRequest from "./moderation/model/GetPostCommentReportRequest";
+import CloseReportRequest from "./moderation/model/CloseReportRequest";
+import GetMemberRightsRequest from "./moderation/model/GetMemberRightsRequest";
+import UpdateMemberRightsRequest from "./moderation/model/UpdateMemberRightsRequest";
 import CommentClient from "./comment/CommentClient";
 import AddCommentRequest from "./comment/model/AddCommentRequest";
 import GetAllMembersRequest from "./initiateUser/model/GetAllMembersRequest";
@@ -65,7 +69,9 @@ import { GetNotification } from "./types/api-responses/getNotificationResponse";
 
 import { GetPinPost } from "./types/api-responses/getPinPostResponse";
 import { GetPostDetails } from "./types/api-responses/getPostDetailsResponse";
+import { GetMemberRights , MemberRights} from "./types/api-responses/GetMemberRightsResponse";
 import { GetReports } from "./types/api-responses/GetReportsResponse";
+import { GetPostCommentReports } from "./types/api-responses/GetPostCommentReportsResponse";
 import { GetTopics } from "./types/api-responses/getTopicsResponse";
 import { GetUniversalFeed } from "./types/api-responses/getUniversalFeedResponse";
 import { LikeComment } from "./types/api-responses/likeCommentResponse";
@@ -80,6 +86,7 @@ import { OgTag } from "./types/models/ogTag";
 import { MenuItem, Post } from "./types/models/post";
 import { Reply } from "./types/models/replies";
 import { Report } from "./types/models/report";
+import { Comment } from "./types/models/comment";
 import { ReportTag } from "./types/models/reportTags";
 import { TaggingUser } from "./types/models/taggingMember";
 import { Topic } from "./types/models/topic";
@@ -369,6 +376,26 @@ class LMFeedClient {
     return updateResponse;
   }
 
+  async getReportsForPostAndComments(request: GetPostCommentReportRequest) {
+    const getReportsForPostAndCommentsResponse = await this.moderationClient.getReportsForPostAndComments(request);
+    return getReportsForPostAndCommentsResponse;
+  }
+
+  async closeReport(request: CloseReportRequest) {
+    const closeReportResponse = await this.moderationClient.closeReport(request);
+    return closeReportResponse;
+  }
+
+  async getMemberRights(request: GetMemberRightsRequest) {
+    const getMemberRightsResponse =  await this.moderationClient.getMemberRights(request);
+    return getMemberRightsResponse
+  }
+
+  async updateMemberRights(request: UpdateMemberRightsRequest) {
+    const updateMemberRightsResponse = await this.moderationClient.updateMemberRights(request);
+    return updateMemberRightsResponse;
+  }
+
   async addComment(request: AddCommentRequest) {
     const postReportResponse = await this.commentClient.addComment(request);
     return postReportResponse;
@@ -473,6 +500,10 @@ export {
   GetPendingPostModerationRequest,
   GetReportsRequest,
   UpdatePendingPostStatusRequest,
+  GetPostCommentReportRequest,
+  CloseReportRequest,
+  GetMemberRightsRequest, 
+  UpdateMemberRightsRequest,
   PostReportRequest,
   AddCommentRequest,
   GetCommentRequest,
@@ -512,6 +543,8 @@ export {
   GetTaggingList,
   GetReportTags,
   GetReports,
+  GetPostCommentReports,
+  GetMemberRights,
   GetPostLikes,
   GetPostDetails,
   GetPinPost,
@@ -542,6 +575,7 @@ export {
   MenuItem,
   Reply,
   Report,
+  Comment,
   ReportTag,
   TaggingUser,
   Topic,
@@ -550,5 +584,6 @@ export {
   FilterComment,
   Like,
   MemberRight,
+  MemberRights,
   PostSeenRequest,
 };

@@ -1,10 +1,10 @@
 import { LMFeedReportStatus } from "../types/types";
 
 class UpdatePendingPostStatusRequest {
-  reportIds: string[];
+  reportIds: number[];
   status: LMFeedReportStatus;
 
-  constructor(reportIds: string[], status: LMFeedReportStatus) {
+  constructor(reportIds: number[], status: LMFeedReportStatus) {
     this.reportIds = reportIds;
     this.status = status;
   }
@@ -14,11 +14,11 @@ class UpdatePendingPostStatusRequest {
   }
 }
 
-class UpdatePendingPostStatusRequestBuilder {
-  private reportIds!: string[];
+export class UpdatePendingPostStatusRequestBuilder {
+  private reportIds!: number[];
   private status!: LMFeedReportStatus;
 
-  public setReportIds(reportIds: string[]): UpdatePendingPostStatusRequestBuilder {
+  public setReportIds(reportIds: number[]): UpdatePendingPostStatusRequestBuilder {
     this.reportIds = reportIds;
     return this;
   }
