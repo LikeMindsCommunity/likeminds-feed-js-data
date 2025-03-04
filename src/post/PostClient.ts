@@ -45,6 +45,9 @@ class PostClient {
       {
         method: "POST",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
 
@@ -56,7 +59,13 @@ class PostClient {
   }
   public async getPost(getPost: GetPostRequest) {
     return await this.networkLibrary.makeAuthenticatedRequest<GetPostDetails>(
-      `${API.FEED_POST}/${getPost.postId}?page=${getPost.page}&page_size=${getPost.pageSize}`
+      `${API.FEED_POST}/${getPost.postId}?page=${getPost.page}&page_size=${getPost.pageSize}`,
+      {
+        method: "GET",
+        headers: {
+          "x-accept-version": "v1",
+        },
+      }
     );
   }
 
@@ -67,13 +76,22 @@ class PostClient {
       {
         method: "PUT",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
 
   public async getPostLikes(request: GetPostLikesRequest) {
     return await this.networkLibrary.makeAuthenticatedRequest<GetPostLikes>(
-      `${API.FEED_POST}/${request.postId}/like?page=${request.page}&page_size=${request.pageSize}`
+      `${API.FEED_POST}/${request.postId}/like?page=${request.page}&page_size=${request.pageSize}`,
+      {
+        method: "GET",
+        headers: {
+          "x-accept-version": "v1",
+        },
+      }
     );
   }
 
@@ -84,6 +102,9 @@ class PostClient {
       {
         method: "PUT",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -95,6 +116,9 @@ class PostClient {
       {
         method: "PUT",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -106,6 +130,9 @@ class PostClient {
       {
         method: "PUT",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -117,6 +144,9 @@ class PostClient {
       {
         method: "DELETE",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -125,6 +155,9 @@ class PostClient {
       `${API.FEED_POST}/${hidePostRequest.postId}/hide`,
       {
         method: "PUT",
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }

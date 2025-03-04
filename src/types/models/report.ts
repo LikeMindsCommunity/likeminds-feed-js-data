@@ -1,33 +1,23 @@
 import { User } from "./member";
+import { ReportEntityType } from "src/moderation/enums";
 
-// export interface Report {
-//     communityId: number;
-//     communityName: string;
-//     entityId: string;
-//     id: number;
-//     isClosed: boolean;
-//     reportedBy: User;
-//     reportedOn: number; 
-//     type: number;
-//     userReported: User;
-//   }
+export interface Tag {
+  id: number;
+  name: string;
+}
 
-export interface Tag{
-    id: number;
-    name: string;
-  }
-  
-  export interface Report{
-    accusedUser : User;
-    entityId: string;
-    id: number;
-    isClosed : boolean;
-    reason : string;
-    reportedByUser : User;
-    reportedOn: number;
-    type: string;
-    tag : Tag;
-    closedBy?: User;
-    closedOn?: number;
-  }
-  
+export interface Report {
+  accusedUser: User;
+  closedBy?: User;
+  closedOn?: number;
+  entityId: string;
+  id: number;
+  isClosed: boolean;
+  reason?: string;
+  reportedByUser: User;
+  reportedOn: number;
+  tag?: Tag;
+  type: ReportEntityType;
+  actionTaken?: number;
+  actionTakenBy?: User;
+}

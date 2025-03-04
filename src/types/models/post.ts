@@ -5,7 +5,6 @@ export interface Post {
   id: string;
   attachments: Attachment[];
   commentsCount: number;
-  communityId: number;
   createdAt: number;
   heading: string;
   isEdited: boolean;
@@ -21,7 +20,6 @@ export interface Post {
   text: string;
   topics: string[];
   updatedAt: number;
-  userId: string;
   uuid: string;
   replies?: Reply[];
   commentIds?: string[];

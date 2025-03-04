@@ -1,4 +1,4 @@
-import { FilterType } from "../types/types";
+import { FilterType } from "../enums";
 
 class GetReportsRequest {
   page: number;

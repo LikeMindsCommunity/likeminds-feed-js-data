@@ -11,7 +11,13 @@ export class HomeFeedClient {
 
   getNotificationFeed(homeFeed: HomeFeed) {
     return this.networkLibrary.makeAuthenticatedRequest<any>(
-      `${environment.apiUrl}${API.FEEDROOM}?page=${homeFeed.page}`
+      `${environment.apiUrl}${API.FEEDROOM}?page=${homeFeed.page}`,
+      {
+        method: "GET",
+        headers: {
+          "x-accept-version": "v1",
+        },
+      }
     );
   }
   markReadNotification(homeFeed: HomeFeed) {

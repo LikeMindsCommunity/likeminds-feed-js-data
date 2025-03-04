@@ -20,7 +20,13 @@ class NotificationFeedClient {
 
   getNotificationFeed(request: GetNotificationFeedRequest) {
     return this.networkLibrary.makeAuthenticatedRequest<GetNotification>(
-      `${API.NOTIFICATION_FEED}?page=${request.page}&page_size=${request.pageSize}`
+      `${API.NOTIFICATION_FEED}?page=${request.page}&page_size=${request.pageSize}`,
+      {
+        method: "GET",
+        headers: {
+          "x-accept-version": "v1",
+        },
+      }
     );
   }
 

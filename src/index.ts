@@ -69,7 +69,10 @@ import { GetNotification } from "./types/api-responses/getNotificationResponse";
 
 import { GetPinPost } from "./types/api-responses/getPinPostResponse";
 import { GetPostDetails } from "./types/api-responses/getPostDetailsResponse";
-import { GetMemberRights , MemberRights} from "./types/api-responses/GetMemberRightsResponse";
+import {
+  GetMemberRights,
+  MemberRights,
+} from "./types/api-responses/GetMemberRightsResponse";
 import { GetReports } from "./types/api-responses/GetReportsResponse";
 import { GetPostCommentReports } from "./types/api-responses/GetPostCommentReportsResponse";
 import { GetTopics } from "./types/api-responses/getTopicsResponse";
@@ -79,7 +82,7 @@ import { LikePost } from "./types/api-responses/likePostResponse";
 import { EditProfile } from "./pages/user/types";
 import LMResponseType from "./LMResponse";
 import { Activity, ActivityEntityData } from "./types/models/Activity";
-import { Attachment, AttachmentMeta } from "./types/models/attachment";
+import { Attachment, AttachmentMeta, AttachmentType } from "./types/models/attachment";
 import { Community } from "./types/models/community";
 import { SdkClientInfo, User } from "./types/models/member";
 import { OgTag } from "./types/models/ogTag";
@@ -114,7 +117,7 @@ import UpdateUserTopicsRequest from "./post/model/UpdateUserTopicsRequest";
 import GetUserTopicsRequest from "./post/model/GetUserTopicsRequest";
 import GetPersonalisedFeedRequest from "./universalfeed/model/GetPersonalisedFeedRequest";
 import PostSeenRequest from "./post/model/PostSeenRequest";
-import { FilterType } from "./moderation/types/types";
+import { FilterType, LMFeedReportStatus, ReportEntityType } from "./moderation/enums";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -323,7 +326,8 @@ class LMFeedClient {
   }
 
   async getFeedWithSearchParams(request: GetFeedRequest) {
-    const getFeedResponse = await this.feedClient.getFeedWithSearchParams(request);
+    const getFeedResponse =
+      await this.feedClient.getFeedWithSearchParams(request);
     return getFeedResponse;
   }
 
@@ -344,7 +348,8 @@ class LMFeedClient {
   }
 
   async getReports(getReportsRequest: GetReportsRequest) {
-    const getReportsResponse = await this.moderationClient.getReports(getReportsRequest);
+    const getReportsResponse =
+      await this.moderationClient.getReports(getReportsRequest);
     return getReportsResponse;
   }
 
@@ -352,7 +357,7 @@ class LMFeedClient {
     const getReportsRequest = GetReportsRequest.builder()
       .setPage(request.page)
       .setPageSize(request.pageSize)
-      .setFilterType([FilterType.PENDING_POSTS])
+      .setFilterType([FilterType.PENDING_POST])
       .setIsClosed(false)
       .build();
     const getPendingPostsResponse = await this.getReports(getReportsRequest);
@@ -372,27 +377,32 @@ class LMFeedClient {
   }
 
   async updatePendingPostStatus(request: UpdatePendingPostStatusRequest) {
-    const updateResponse = await this.moderationClient.updatePendingPostStatus(request);
+    const updateResponse =
+      await this.moderationClient.updatePendingPostStatus(request);
     return updateResponse;
   }
 
   async getReportsForPostAndComments(request: GetPostCommentReportRequest) {
-    const getReportsForPostAndCommentsResponse = await this.moderationClient.getReportsForPostAndComments(request);
+    const getReportsForPostAndCommentsResponse =
+      await this.moderationClient.getReportsForPostAndComments(request);
     return getReportsForPostAndCommentsResponse;
   }
 
   async closeReport(request: CloseReportRequest) {
-    const closeReportResponse = await this.moderationClient.closeReport(request);
+    const closeReportResponse =
+      await this.moderationClient.closeReport(request);
     return closeReportResponse;
   }
 
   async getMemberRights(request: GetMemberRightsRequest) {
-    const getMemberRightsResponse =  await this.moderationClient.getMemberRights(request);
-    return getMemberRightsResponse
+    const getMemberRightsResponse =
+      await this.moderationClient.getMemberRights(request);
+    return getMemberRightsResponse;
   }
 
   async updateMemberRights(request: UpdateMemberRightsRequest) {
-    const updateMemberRightsResponse = await this.moderationClient.updateMemberRights(request);
+    const updateMemberRightsResponse =
+      await this.moderationClient.updateMemberRights(request);
     return updateMemberRightsResponse;
   }
 
@@ -477,7 +487,6 @@ class LMFeedClient {
   async postSeen(request: PostSeenRequest) {
     return await this.postClient.postSeen(request);
   }
-
 }
 
 export {
@@ -502,7 +511,7 @@ export {
   UpdatePendingPostStatusRequest,
   GetPostCommentReportRequest,
   CloseReportRequest,
-  GetMemberRightsRequest, 
+  GetMemberRightsRequest,
   UpdateMemberRightsRequest,
   PostReportRequest,
   AddCommentRequest,
@@ -525,6 +534,9 @@ export {
   NetworkLibrary,
   TokenValues,
   TokenManager,
+  FilterType,
+  ReportEntityType,
+  LMFeedReportStatus,
   API,
   LMResponseType,
   // APIs
@@ -567,6 +579,7 @@ export {
   ActivityEntityData,
   Attachment,
   AttachmentMeta,
+  AttachmentType,
   Community,
   User,
   SdkClientInfo,

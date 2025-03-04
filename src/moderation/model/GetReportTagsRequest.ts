@@ -1,10 +1,11 @@
+import { ReportEntityType } from "../enums";
 class GetReportTagsRequest {
   // Properties of the request class
-  type: number;
+  entityType: ReportEntityType;
 
   // Public constructor to create the request object
-  constructor(type: number) {
-    this.type = type;
+  constructor(entityType: ReportEntityType) {
+    this.entityType = entityType;
   }
 
   // Static builder method to create the request object
@@ -15,17 +16,20 @@ class GetReportTagsRequest {
 
 // Builder class for GetReportTagsRequest
 export class GetReportTagsBuilder {
-  private type: number | undefined;
+  private entityType: ReportEntityType | undefined;
   // Add other properties as needed
 
-  public setType(type: number): GetReportTagsBuilder {
-    this.type = type;
+  public setEntityType(entityType: ReportEntityType): GetReportTagsBuilder {
+    this.entityType = entityType;
     return this;
   }
 
   // Build method to create the final GetReportTagsRequest object
   public build(): GetReportTagsRequest {
-    return new GetReportTagsRequest(this.type);
+    if (!this.entityType) {
+      throw new Error("entityType is required");
+    }
+    return new GetReportTagsRequest(this.entityType);
   }
 }
 

@@ -5,7 +5,7 @@ import GetReportsRequest from "./model/GetReportsRequest";
 import CloseReportRequest from "./model/CloseReportRequest";
 import GetMemberRightsRequest from "./model/GetMemberRightsRequest";
 import UpdateMemberRightsRequest from "./model/UpdateMemberRightsRequest";
-import { FilterType } from "./types/types";
+import { FilterType } from "./enums";
 // import { GetReportTagsResponse } from "./model/GetReportTagsResponse";
 import UpdatePendingPostStatusRequest from "./model/UpdatePendingPostStatusRequest";
 import GetPostCommentReportRequest from "./model/GetPostCommentReportRequest";
@@ -14,8 +14,8 @@ import { ModelConverter } from "../utils/ModelConverter";
 import PostReportRequest from "./model/PostReportRequest";
 import { PostReport } from "../types/api-responses/postReportResponse";
 import { GetReports } from "../types/api-responses/GetReportsResponse";
-import { GetPostCommentReports } from "src/types/api-responses/GetPostCommentReportsResponse";
-import { GetMemberRights } from "src/types/api-responses/GetMemberRightsResponse";
+import { GetPostCommentReports } from "../types/api-responses/GetPostCommentReportsResponse";
+import { GetMemberRights } from "../types/api-responses/GetMemberRightsResponse";
 
 class ModerationClient {
   networkLibrary: NetworkLibrary;
@@ -26,13 +26,15 @@ class ModerationClient {
 
   getReportTags(request: GetReportTagsRequest) {
     return this.networkLibrary.makeAuthenticatedRequest<GetReportTags>(
-      `${API.GET_REPORT_TAGS}?type=${request.type}`
+      `${API.GET_REPORT_TAGS}?entity_type=${request.entityType}`,
+      { method: "GET", headers: { "x-accept-version": "v1" } }
     );
   }
 
   getReports(getReportsRequest: GetReportsRequest) {
+    const filterTypeParams = JSON.stringify(getReportsRequest.filterType);
     return this.networkLibrary.makeAuthenticatedRequest<GetReports>(
-      `${API.GET_REPORTS}?page=${getReportsRequest.page}&pageSize=${getReportsRequest.pageSize}&filterType=${getReportsRequest.filterType?.join(",")}&isClosed=${getReportsRequest.isClosed}`,
+      `${API.GET_REPORTS}?page=${getReportsRequest.page}&page_size=${getReportsRequest.pageSize}&filter_type=${filterTypeParams}&is_closed=${getReportsRequest.isClosed}`,
       { method: "GET", headers: { "x-accept-version": "v1" } }
     );
   }
@@ -43,15 +45,20 @@ class ModerationClient {
       {
         data: ModelConverter.requestBodyGenerator(request),
         method: "PATCH",
+        headers: { "x-accept-version": "v1" },
       }
     );
   }
 
   getReportsForPostAndComments(getReportsRequest: GetPostCommentReportRequest) {
-    const filterType = [FilterType.POST, FilterType.COMMENTS, FilterType.REPLY];
+    const filterTypeParams = JSON.stringify([
+      FilterType.POST,
+      FilterType.COMMENT,
+      FilterType.REPLY,
+    ]);
     const isClosed = "false";
     return this.networkLibrary.makeAuthenticatedRequest<GetPostCommentReports>(
-      `${API.GET_REPORTS}?page=${getReportsRequest.page}&pageSize=${getReportsRequest.pageSize}&filterType=${filterType.join(",")}&isClosed=${isClosed}`,
+      `${API.GET_REPORTS}?page=${getReportsRequest.page}&page_size=${getReportsRequest.pageSize}&filter_type=${filterTypeParams}&is_closed=${isClosed}`,
       { method: "GET", headers: { "x-accept-version": "v1" } }
     );
   }
@@ -66,7 +73,7 @@ class ModerationClient {
 
   getMemberRights(request: GetMemberRightsRequest) {
     return this.networkLibrary.makeAuthenticatedRequest<GetMemberRights>(
-      `${API.GET_MEMBER_RIGHTS}?uuid=${request.uuid}&isCM=${request.isCM}`,
+      `${API.GET_MEMBER_RIGHTS}?uuid=${request.uuid}&is_cm=${request.isCM}`,
       { method: "GET", headers: { "x-accept-version": "v1" } }
     );
   }
@@ -88,6 +95,7 @@ class ModerationClient {
       {
         data: ModelConverter.requestBodyGenerator(request),
         method: "POST",
+        headers: { "x-accept-version": "v1" },
       }
     );
   }
