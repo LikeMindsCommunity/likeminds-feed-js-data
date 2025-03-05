@@ -2,20 +2,20 @@ import { ReportEntityType } from "../enums";
 
 class PostReportRequest {
   entityId: string;
-  accusedUUID: string;
+  accusedUuid: string;
   entityType: ReportEntityType;
   tagId: number;
   reason?: string;
 
   constructor(
     entityId: string,
-    accusedUUID: string,
+    accusedUuid: string,
     entityType: ReportEntityType,
     tagId: number,
     reason?: string,
   ) {
     this.entityId = entityId;
-    this.accusedUUID = accusedUUID;
+    this.accusedUuid = accusedUuid;
     this.entityType = entityType;
     this.tagId = tagId;
     this.reason = reason;
@@ -28,7 +28,7 @@ class PostReportRequest {
 
 export class PostReportBuilder {
   private entityId?: string;
-  private accusedUUID?: string;
+  private accusedUuid?: string;
   private entityType?: ReportEntityType;
   private tagId?: number;
   private reason?: string;
@@ -38,8 +38,8 @@ export class PostReportBuilder {
     return this;
   }
 
-  public setAccusedUUID(accusedUUID: string): PostReportBuilder {
-    this.accusedUUID = accusedUUID;
+  public setAccusedUUID(accusedUuid: string): PostReportBuilder {
+    this.accusedUuid = accusedUuid;
     return this;
   }
 
@@ -59,13 +59,13 @@ export class PostReportBuilder {
   }
 
   public build(): PostReportRequest {
-    if (!this.entityId || !this.accusedUUID || this.entityType === undefined || this.tagId === undefined) {
+    if (!this.entityId || !this.accusedUuid || this.entityType === undefined || this.tagId === undefined) {
       throw new Error("entityId, accusedUUID, entityType, and tagId are required.");
     }
 
     return new PostReportRequest(
       this.entityId,
-      this.accusedUUID,
+      this.accusedUuid,
       this.entityType,
       this.tagId,
       this.reason,
