@@ -23,7 +23,13 @@ export class UniversalFeed {
   // Get Universal Feed
   getFeed(feed: Feed): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}`
+      `${environment.apiUrl}${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}`,
+      {
+        method: "GET",
+        headers: {
+          "x-accept-version": "v1",
+        },
+      }
     );
   }
   //   FEED_POST
@@ -37,6 +43,9 @@ export class UniversalFeed {
       {
         method: "POST",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -48,19 +57,34 @@ export class UniversalFeed {
       {
         method: "PUT",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
 
   getPost(getPost: GetPost, postId: string): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.FEED_POST}/${postId}?page=${getPost.page}&page_size=${getPost.pageSize}`
+      `${environment.apiUrl}${API.FEED_POST}/${postId}?page=${getPost.page}&page_size=${getPost.pageSize}`,
+      {
+        method: "GET",
+        headers: {
+          "x-accept-version": "v1",
+        },
+      }
     );
   }
 
   getPostLikes(getPost: GetPost, postId: string): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.FEED_POST}/${postId}/like?page=${getPost.page}&page_size=${getPost.pageSize}`
+      `${environment.apiUrl}${API.FEED_POST}/${postId}/like?page=${getPost.page}&page_size=${getPost.pageSize}`,
+      {
+        method: "GET",
+        headers: {
+          "x-accept-version": "v1",
+        },
+      }
     );
   }
 
@@ -71,6 +95,9 @@ export class UniversalFeed {
       {
         method: "PUT",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -82,6 +109,9 @@ export class UniversalFeed {
       {
         method: "PUT",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -96,6 +126,9 @@ export class UniversalFeed {
       {
         method: "PUT",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -109,6 +142,9 @@ export class UniversalFeed {
       {
         method: "POST",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -119,7 +155,13 @@ export class UniversalFeed {
     commentId: any
   ): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${environment.apiUrl}${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`
+      `${environment.apiUrl}${API.FEED_POST}/${postId}/comment/${commentId}?page=${getComment.page}&page_size=${getComment.pageSize}`,
+      {
+        method: "GET",
+        headers: {
+          "x-accept-version": "v1",
+        },
+      }
     );
   }
   getCommentLikes(
@@ -128,7 +170,13 @@ export class UniversalFeed {
     commentId: any
   ): Promise<any> {
     return this.networkLibrary.makeAuthenticatedRequest(
-      `${API.FEED_POST}/${postId}/comment/${commentId}/like?page=${getComment.page}&page_size=${getComment.pageSize}`
+      `${API.FEED_POST}/${postId}/comment/${commentId}/like?page=${getComment.page}&page_size=${getComment.pageSize}`,
+      {
+        method: "GET",
+        headers: {
+          "x-accept-version": "v1",
+        },
+      }
     );
   }
 
@@ -138,6 +186,9 @@ export class UniversalFeed {
       {
         method: "PUT",
         data: { params: "" },
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -151,6 +202,9 @@ export class UniversalFeed {
       {
         method: "POST",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -164,6 +218,9 @@ export class UniversalFeed {
       {
         method: "PUT",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -181,6 +238,9 @@ export class UniversalFeed {
       {
         method: "DELETE",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -194,6 +254,9 @@ export class UniversalFeed {
       {
         method: "DELETE",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }

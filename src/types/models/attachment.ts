@@ -1,9 +1,23 @@
 import { PollMultipleSelectState, PollType } from "../../poll/enums";
 import { OgTag } from "./ogTag";
 
+export enum AttachmentType {
+  IMAGE = "image",
+  VIDEO = "video",
+  DOCUMENT = "document",
+  LINK = "link",
+  CUSTOM = "custom",
+  POLL = "poll",
+  ARTICLE = "article",
+  POST = "post",
+  REPOST = "repost",
+  GIF = "gif",
+  REEL = "reel"
+}
+
 export interface Attachment {
-  attachmentMeta: AttachmentMeta;
-  attachmentType: number;
+  metaData: AttachmentMeta;
+  type: AttachmentType;
 }
 
 export interface AttachmentMeta {

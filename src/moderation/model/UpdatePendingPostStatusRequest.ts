@@ -1,4 +1,4 @@
-import { LMFeedReportStatus } from "../types/types";
+import { LMFeedReportStatus } from "../enums";
 
 class UpdatePendingPostStatusRequest {
   reportIds: number[];

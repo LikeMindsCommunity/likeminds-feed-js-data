@@ -1,72 +1,71 @@
+import { ReportEntityType } from "../enums";
+
 class PostReportRequest {
-  // Properties of the request class
   entityId: string;
-  uuid: string;
-  entityType: number;
+  accusedUuid: string;
+  entityType: ReportEntityType;
   tagId: number;
   reason?: string;
 
-  // Public constructor to create the request object
   constructor(
     entityId: string,
-    uuid: string,
-    entityType: number,
+    accusedUuid: string,
+    entityType: ReportEntityType,
     tagId: number,
     reason?: string,
   ) {
     this.entityId = entityId;
-    this.uuid = uuid;
+    this.accusedUuid = accusedUuid;
     this.entityType = entityType;
     this.tagId = tagId;
     this.reason = reason;
   }
 
-  // Static builder method to create the request object
   public static builder(): PostReportBuilder {
     return new PostReportBuilder();
   }
 }
 
-// Builder class for PostReportRequest
 export class PostReportBuilder {
-  private entityId: string | undefined;
-  private uuid: string | undefined;
-  private entityType: number | undefined;
-  private tagId: number | undefined;
-  private reason: string | undefined;
-  // Add other properties as needed
+  private entityId?: string;
+  private accusedUuid?: string;
+  private entityType?: ReportEntityType;
+  private tagId?: number;
+  private reason?: string;
 
   public setEntityId(entityId: string): PostReportBuilder {
     this.entityId = entityId;
     return this;
   }
 
-  public setUuid(uuid: string): PostReportBuilder {
-    this.uuid = uuid;
+  public setAccusedUUID(accusedUuid: string): PostReportBuilder {
+    this.accusedUuid = accusedUuid;
     return this;
   }
-  public setEntityType(entityType: number): PostReportBuilder {
+
+  public setEntityType(entityType: ReportEntityType): PostReportBuilder {
     this.entityType = entityType;
     return this;
   }
+
   public setTagId(tagId: number): PostReportBuilder {
     this.tagId = tagId;
     return this;
   }
+
   public setReason(reason: string): PostReportBuilder {
     this.reason = reason;
     return this;
   }
 
-  // Build method to create the final PostReportRequest object
   public build(): PostReportRequest {
-    if (!this.entityId || !this.uuid || !this.entityType || !this.tagId) {
-      throw new Error("entityId, uuid, entityType and tagId are required.");
+    if (!this.entityId || !this.accusedUuid || this.entityType === undefined || this.tagId === undefined) {
+      throw new Error("entityId, accusedUUID, entityType, and tagId are required.");
     }
 
     return new PostReportRequest(
       this.entityId,
-      this.uuid,
+      this.accusedUuid,
       this.entityType,
       this.tagId,
       this.reason,
