@@ -1,30 +1,24 @@
 import { Attachment } from "./attachment";
-import { Reply } from "./replies";
 
-export interface Post {
+export interface Comment {
   id: string;
   attachments: Attachment[];
   commentsCount: number;
   createdAt: number;
-  heading: string;
+  deleteReason: string;
+  deletedBy: string;
+  deletedByUuid: string;
+  isDeleted: boolean;
   isEdited: boolean;
   isLiked: boolean;
-  isPinned: boolean;
-  isRepost: boolean;
-  isRepostedByUser: boolean;
-  isSaved: boolean;
+  level: number;
   likesCount: number;
   menuItems: MenuItem[];
-  repostCount: number;
+  postId: string;
   tempId: null | string;
   text: string;
-  topics: string[];
   updatedAt: number;
   uuid: string;
-  replies?: Reply[];
-  commentIds?: string[];
-  isAnonymous: boolean;
-  isHidden: boolean;
 }
 
 export interface MenuItem {

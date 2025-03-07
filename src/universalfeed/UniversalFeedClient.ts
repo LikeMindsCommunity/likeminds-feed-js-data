@@ -7,7 +7,7 @@ import GetFeedRequest from "./model/GetFeedRequest";
 
 import { GetUniversalFeed } from "../types/api-responses/getUniversalFeedResponse";
 import SearchPostsRequest from "./model/SearchPostsRequest";
-import { SearchPostResponse } from "../types/api-responses/searchPostsResponse"
+import { SearchPostResponse } from "../types/api-responses/searchPostsResponse";
 import GetPersonalisedFeedRequest from "./model/GetPersonalisedFeedRequest";
 import { GetPersonalisedFeed } from "../types/api-responses/getPersonalisedFeedResponse";
 
@@ -25,20 +25,27 @@ class UniversalFeedClient {
       : `${API.FEED_UNIVERSAL}?page=${feed.page}&page_size=${feed.pageSize}`;
 
     const responseData =
-      await this.networkLibrary.makeAuthenticatedRequest<GetUniversalFeed>(url);
+      await this.networkLibrary.makeAuthenticatedRequest<GetUniversalFeed>(
+        url,
+        {
+          method: "GET",
+          headers: {
+            "x-accept-version": "v1",
+          },
+        }
+      );
     return responseData;
   }
 
   // Specifically For React Native To Get Feed along with Topic Categorization
   async getFeedWithSearchParams(feed: GetFeedRequest) {
-
     let queryParams;
 
     if (feed?.topicIds?.length > 0) {
       queryParams = new URLSearchParams({
         page: feed.page.toString(),
         page_size: feed.pageSize.toString(),
-        topic_ids: JSON.stringify(feed.topicIds)
+        topic_ids: JSON.stringify(feed.topicIds),
       });
     } else {
       queryParams = new URLSearchParams({
@@ -47,14 +54,10 @@ class UniversalFeedClient {
       });
     }
 
-
     const url = `${API.FEED_UNIVERSAL}?${queryParams.toString()}`;
 
-
-    const responseData = await this.networkLibrary.makeAuthenticatedRequest<GetUniversalFeed>(
-      url
-    );
-
+    const responseData =
+      await this.networkLibrary.makeAuthenticatedRequest<GetUniversalFeed>(url);
 
     return responseData;
   }
@@ -74,9 +77,15 @@ class UniversalFeedClient {
     const url = `${API.SEARCH}?page=${SearchPostsRequest.page}&page_size=${SearchPostsRequest.pageSize}&search=${SearchPostsRequest.search}&search_type=${SearchPostsRequest.searchType}`;
 
     const responseData =
-      await this.networkLibrary.makeAuthenticatedRequest<SearchPostResponse>(url);
+      await this.networkLibrary.makeAuthenticatedRequest<SearchPostResponse>(
+        url,
+        {
+          headers: {
+            "x-accept-version": "v1",
+          },
+        }
+      );
     return responseData;
-
   }
 }
 

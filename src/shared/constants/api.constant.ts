@@ -14,7 +14,12 @@ export const API = {
   COMMUNITY_TAG: "/community/tag",
   COMMUNITY_CONFIGURATIONS: "/community/configurations", //(GET)
   GET_REPORT_TAGS: "/community/report/tag",
+  GET_REPORTS: "/community/report",
+  UPDATE_REPORT: "/community/report",
   POST_REPORT: "/community/report",
+  CLOSE_REPORT: "/community/report",
+  GET_MEMBER_RIGHTS: "/moderation/rights",
+  UPDATE_MEMBER_RIGHTS: "/moderation/rights",
   NOTIFICATION_FEED: "/feed/user/activity",
   COMMUNITY_MEMBER_PROFILE: "/community/member/profile",
 
