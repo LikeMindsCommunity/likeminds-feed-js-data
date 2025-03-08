@@ -20,11 +20,18 @@ import SearchPostsRequest from "./universalfeed/model/SearchPostsRequest";
 import ModerationClient from "./moderation/ModerationClient";
 import GetReportTagsRequest from "./moderation/model/GetReportTagsRequest";
 import PostReportRequest from "./moderation/model/PostReportRequest";
+import GetReportsRequest from "./moderation/model/GetReportsRequest";
+import GetPendingPostModerationRequest from "./moderation/model/GetPendingPostModerationRequest";
+import GetPostCommentReportRequest from "./moderation/model/GetPostCommentReportRequest";
+import CloseReportRequest from "./moderation/model/CloseReportRequest";
+import GetMemberRightsRequest from "./moderation/model/GetMemberRightsRequest";
+import UpdateMemberRightsRequest from "./moderation/model/UpdateMemberRightsRequest";
 import CommentClient from "./comment/CommentClient";
 import AddCommentRequest from "./comment/model/AddCommentRequest";
 import GetAllMembersRequest from "./initiateUser/model/GetAllMembersRequest";
 import ReplyCommentRequest from "./comment/model/ReplyCommentRequest";
 import GetCommentRequest from "./comment/model/GetCommentRequest";
+import UpdatePendingPostStatusRequest from "./moderation/model/UpdatePendingPostStatusRequest";
 import GetCommentLikesRequest from "./comment/model/GetCommentLikesRequest";
 import LikeCommentRequest from "./comment/model/LikeCommentRequest";
 import DeleteCommentRequest from "./comment/model/DeleteCommentRequest";
@@ -62,6 +69,12 @@ import { GetNotification } from "./types/api-responses/getNotificationResponse";
 
 import { GetPinPost } from "./types/api-responses/getPinPostResponse";
 import { GetPostDetails } from "./types/api-responses/getPostDetailsResponse";
+import {
+  GetMemberRights,
+  MemberRights,
+} from "./types/api-responses/GetMemberRightsResponse";
+import { GetReports } from "./types/api-responses/GetReportsResponse";
+import { GetPostCommentReports } from "./types/api-responses/GetPostCommentReportsResponse";
 import { GetTopics } from "./types/api-responses/getTopicsResponse";
 import { GetUniversalFeed } from "./types/api-responses/getUniversalFeedResponse";
 import { LikeComment } from "./types/api-responses/likeCommentResponse";
@@ -69,12 +82,14 @@ import { LikePost } from "./types/api-responses/likePostResponse";
 import { EditProfile } from "./pages/user/types";
 import LMResponseType from "./LMResponse";
 import { Activity, ActivityEntityData } from "./types/models/Activity";
-import { Attachment, AttachmentMeta } from "./types/models/attachment";
+import { Attachment, AttachmentMeta, AttachmentType } from "./types/models/attachment";
 import { Community } from "./types/models/community";
 import { SdkClientInfo, User } from "./types/models/member";
 import { OgTag } from "./types/models/ogTag";
 import { MenuItem, Post } from "./types/models/post";
 import { Reply } from "./types/models/replies";
+import { Report } from "./types/models/report";
+import { Comment } from "./types/models/comment";
 import { ReportTag } from "./types/models/reportTags";
 import { TaggingUser } from "./types/models/taggingMember";
 import { Topic } from "./types/models/topic";
@@ -102,6 +117,7 @@ import UpdateUserTopicsRequest from "./post/model/UpdateUserTopicsRequest";
 import GetUserTopicsRequest from "./post/model/GetUserTopicsRequest";
 import GetPersonalisedFeedRequest from "./universalfeed/model/GetPersonalisedFeedRequest";
 import PostSeenRequest from "./post/model/PostSeenRequest";
+import { FilterType, LMFeedReportStatus, ReportEntityType } from "./moderation/enums";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -310,7 +326,8 @@ class LMFeedClient {
   }
 
   async getFeedWithSearchParams(request: GetFeedRequest) {
-    const getFeedResponse = await this.feedClient.getFeedWithSearchParams(request);
+    const getFeedResponse =
+      await this.feedClient.getFeedWithSearchParams(request);
     return getFeedResponse;
   }
 
@@ -330,6 +347,23 @@ class LMFeedClient {
     return postReportResponse;
   }
 
+  async getReports(getReportsRequest: GetReportsRequest) {
+    const getReportsResponse =
+      await this.moderationClient.getReports(getReportsRequest);
+    return getReportsResponse;
+  }
+
+  async getPendingPostsForModeration(request: GetPendingPostModerationRequest) {
+    const getReportsRequest = GetReportsRequest.builder()
+      .setPage(request.page)
+      .setPageSize(request.pageSize)
+      .setFilterType([FilterType.PENDING_POST])
+      .setIsClosed(false)
+      .build();
+    const getPendingPostsResponse = await this.getReports(getReportsRequest);
+    return getPendingPostsResponse;
+  }
+
   async getComments(getCommentRequest: GetCommentRequest) {
     const getCommentResponse = await this.commentClient.getComment(
       GetCommentRequest.builder()
@@ -340,6 +374,36 @@ class LMFeedClient {
         .build()
     );
     return getCommentResponse;
+  }
+
+  async updatePendingPostStatus(request: UpdatePendingPostStatusRequest) {
+    const updateResponse =
+      await this.moderationClient.updatePendingPostStatus(request);
+    return updateResponse;
+  }
+
+  async getReportsForPostAndComments(request: GetPostCommentReportRequest) {
+    const getReportsForPostAndCommentsResponse =
+      await this.moderationClient.getReportsForPostAndComments(request);
+    return getReportsForPostAndCommentsResponse;
+  }
+
+  async closeReport(request: CloseReportRequest) {
+    const closeReportResponse =
+      await this.moderationClient.closeReport(request);
+    return closeReportResponse;
+  }
+
+  async getMemberRights(request: GetMemberRightsRequest) {
+    const getMemberRightsResponse =
+      await this.moderationClient.getMemberRights(request);
+    return getMemberRightsResponse;
+  }
+
+  async updateMemberRights(request: UpdateMemberRightsRequest) {
+    const updateMemberRightsResponse =
+      await this.moderationClient.updateMemberRights(request);
+    return updateMemberRightsResponse;
   }
 
   async addComment(request: AddCommentRequest) {
@@ -423,7 +487,6 @@ class LMFeedClient {
   async postSeen(request: PostSeenRequest) {
     return await this.postClient.postSeen(request);
   }
-
 }
 
 export {
@@ -443,6 +506,13 @@ export {
   GetFeedRequest,
   GetPersonalisedFeedRequest,
   GetReportTagsRequest,
+  GetPendingPostModerationRequest,
+  GetReportsRequest,
+  UpdatePendingPostStatusRequest,
+  GetPostCommentReportRequest,
+  CloseReportRequest,
+  GetMemberRightsRequest,
+  UpdateMemberRightsRequest,
   PostReportRequest,
   AddCommentRequest,
   GetCommentRequest,
@@ -464,6 +534,9 @@ export {
   NetworkLibrary,
   TokenValues,
   TokenManager,
+  FilterType,
+  ReportEntityType,
+  LMFeedReportStatus,
   API,
   LMResponseType,
   // APIs
@@ -481,6 +554,9 @@ export {
   GetTopics,
   GetTaggingList,
   GetReportTags,
+  GetReports,
+  GetPostCommentReports,
+  GetMemberRights,
   GetPostLikes,
   GetPostDetails,
   GetPinPost,
@@ -503,6 +579,7 @@ export {
   ActivityEntityData,
   Attachment,
   AttachmentMeta,
+  AttachmentType,
   Community,
   User,
   SdkClientInfo,
@@ -510,6 +587,8 @@ export {
   Post,
   MenuItem,
   Reply,
+  Report,
+  Comment,
   ReportTag,
   TaggingUser,
   Topic,
@@ -518,5 +597,6 @@ export {
   FilterComment,
   Like,
   MemberRight,
+  MemberRights,
   PostSeenRequest,
 };

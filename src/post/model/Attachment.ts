@@ -1,18 +1,15 @@
-import { Attachment } from "../../types/models/attachment";
+import { Attachment, AttachmentType } from "../../types/models/attachment";
 import LMFeedPostAttachmentMeta from "./AttachmentMeta";
 
 class LMFeedPostAttachment implements Attachment {
   // Properties of the request class
-  public attachmentType: number;
-  public attachmentMeta: LMFeedPostAttachmentMeta;
+  public type: AttachmentType;
+  public metaData: LMFeedPostAttachmentMeta;
 
   // Public constructor to create the request object
-  constructor(
-    attachmentType: number,
-    attachmentMeta: LMFeedPostAttachmentMeta
-  ) {
-    this.attachmentType = attachmentType;
-    this.attachmentMeta = attachmentMeta;
+  constructor(type: AttachmentType, metaData: LMFeedPostAttachmentMeta) {
+    this.type = type;
+    this.metaData = metaData;
   }
 
   // Static builder method to create the request object
@@ -23,29 +20,26 @@ class LMFeedPostAttachment implements Attachment {
 
 // Builder class for Attachment
 export class AttachmentBuilder {
-  private attachmentType: number | undefined;
-  private attachmentMeta: LMFeedPostAttachmentMeta | undefined;
+  private type: AttachmentType | undefined;
+  private metaData: LMFeedPostAttachmentMeta | undefined;
   // Add other properties as needed
 
-  public setAttachmentType(attachmentType: number): AttachmentBuilder {
-    this.attachmentType = attachmentType;
+  public setType(type: AttachmentType): AttachmentBuilder {
+    this.type = type;
     return this;
   }
 
-  public setAttachmentMeta(
-    attachmentMeta: LMFeedPostAttachmentMeta
-  ): AttachmentBuilder {
-    this.attachmentMeta = attachmentMeta;
+  public setMetadata(metaData: LMFeedPostAttachmentMeta): AttachmentBuilder {
+    this.metaData = metaData;
     return this;
   }
 
   // Build method to create the final Attachment object
   public build(): LMFeedPostAttachment {
-    if (!this.attachmentType || !this.attachmentMeta) {
-      throw new Error("attachmentType and attachmentMeta are required.");
+    if (!this.type || !this.metaData) {
+      throw new Error("type and metadata are required.");
     }
-
-    return new LMFeedPostAttachment(this.attachmentType, this.attachmentMeta);
+    return new LMFeedPostAttachment(this.type, this.metaData);
   }
 }
 

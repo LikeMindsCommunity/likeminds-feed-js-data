@@ -34,6 +34,9 @@ class CommentClient {
         {
           method: "POST",
           data: params,
+          headers: {
+            "x-accept-version": "v1",
+          },
         }
       )
       .then((resData: any) => {
@@ -45,7 +48,13 @@ class CommentClient {
   public async getComment(getCommentRequest: GetCommentRequest) {
     return this.networkLibrary
       .makeAuthenticatedRequest<GetCommentDetails>(
-        `${API.FEED_POST}/${getCommentRequest.postId}/comment/${getCommentRequest.commentId}?page=${getCommentRequest.page}&page_size=${getCommentRequest.pageSize}`
+        `${API.FEED_POST}/${getCommentRequest.postId}/comment/${getCommentRequest.commentId}?page=${getCommentRequest.page}&page_size=${getCommentRequest.pageSize}`,
+        {
+          method: "GET",
+          headers: {
+            "x-accept-version": "v1",
+          },
+        }
       )
       .then((resData: any) => {
         const responseData = ModelConverter.responseBodyParser(resData);
@@ -55,7 +64,13 @@ class CommentClient {
 
   public async getCommentLikes(request: GetCommentLikesRequest) {
     return this.networkLibrary.makeAuthenticatedRequest<GetCommentLikes>(
-      `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/like?page=${request.page}&page_size=${request.pageSize}`
+      `${API.FEED_POST}/${request.postId}/comment/${request.commentId}/like?page=${request.page}&page_size=${request.pageSize}`,
+      {
+        method: "GET",
+        headers: {
+          "x-accept-version": "v1",
+        },
+      }
     );
   }
 
@@ -65,6 +80,9 @@ class CommentClient {
       {
         method: "PUT",
         data: ModelConverter.requestBodyGenerator(request),
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -76,6 +94,9 @@ class CommentClient {
       {
         method: "POST",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -87,6 +108,9 @@ class CommentClient {
       {
         method: "PUT",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }
@@ -98,6 +122,9 @@ class CommentClient {
       {
         method: "DELETE",
         data: params,
+        headers: {
+          "x-accept-version": "v1",
+        },
       }
     );
   }

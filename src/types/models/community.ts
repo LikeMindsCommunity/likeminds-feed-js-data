@@ -20,6 +20,15 @@ export interface Community {
   hideDmTab: boolean;
   isFreemiumCommunity: boolean;
   communitySettingRights: CommunitySettingRights[];
+  communitySettings : CommunitySettings[];
+}
+
+interface CommunitySettings {
+  enabled : boolean;
+  enabledBy: number;
+  settingSubTitle : string;
+  settingTitle : string;
+  settingType : string;
 }
 
 interface CommunitySettingRights {
