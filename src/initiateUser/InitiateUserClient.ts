@@ -10,6 +10,7 @@ import { ModelConverter } from "../utils/ModelConverter";
 import { GetMemberState } from "../types/api-responses/getMemberStateResponse";
 import GetAllMembersRequest from "./model/GetAllMembersRequest";
 import ValidateUserRequest from "./model/ValidateUserRequest";
+import LogoutUserRequest from "./model/LogoutUserRequest";
 
 import { GetAllMembers } from "../types/api-responses/getAllMembersResponse";
 // import { ValidateUserResponse } from "./model/ValidateUserResponse";
@@ -84,6 +85,13 @@ class InitiateUserClient {
     return this.networkLibrary.makeAuthenticatedRequest<GetAllMembers>(
       `${API.DM_ALL_MEMBERS}?page=${request.page}`
     );
+  }
+
+  public async logoutUser(request: LogoutUserRequest) {
+    return this.networkLibrary.makeAuthenticatedRequest(`${API.USER_LOGOUT}`, {
+      method: "POST",
+      data: ModelConverter.requestBodyGenerator(request),
+    });
   }
 
   public async editProfile(editProfile: EditProfile) {
