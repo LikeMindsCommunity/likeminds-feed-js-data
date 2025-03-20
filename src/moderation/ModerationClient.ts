@@ -34,7 +34,7 @@ class ModerationClient {
   getReports(getReportsRequest: GetReportsRequest) {
     const filterTypeParams = JSON.stringify(getReportsRequest.filterType);
     return this.networkLibrary.makeAuthenticatedRequest<GetReports>(
-      `${API.GET_REPORTS}?page=${getReportsRequest.page}&page_size=${getReportsRequest.pageSize}&filter_type=${filterTypeParams}&is_closed=${getReportsRequest.isClosed}`,
+      `${API.GET_REPORTS}?page=${getReportsRequest.page}&page_size=${getReportsRequest.pageSize}&filter_types=${filterTypeParams}&is_closed=${getReportsRequest.isClosed}`,
       { method: "GET", headers: { "x-accept-version": "v1" } }
     );
   }
@@ -58,7 +58,7 @@ class ModerationClient {
     ]);
     const isClosed = "false";
     return this.networkLibrary.makeAuthenticatedRequest<GetPostCommentReports>(
-      `${API.GET_REPORTS}?page=${getReportsRequest.page}&page_size=${getReportsRequest.pageSize}&filter_type=${filterTypeParams}&is_closed=${isClosed}`,
+      `${API.GET_REPORTS}?page=${getReportsRequest.page}&page_size=${getReportsRequest.pageSize}&filter_types=${filterTypeParams}&is_closed=${isClosed}`,
       { method: "GET", headers: { "x-accept-version": "v1" } }
     );
   }
