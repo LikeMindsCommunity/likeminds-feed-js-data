@@ -1,6 +1,6 @@
 {
   "name": "@likeminds.community/feed-js",
-  "version": "1.17.0",
+  "version": "1.17.1",
   "description": "LikeMinds Javascript SDK for chat APIs",
   "main": "dist/index.js",
   "module": "dist/index.m.js",
@@ -13,7 +13,8 @@
     "eslint:fix": "eslint --fix .",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "lint": "tsc"
+    "lint": "tsc",
+    "build-windows": "(if exist dist (rmdir /s /q dist)) && microbundle --tsconfig tsconfig.json --no-sourcemap"
   },
   "keywords": [
     "feed",
