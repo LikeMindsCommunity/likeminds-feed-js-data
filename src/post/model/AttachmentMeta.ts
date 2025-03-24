@@ -23,7 +23,7 @@ class LMFeedPostAttachmentMeta implements AttachmentMeta {
   isAnonymous?: boolean;
   allowAddOption?: boolean;
   entityId?: string;
-  meta?: Record<string, any> | null;
+  widgetMeta?: Record<string, any> | null;
 
   // Public constructor to create the request object
   constructor(
@@ -47,7 +47,7 @@ class LMFeedPostAttachmentMeta implements AttachmentMeta {
     body?: string,
     thumbnailUrl?: string,
     entityId?: string,
-    meta?: Record<string, any> | null
+    widgetMeta?: Record<string, any> | null
   ) {
     this.name = name;
     this.url = url;
@@ -69,7 +69,7 @@ class LMFeedPostAttachmentMeta implements AttachmentMeta {
     this.body = body;
     this.thumbnailUrl = thumbnailUrl;
     this.entityId = entityId;
-    this.meta = meta;
+    this.widgetMeta = widgetMeta;
   }
 
   // Static builder method to create the request object
@@ -100,7 +100,7 @@ export class AttachmentMetaBuilder {
   isAnonymous?: boolean | undefined;
   allowAddOption?: boolean | undefined;
   entityId?: string | undefined;
-  meta?: Record<string, any> | null;
+  widgetMeta?: Record<string, any> | null;
   // Add other properties as needed
 
   public setName(name: string): AttachmentMetaBuilder {
@@ -207,8 +207,8 @@ export class AttachmentMetaBuilder {
     return this;
   }
 
-  public setMeta(meta: Record<string, any> | null): AttachmentMetaBuilder {
-    this.meta = meta;
+  public setWidgetMeta(widgetMeta: Record<string, any> | null): AttachmentMetaBuilder {
+    this.widgetMeta = widgetMeta;
     return this;
   }
   // Build method to create the final AttachmentMeta object
@@ -237,7 +237,7 @@ export class AttachmentMetaBuilder {
       this.body,
       this.thumbnailUrl,
       this.entityId,
-      this.meta
+      this.widgetMeta
     );
   }
 }
