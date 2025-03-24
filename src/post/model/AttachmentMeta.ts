@@ -1,5 +1,5 @@
 import { PollMultipleSelectState, PollType } from "src/poll/enums";
-import { AttachmentMeta } from "../../types/models/attachment";
+import { AttachmentMeta, WidgetMeta } from "../../types/models/attachment";
 
 class LMFeedPostAttachmentMeta implements AttachmentMeta {
   // Properties of the request class
@@ -23,7 +23,7 @@ class LMFeedPostAttachmentMeta implements AttachmentMeta {
   isAnonymous?: boolean;
   allowAddOption?: boolean;
   entityId?: string;
-  widgetMeta?: Record<string, any> | null;
+  widgetMeta?: WidgetMeta;
 
   // Public constructor to create the request object
   constructor(
@@ -47,7 +47,7 @@ class LMFeedPostAttachmentMeta implements AttachmentMeta {
     body?: string,
     thumbnailUrl?: string,
     entityId?: string,
-    widgetMeta?: Record<string, any> | null
+    widgetMeta?: WidgetMeta
   ) {
     this.name = name;
     this.url = url;
@@ -100,7 +100,7 @@ export class AttachmentMetaBuilder {
   isAnonymous?: boolean | undefined;
   allowAddOption?: boolean | undefined;
   entityId?: string | undefined;
-  widgetMeta?: Record<string, any> | null;
+  widgetMeta?: WidgetMeta
   // Add other properties as needed
 
   public setName(name: string): AttachmentMetaBuilder {
@@ -207,7 +207,7 @@ export class AttachmentMetaBuilder {
     return this;
   }
 
-  public setWidgetMeta(widgetMeta: Record<string, any> | null): AttachmentMetaBuilder {
+  public setWidgetMeta(widgetMeta: WidgetMeta | null): AttachmentMetaBuilder {
     this.widgetMeta = widgetMeta;
     return this;
   }

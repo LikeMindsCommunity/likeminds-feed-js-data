@@ -40,6 +40,10 @@ export interface AttachmentMeta {
   isAnonymous?: boolean; //
   allowAddOption?: boolean; //
   thumbnailUrl?: string; //
-  widgetMeta?: Record<string, any> | null; //
+  widgetMeta?: WidgetMeta; //
   pageCount?: number; //
+}
+
+export interface WidgetMeta {
+  meta: Record<string, any>;
 }
