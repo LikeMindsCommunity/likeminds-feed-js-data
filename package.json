@@ -8,7 +8,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap",
-    "npm-deploy": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap && npm publish --access public",
+    "npm-deploy": "rm -rf dist && cross-env ENVIRONMENT=production microbundle --define process.env.ENVIRONMENT='\"production\"' --tsconfig tsconfig.json --no-sourcemap && npm publish --access public",
     "eslint": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier": "prettier --check .",
