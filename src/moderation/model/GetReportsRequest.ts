@@ -3,13 +3,13 @@ import { FilterType } from "../enums";
 class GetReportsRequest {
   page: number;
   pageSize?: number;
-  filterType?: FilterType[];
+  filterTypes?: FilterType[];
   isClosed?: boolean;
 
-  constructor(page: number, pageSize?: number, filterType?: FilterType[], isClosed?: boolean) {
+  constructor(page: number, pageSize?: number, filterTypes?: FilterType[], isClosed?: boolean) {
     this.page = page;
     this.pageSize = pageSize;
-    this.filterType = filterType;
+    this.filterTypes = filterTypes;
     this.isClosed = isClosed;
   }
 
@@ -21,7 +21,7 @@ class GetReportsRequest {
 class GetReportsRequestBuilder {
   private page!: number;
   private pageSize?: number;
-  private filterType?: FilterType[];
+  private filterTypes?: FilterType[];
   private isClosed?: boolean;
 
   public setPage(page: number): GetReportsRequestBuilder {
@@ -34,8 +34,8 @@ class GetReportsRequestBuilder {
     return this;
   }
 
-  public setFilterType(filterType: FilterType[]): GetReportsRequestBuilder {
-    this.filterType = filterType;
+  public setFilterType(filterTypes: FilterType[]): GetReportsRequestBuilder {
+    this.filterTypes = filterTypes;
     return this;
   }
 
@@ -45,7 +45,7 @@ class GetReportsRequestBuilder {
   }
 
   public build(): GetReportsRequest {
-    return new GetReportsRequest(this.page, this.pageSize, this.filterType, this.isClosed);
+    return new GetReportsRequest(this.page, this.pageSize, this.filterTypes, this.isClosed);
   }
 }
 

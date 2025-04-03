@@ -23,7 +23,6 @@ import PostReportRequest from "./moderation/model/PostReportRequest";
 import GetReportsRequest from "./moderation/model/GetReportsRequest";
 import GetPendingPostModerationRequest from "./moderation/model/GetPendingPostModerationRequest";
 import GetPostCommentReportRequest from "./moderation/model/GetPostCommentReportRequest";
-import CloseReportRequest from "./moderation/model/CloseReportRequest";
 import GetMemberRightsRequest from "./moderation/model/GetMemberRightsRequest";
 import UpdateMemberRightsRequest from "./moderation/model/UpdateMemberRightsRequest";
 import CommentClient from "./comment/CommentClient";
@@ -32,7 +31,7 @@ import GetAllMembersRequest from "./initiateUser/model/GetAllMembersRequest";
 import LogoutUserRequest from "./initiateUser/model/LogoutUserRequest";
 import ReplyCommentRequest from "./comment/model/ReplyCommentRequest";
 import GetCommentRequest from "./comment/model/GetCommentRequest";
-import UpdatePendingPostStatusRequest from "./moderation/model/UpdatePendingPostStatusRequest";
+import UpdateReportStatusRequest from "./moderation/model/UpdateReportStatusRequest";
 import GetCommentLikesRequest from "./comment/model/GetCommentLikesRequest";
 import LikeCommentRequest from "./comment/model/LikeCommentRequest";
 import DeleteCommentRequest from "./comment/model/DeleteCommentRequest";
@@ -83,7 +82,11 @@ import { LikePost } from "./types/api-responses/likePostResponse";
 import { EditProfile } from "./pages/user/types";
 import LMResponseType from "./LMResponse";
 import { Activity, ActivityEntityData } from "./types/models/Activity";
-import { Attachment, AttachmentMeta, AttachmentType } from "./types/models/attachment";
+import {
+  Attachment,
+  AttachmentMeta,
+  AttachmentType,
+} from "./types/models/attachment";
 import { Community } from "./types/models/community";
 import { SdkClientInfo, User } from "./types/models/member";
 import { OgTag } from "./types/models/ogTag";
@@ -118,7 +121,11 @@ import UpdateUserTopicsRequest from "./post/model/UpdateUserTopicsRequest";
 import GetUserTopicsRequest from "./post/model/GetUserTopicsRequest";
 import GetPersonalisedFeedRequest from "./universalfeed/model/GetPersonalisedFeedRequest";
 import PostSeenRequest from "./post/model/PostSeenRequest";
-import { FilterType, LMFeedReportStatus, ReportEntityType } from "./moderation/enums";
+import {
+  FilterType,
+  LMFeedReportStatus,
+  ReportEntityType,
+} from "./moderation/enums";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -377,9 +384,9 @@ class LMFeedClient {
     return getCommentResponse;
   }
 
-  async updatePendingPostStatus(request: UpdatePendingPostStatusRequest) {
+  async updateReportStatus(request: UpdateReportStatusRequest) {
     const updateResponse =
-      await this.moderationClient.updatePendingPostStatus(request);
+      await this.moderationClient.updateReportStatus(request);
     return updateResponse;
   }
 
@@ -387,12 +394,6 @@ class LMFeedClient {
     const getReportsForPostAndCommentsResponse =
       await this.moderationClient.getReportsForPostAndComments(request);
     return getReportsForPostAndCommentsResponse;
-  }
-
-  async closeReport(request: CloseReportRequest) {
-    const closeReportResponse =
-      await this.moderationClient.closeReport(request);
-    return closeReportResponse;
   }
 
   async getMemberRights(request: GetMemberRightsRequest) {
@@ -513,9 +514,8 @@ export {
   GetReportTagsRequest,
   GetPendingPostModerationRequest,
   GetReportsRequest,
-  UpdatePendingPostStatusRequest,
+  UpdateReportStatusRequest,
   GetPostCommentReportRequest,
-  CloseReportRequest,
   GetMemberRightsRequest,
   UpdateMemberRightsRequest,
   PostReportRequest,

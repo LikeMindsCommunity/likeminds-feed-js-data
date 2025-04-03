@@ -2,12 +2,11 @@ import { API } from "../shared/constants/api.constant";
 import NetworkLibrary from "../core/services/networklibrary";
 import GetReportTagsRequest from "./model/GetReportTagsRequest";
 import GetReportsRequest from "./model/GetReportsRequest";
-import CloseReportRequest from "./model/CloseReportRequest";
 import GetMemberRightsRequest from "./model/GetMemberRightsRequest";
 import UpdateMemberRightsRequest from "./model/UpdateMemberRightsRequest";
 import { FilterType } from "./enums";
 // import { GetReportTagsResponse } from "./model/GetReportTagsResponse";
-import UpdatePendingPostStatusRequest from "./model/UpdatePendingPostStatusRequest";
+import UpdateReportStatusRequest from "./model/UpdateReportStatusRequest";
 import GetPostCommentReportRequest from "./model/GetPostCommentReportRequest";
 import { GetReportTags } from "../types/api-responses/getReportTagsResponse";
 import { ModelConverter } from "../utils/ModelConverter";
@@ -32,14 +31,14 @@ class ModerationClient {
   }
 
   getReports(getReportsRequest: GetReportsRequest) {
-    const filterTypeParams = JSON.stringify(getReportsRequest.filterType);
+    const filterTypeParams = JSON.stringify(getReportsRequest.filterTypes);
     return this.networkLibrary.makeAuthenticatedRequest<GetReports>(
       `${API.GET_REPORTS}?page=${getReportsRequest.page}&page_size=${getReportsRequest.pageSize}&filter_types=${filterTypeParams}&is_closed=${getReportsRequest.isClosed}`,
       { method: "GET", headers: { "x-accept-version": "v1" } }
     );
   }
 
-  updatePendingPostStatus(request: UpdatePendingPostStatusRequest) {
+  updateReportStatus(request: UpdateReportStatusRequest) {
     return this.networkLibrary.makeAuthenticatedRequest(
       `${API.UPDATE_REPORT}`,
       {
@@ -61,14 +60,6 @@ class ModerationClient {
       `${API.GET_REPORTS}?page=${getReportsRequest.page}&page_size=${getReportsRequest.pageSize}&filter_types=${filterTypeParams}&is_closed=${isClosed}`,
       { method: "GET", headers: { "x-accept-version": "v1" } }
     );
-  }
-
-  closeReport(request: CloseReportRequest) {
-    return this.networkLibrary.makeAuthenticatedRequest(`${API.CLOSE_REPORT}`, {
-      method: "DELETE",
-      headers: { "x-accept-version": "v1" },
-      data: ModelConverter.requestBodyGenerator(request),
-    });
   }
 
   getMemberRights(request: GetMemberRightsRequest) {
