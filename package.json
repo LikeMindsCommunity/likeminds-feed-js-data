@@ -1,6 +1,6 @@
 {
   "name": "@likeminds.community/feed-js",
-  "version": "1.17.1",
+  "version": "1.18.0",
   "description": "LikeMinds Javascript SDK for chat APIs",
   "main": "dist/index.js",
   "module": "dist/index.m.js",
@@ -8,13 +8,15 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap",
-    "npm-deploy": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap && npm publish --access public",
+    "npm-deploy": "rm -rf dist && cross-env ENVIRONMENT=production microbundle --define process.env.ENVIRONMENT='\"production\"' --tsconfig tsconfig.json --no-sourcemap && npm publish --access public",
     "eslint": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "lint": "tsc",
-    "build-windows": "(if exist dist (rmdir /s /q dist)) && microbundle --tsconfig tsconfig.json --no-sourcemap"
+    "build-windows": "(if exist dist (rmdir /s /q dist)) && microbundle --tsconfig tsconfig.json --no-sourcemap",
+    "build:dev": "cross-env ENVIRONMENT=beta microbundle --define process.env.ENVIRONMENT='\"beta\"' --tsconfig tsconfig.json --no-sourcemap",
+    "build:prod": "cross-env ENVIRONMENT=production microbundle --define process.env.ENVIRONMENT='\"production\"' --tsconfig tsconfig.json --no-sourcemap"
   },
   "keywords": [
     "feed",
@@ -33,6 +35,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@typescript-eslint/parser": "^6.8.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.53.0",
     "microbundle": "^0.15.1",
     "prettier": "^3.0.3",
