@@ -118,6 +118,7 @@ import GetUserTopicsRequest from "./post/model/GetUserTopicsRequest";
 import GetPersonalisedFeedRequest from "./universalfeed/model/GetPersonalisedFeedRequest";
 import PostSeenRequest from "./post/model/PostSeenRequest";
 import { FilterType, LMFeedReportStatus, ReportEntityType } from "./moderation/enums";
+import { environment } from "./environment";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -171,6 +172,19 @@ class LMFeedClient {
     this.apiKey = apiKey;
     return this;
   }
+
+  public static getIdentityPoolId() {
+    return environment.poolId
+  }
+
+  public static getBucketId() {
+    return environment.bucketName
+  }
+
+  public static getRegion() {
+    return environment.region
+  }
+
   public setLMSDKCallbacks(lmSdkCallbacks: LMSDKCallbacks) {
     this.LMSDKCallbacks = lmSdkCallbacks;
     this.networkLibrary.setLMSDKCallbacks(lmSdkCallbacks);
