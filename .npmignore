@@ -21,6 +21,6 @@ src/**/*
 npm-debug.log
 yarn-error.log
 coverage/
-dist/
+
 build/
 *.log
