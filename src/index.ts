@@ -73,7 +73,7 @@ import {
   GetMemberRights,
   MemberRights,
 } from "./types/api-responses/GetMemberRightsResponse";
-import { GetReports } from "./types/api-responses/GetReportsResponse";
+import { GetReports, GroupReport } from "./types/api-responses/GetReportsResponse";
 import { GetPostCommentReports } from "./types/api-responses/GetPostCommentReportsResponse";
 import { GetTopics } from "./types/api-responses/getTopicsResponse";
 import { GetUniversalFeed } from "./types/api-responses/getUniversalFeedResponse";
@@ -571,6 +571,7 @@ export {
   GetTaggingList,
   GetReportTags,
   GetReports,
+  GroupReport,
   GetPostCommentReports,
   GetMemberRights,
   GetPostLikes,
