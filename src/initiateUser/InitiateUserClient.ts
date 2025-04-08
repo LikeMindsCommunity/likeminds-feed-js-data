@@ -87,7 +87,9 @@ class InitiateUserClient {
     );
   }
 
-  public async logoutUser(request: LogoutUserRequest) {
+  public async logoutUser(
+    request: LogoutUserRequest
+  ): Promise<LMResponse<any>> {
     return this.networkLibrary.makeAuthenticatedRequest(`${API.USER_LOGOUT}`, {
       method: "POST",
       data: ModelConverter.requestBodyGenerator(request),

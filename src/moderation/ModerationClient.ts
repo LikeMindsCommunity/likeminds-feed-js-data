@@ -15,6 +15,7 @@ import { PostReport } from "../types/api-responses/postReportResponse";
 import { GetReports } from "../types/api-responses/GetReportsResponse";
 import { GetPostCommentReports } from "../types/api-responses/GetPostCommentReportsResponse";
 import { GetMemberRights } from "../types/api-responses/GetMemberRightsResponse";
+import LMResponse from "src/core/services/lmresponse";
 
 class ModerationClient {
   networkLibrary: NetworkLibrary;
@@ -30,7 +31,9 @@ class ModerationClient {
     );
   }
 
-  getReports(getReportsRequest: GetReportsRequest) {
+  getReports(
+    getReportsRequest: GetReportsRequest
+  ): Promise<LMResponse<GetReports>> {
     const filterTypeParams = JSON.stringify(getReportsRequest.filterTypes);
     return this.networkLibrary.makeAuthenticatedRequest<GetReports>(
       `${API.GET_REPORTS}?page=${getReportsRequest.page}&page_size=${getReportsRequest.pageSize}&filter_types=${filterTypeParams}&is_closed=${getReportsRequest.isClosed}`,
@@ -38,7 +41,9 @@ class ModerationClient {
     );
   }
 
-  updateReportStatus(request: UpdateReportStatusRequest) {
+  updateReportStatus(
+    request: UpdateReportStatusRequest
+  ): Promise<LMResponse<any>> {
     return this.networkLibrary.makeAuthenticatedRequest(
       `${API.UPDATE_REPORT}`,
       {
