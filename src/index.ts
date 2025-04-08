@@ -92,7 +92,7 @@ import { SdkClientInfo, User } from "./types/models/member";
 import { OgTag } from "./types/models/ogTag";
 import { MenuItem, Post } from "./types/models/post";
 import { Reply } from "./types/models/replies";
-import { Report } from "./types/models/report";
+import { Report, ActionTaken } from "./types/models/report";
 import { Comment } from "./types/models/comment";
 import { ReportTag } from "./types/models/reportTags";
 import { TaggingUser } from "./types/models/taggingMember";
@@ -553,6 +553,7 @@ export {
   FilterType,
   ReportEntityType,
   LMFeedReportStatus,
+  ActionTaken,
   API,
   LMResponseType,
   // APIs
