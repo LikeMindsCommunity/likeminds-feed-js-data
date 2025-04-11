@@ -58,6 +58,7 @@ class TokenManager {
   }
   
   public clearTokenManager() {
+    console.log("clear token manager called");
     this.accessToken = null
     this.refreshToken = null
 }
