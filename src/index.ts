@@ -26,9 +26,9 @@ import GetPostCommentReportRequest from "./moderation/model/GetPostCommentReport
 import GetMemberRightsRequest from "./moderation/model/GetMemberRightsRequest";
 import UpdateMemberRightsRequest from "./moderation/model/UpdateMemberRightsRequest";
 import CommentClient from "./comment/CommentClient";
+import LogoutRequest from "./initiateUser/model/LogoutRequest";
 import AddCommentRequest from "./comment/model/AddCommentRequest";
 import GetAllMembersRequest from "./initiateUser/model/GetAllMembersRequest";
-import LogoutUserRequest from "./initiateUser/model/LogoutUserRequest";
 import ReplyCommentRequest from "./comment/model/ReplyCommentRequest";
 import GetCommentRequest from "./comment/model/GetCommentRequest";
 import UpdateReportStatusRequest from "./moderation/model/UpdateReportStatusRequest";
@@ -472,7 +472,7 @@ class LMFeedClient {
     return await this.initiateUserClient.getAllMembers(request);
   }
 
-  async logoutUser(request: LogoutUserRequest) {
+  async logoutUser(request: LogoutRequest) {
     return await this.initiateUserClient.logoutUser(request);
   }
 
@@ -538,7 +538,7 @@ export {
   GetNotificationFeedRequest,
   MarkReadNotificationRequest,
   GetAllMembersRequest,
-  LogoutUserRequest,
+  LogoutRequest,
   EditCommentRequest,
   GetTopicsRequest,
   UpdateUserTopicsRequest,

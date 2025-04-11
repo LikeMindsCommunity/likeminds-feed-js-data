@@ -1,10 +1,12 @@
 class LogoutRequest {
   // Properties of the request class
   refreshToken: string;
-  deviceId: string;
+  deviceId?: string;
 
   // Public constructor to create the request object
-  constructor(refreshToken: string, deviceId: string) {
+
+
+  constructor(refreshToken: string, deviceId?: string) {
     this.refreshToken = refreshToken;
     this.deviceId = deviceId;
   }
@@ -18,7 +20,7 @@ class LogoutRequest {
 // Builder class for LogoutRequest
 export class LogoutBuilder {
   private refreshToken: string | undefined;
-  private deviceId: string | undefined;
+  private deviceId?: string | undefined;
   // Add other properties as needed
 
   public setRefreshToken(refreshToken: string): LogoutBuilder {
@@ -33,8 +35,8 @@ export class LogoutBuilder {
 
   // Build method to create the final LogoutRequest object
   public build(): LogoutRequest {
-    if (!this.refreshToken || !this.deviceId) {
-      throw new Error("UUID and DeviceI are required.");
+    if (!this.refreshToken) {
+      throw new Error("UUID is required.");
     }
 
     return new LogoutRequest(this.refreshToken, this.deviceId);
