@@ -16,10 +16,10 @@ class LogoutRequest {
 
 // Builder class for LogoutRequest
 export class LogoutBuilder {
-  private deviceId?: string | undefined;
+  private deviceId?: string;
   // Add other properties as needed
 
-  public setDeviceId(deviceId?: string): LogoutBuilder {
+  public setDeviceId(deviceId?: string | null): LogoutBuilder {
     this.deviceId = deviceId;
     return this;
   }
