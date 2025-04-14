@@ -91,8 +91,6 @@ class NetworkLibrary {
   }
 
   public clearLocalStorage() {
-    console.log("local storage clear called");
-    
     localStorage.removeItem(TokenValues.LOCAL_ACCESS_TOKEN);
     localStorage.removeItem(TokenValues.LOCAL_REFRESH_TOKEN);
     localStorage.removeItem(TokenValues.LOCAL_USER);

@@ -22,12 +22,6 @@ import {
   InitiateUser,
   ValidateUser,
 } from "../types/api-responses/initiateUserResponse";
-import { LogoutResponse } from "./model/LogoutResponse";
-import LMResponseType from "src/LMResponse";
-
-interface _LogoutUserRequest_ {
-  refreshToken: string;
-}
 
 class InitiateUserClient {
   private networkLibrary: NetworkLibrary;
@@ -96,28 +90,18 @@ class InitiateUserClient {
   public async logoutUser(
     request: LogoutRequest
   ): Promise<LMResponse<Nothing>> {
-    console.log("data logout called");
 
     const internalRequest = {
       refreshToken: this.networkLibrary.getRefreshToken(),
     };
 
-    console.log(`internal request`, internalRequest);
-
     const accessToken = this.networkLibrary.getAccessTokenFromLocalStorage();
     const refreshToken = this.networkLibrary.getRefreshTokenFromLocalStorage();
 
-    console.log(
-      "access and refresh from local storage",
-      accessToken,
-      refreshToken
-    );
-
     // If both tokens are null, clear local storage and DB
     if (!accessToken && !refreshToken) {
-      console.log("case 1");
       this.networkLibrary.clearLocalStorage();
-      return new LMResponse<Nothing>(null, null, true);
+      return new LMResponse<Nothing>("" as unknown as any, null, true);
     }
 
     if (
@@ -126,16 +110,12 @@ class InitiateUserClient {
       request?.deviceId == null ||
       request?.deviceId == undefined
     ) {
-      console.log("case 2, no api call clear db");
-
       this.networkLibrary.clearLocalStorage();
       return new LMResponse<Nothing>("" as unknown as any, null, true);
     }
 
     try {
       // Make an authenticated logout request
-      console.log("case 2");
-      console.log("calling api");
       const response = await this.networkLibrary.makeAuthenticatedRequest(
         `${API.USER_LOGOUT}`,
         {
@@ -150,16 +130,12 @@ class InitiateUserClient {
       );
       if (response) {
         this.networkLibrary.clearLocalStorage();
-        console.log("api success");
-
-        return new LMResponse<Nothing>(null, null, true);
+        return new LMResponse<Nothing>("" as unknown as any, null, true);
       } else {
-        console.log("api fail");
-
-        return new LMResponse<Nothing>(null, response?.errorMessage, false);
+        return new LMResponse<Nothing>("" as unknown as any, response?.errorMessage, false);
       }
     } catch (error) {
-      return new LMResponse<Nothing>(null, error, false);
+      return new LMResponse<Nothing>("" as unknown as any,  error, false);
     }
   }
 
