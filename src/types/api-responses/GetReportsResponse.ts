@@ -1,12 +1,12 @@
 import { Widget } from "../models/widget";
-import {Post} from "../models/post";
+import { Post } from "../models/post";
 import { User } from "../models/member";
 import { Topic } from "../models/topic";
-import {Report} from "../models/report";
+import { GroupReport } from "../models/GroupReport";
 import { Comment } from "../models/comment";
 
 export interface GetReports {
-  reports: Report[];
+  reportsData: GroupReport[];
   posts: Record<string, Post>;
   users: Record<string, User>;
   repostedPosts: Record<string, Post>;
