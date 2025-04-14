@@ -3,7 +3,7 @@ import { Post } from "../models/post";
 import { User } from "../models/member";
 import { Topic } from "../models/topic";
 import { Comment } from "../models/comment";
-import { GroupReport } from "./GetReportsResponse";
+import { GroupReport } from "../models/GroupReport";
 
 export interface GetPostCommentReports {
   reportsData: GroupReport[];

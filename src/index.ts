@@ -73,7 +73,8 @@ import {
   GetMemberRights,
   MemberRights,
 } from "./types/api-responses/GetMemberRightsResponse";
-import { GetReports, GroupReport } from "./types/api-responses/GetReportsResponse";
+import { GetReports } from "./types/api-responses/GetReportsResponse";
+import { GroupReport } from "./types/models/GroupReport";
 import { GetPostCommentReports } from "./types/api-responses/GetPostCommentReportsResponse";
 import { GetTopics } from "./types/api-responses/getTopicsResponse";
 import { GetUniversalFeed } from "./types/api-responses/getUniversalFeedResponse";
@@ -121,7 +122,11 @@ import UpdateUserTopicsRequest from "./post/model/UpdateUserTopicsRequest";
 import GetUserTopicsRequest from "./post/model/GetUserTopicsRequest";
 import GetPersonalisedFeedRequest from "./universalfeed/model/GetPersonalisedFeedRequest";
 import PostSeenRequest from "./post/model/PostSeenRequest";
-import { FilterType, LMFeedReportStatus, ReportEntityType } from "./moderation/enums";
+import {
+  FilterType,
+  LMFeedReportStatus,
+  ReportEntityType,
+} from "./moderation/enums";
 import { environment } from "./environment";
 
 class LMFeedClient {
@@ -178,15 +183,15 @@ class LMFeedClient {
   }
 
   public static getIdentityPoolId() {
-    return environment.poolId
+    return environment.poolId;
   }
 
   public static getBucketId() {
-    return environment.bucketName
+    return environment.bucketName;
   }
 
   public static getRegion() {
-    return environment.region
+    return environment.region;
   }
 
   public setLMSDKCallbacks(lmSdkCallbacks: LMSDKCallbacks) {
