@@ -56,6 +56,12 @@ class TokenManager {
   public getVersionCode() {
     return this.xVersionCode;
   }
+  
+  // Clears all in-memory authentication tokens.
+  public clearTokenManager() {
+    this.accessToken = null
+    this.refreshToken = null
+}
 
   public async refreshAccessToken(): Promise<void> {
     try {

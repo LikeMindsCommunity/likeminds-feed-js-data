@@ -10,6 +10,7 @@ import { ModelConverter } from "../utils/ModelConverter";
 import { GetMemberState } from "../types/api-responses/getMemberStateResponse";
 import GetAllMembersRequest from "./model/GetAllMembersRequest";
 import ValidateUserRequest from "./model/ValidateUserRequest";
+import LogoutRequest from "./model/LogoutRequest";
 
 import { GetAllMembers } from "../types/api-responses/getAllMembersResponse";
 // import { ValidateUserResponse } from "./model/ValidateUserResponse";
@@ -84,6 +85,58 @@ class InitiateUserClient {
     return this.networkLibrary.makeAuthenticatedRequest<GetAllMembers>(
       `${API.DM_ALL_MEMBERS}?page=${request.page}`
     );
+  }
+
+  public async logoutUser(
+    request: LogoutRequest
+  ): Promise<LMResponse<Nothing>> {
+
+    const internalRequest = {
+      refreshToken: this.networkLibrary.getRefreshToken(),
+    };
+
+    const accessToken = this.networkLibrary.getAccessTokenFromLocalStorage();
+    const refreshToken = this.networkLibrary.getRefreshTokenFromLocalStorage();
+
+    // If both tokens are null, clear local storage and DB
+    if (!accessToken && !refreshToken) {
+      this.networkLibrary.clearLocalStorage();
+      return new LMResponse<Nothing>("" as unknown as any, null, true);
+    }
+
+    if (
+      request == null ||
+      request == undefined ||
+      request?.deviceId == null ||
+      request?.deviceId == undefined
+    ) {
+      this.networkLibrary.clearLocalStorage();
+      return new LMResponse<Nothing>("" as unknown as any, null, true);
+    }
+
+    try {
+      // Make an authenticated logout request
+      const response = await this.networkLibrary.makeAuthenticatedRequest(
+        `${API.USER_LOGOUT}`,
+        {
+          method: "POST",
+          headers: {
+            "x-device-id": request?.deviceId ?? "",
+          },
+          data: {
+            refresh_token: refreshToken,
+          },
+        }
+      );
+      if (response) {
+        this.networkLibrary.clearLocalStorage();
+        return new LMResponse<Nothing>("" as unknown as any, null, true);
+      } else {
+        return new LMResponse<Nothing>("" as unknown as any, response?.errorMessage, false);
+      }
+    } catch (error) {
+      return new LMResponse<Nothing>("" as unknown as any,  error, false);
+    }
   }
 
   public async editProfile(editProfile: EditProfile) {

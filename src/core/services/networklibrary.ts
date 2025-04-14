@@ -90,6 +90,15 @@ class NetworkLibrary {
     this.tokenManager.setLMSdkCallbacks(callback);
   }
 
+  // Clears all authentication and user-related data from localStorage.
+  public clearLocalStorage() {
+    localStorage.removeItem(TokenValues.LOCAL_ACCESS_TOKEN);
+    localStorage.removeItem(TokenValues.LOCAL_REFRESH_TOKEN);
+    localStorage.removeItem(TokenValues.LOCAL_USER);
+    localStorage.removeItem(TokenValues.LOCAL_API_KEY);
+    this.tokenManager.clearTokenManager();
+  }
+
   private async makeRequest<T>(
     url: string,
     config?: AxiosRequestConfig

@@ -6,8 +6,13 @@ export enum FilterType {
 }
 
 export enum LMFeedReportStatus {
-  APPROVED = "approved",
-  REJECTED = "rejected",
+  EDIT_MEMBER_PERMISSION = "EDIT_MEMBER_PERMISSION",
+  PENDING_POST_APPROVED = "PENDING_POST_APPROVED",
+  PENDING_POST_REJECTED = "PENDING_POST_REJECTED",
+  POST_APPROVED = "POST_APPROVED",
+  POST_REJECTED = "POST_REJECTED",
+  COMMENT_APPROVED = "COMMENT_APPROVED",
+  COMMENT_REJECTED = "COMMENT_REJECTED",
 }
 
 export enum ReportEntityType {
@@ -16,5 +21,5 @@ export enum ReportEntityType {
   CONVERSATION = "conversation",
   POST = "post",
   COMMENT = "comment",
-  REPLY = "reply"
+  REPLY = "reply",
 }
