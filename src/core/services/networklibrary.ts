@@ -90,6 +90,7 @@ class NetworkLibrary {
     this.tokenManager.setLMSdkCallbacks(callback);
   }
 
+  // Clears all authentication and user-related data from localStorage.
   public clearLocalStorage() {
     localStorage.removeItem(TokenValues.LOCAL_ACCESS_TOKEN);
     localStorage.removeItem(TokenValues.LOCAL_REFRESH_TOKEN);
