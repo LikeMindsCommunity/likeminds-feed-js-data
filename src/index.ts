@@ -128,6 +128,9 @@ import {
   ReportEntityType,
 } from "./moderation/enums";
 import { environment } from "./environment";
+import { GetTemporaryPostResponse } from "./types/api-responses/GetTemporaryPostResponse";
+import SaveTemporaryPostRequest from "./post/model/SaveTemporaryPostRequest";
+import DeleteTemporaryPostRequest from "./post/model/DeleteTemporaryPostRequest";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -508,6 +511,18 @@ class LMFeedClient {
   async postSeen(request: PostSeenRequest) {
     return await this.postClient.postSeen(request);
   }
+
+  async saveTemporaryPost(request: SaveTemporaryPostRequest) {
+    return await this.postClient.saveTemporaryPost(request);
+  }
+
+  async getTemporaryPost() {
+    return await this.postClient.getTemporaryPost();
+  }
+
+  async deleteTemporaryPost(request: DeleteTemporaryPostRequest) {
+    return await this.postClient.deleteTemporaryPost(request);
+  }
 }
 
 export {
@@ -622,4 +637,7 @@ export {
   MemberRight,
   MemberRights,
   PostSeenRequest,
+  SaveTemporaryPostRequest,
+  DeleteTemporaryPostRequest,
+  GetTemporaryPostResponse,
 };
