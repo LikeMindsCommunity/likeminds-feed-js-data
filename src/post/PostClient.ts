@@ -306,9 +306,12 @@ class PostClient {
       const db = await this.openIndexedDB();
       const transaction = db.transaction(["temporaryPosts"], "readwrite");
       const store = transaction.objectStore("temporaryPosts");
-
+      console.log(request.temporaryPostId);
+      console.log("hello ji")
       await new Promise<void>((resolve, reject) => {
-        const deleteRequest = store.delete(Number(request.temporaryPostId));
+        const deleteRequest = store.delete(request.temporaryPostId);
+        console.log({deleteRequest})
+        console.log("delete req called")
         deleteRequest.onsuccess = () => resolve();
         deleteRequest.onerror = () => reject(deleteRequest.error);
       });
