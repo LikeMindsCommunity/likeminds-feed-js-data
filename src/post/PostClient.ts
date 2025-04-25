@@ -328,16 +328,28 @@ class PostClient {
 
   private async openIndexedDB(): Promise<IDBDatabase> {
     return new Promise((resolve, reject) => {
-      const request = indexedDB.open("FeedDB", 1);
-
+      // Increment to version 3 to force the upgrade
+      const request = indexedDB.open("FeedDB", 3);
+  
       request.onerror = () => reject(request.error);
       request.onsuccess = () => resolve(request.result);
-
+  
       request.onupgradeneeded = (event) => {
+        console.log("Running database upgrade to version", event.newVersion);
         const db = (event.target as IDBOpenDBRequest).result;
-        if (!db.objectStoreNames.contains("temporaryPosts")) {
-          db.createObjectStore("temporaryPosts", { autoIncrement: true });
+        
+        // If the store exists, delete it first
+        if (db.objectStoreNames.contains("temporaryPosts")) {
+          console.log("Deleting existing temporaryPosts store");
+          db.deleteObjectStore("temporaryPosts");
         }
+        
+        // Create new store with correct schema
+        console.log("Creating new temporaryPosts store with keyPath");
+        db.createObjectStore("temporaryPosts", {
+          keyPath: "id", 
+          autoIncrement: false 
+        });
       };
     });
   }
