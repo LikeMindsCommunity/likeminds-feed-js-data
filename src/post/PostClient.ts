@@ -254,51 +254,30 @@ class PostClient {
       const db = await this.openIndexedDB();
       const transaction = db.transaction(["temporaryPosts"], "readwrite");
       const store = transaction.objectStore("temporaryPosts");
-
+  
       await new Promise<void>((resolve, reject) => {
-        const addRequest = store.add(request.tempPost);
-        addRequest.onsuccess = () => resolve();
-        addRequest.onerror = () => reject(addRequest.error);
+        // Use put instead of add to handle both insert and update
+        console.log("save krra hu");
+        const putRequest = store.put(request.tempPost, request.tempPost.post.id);
+        console.log("save ho gya ji")
+        putRequest.onsuccess = () => resolve();
+        putRequest.onerror = (event) => {
+          console.error("Error saving temporary post:", putRequest.error);
+          reject(putRequest.error);
+        };
       });
-
+  
       return { success: true, errorMessage: null, data: undefined };
     } catch (error) {
+      console.error("Exception in saveTemporaryPost:", error);
       return {
         success: false,
-        errorMessage: "Error while saving post",
+        errorMessage: error instanceof Error ? error.message : "Error while saving post",
         data: undefined,
       };
     }
   }
-
-  async getTemporaryPost(): Promise<LMResponseType<GetTemporaryPostResponse>> {
-    try {
-      const db = await this.openIndexedDB();
-      const transaction = db.transaction(["temporaryPosts"], "readonly");
-      const store = transaction.objectStore("temporaryPosts");
-
-      const posts = await new Promise<any[]>((resolve, reject) => {
-        const getRequest = store.getAll();
-        getRequest.onsuccess = () => resolve(getRequest.result);
-        getRequest.onerror = () => reject(getRequest.error);
-      });
-
-      const latestPost = posts[posts.length - 1] || null;
-
-      return {
-        success: true,
-        errorMessage: null,
-        data: { tempPost: latestPost },
-      };
-    } catch (error) {
-      return {
-        success: false,
-        errorMessage: "Error while fetching post",
-        data: { tempPost: null },
-      };
-    }
-  }
-
+  
   async deleteTemporaryPost(
     request: DeleteTemporaryPostRequest
   ): Promise<LMResponseType<void>> {
@@ -306,50 +285,89 @@ class PostClient {
       const db = await this.openIndexedDB();
       const transaction = db.transaction(["temporaryPosts"], "readwrite");
       const store = transaction.objectStore("temporaryPosts");
-      console.log(request.temporaryPostId);
-      console.log("hello ji")
+      
       await new Promise<void>((resolve, reject) => {
         const deleteRequest = store.delete(request.temporaryPostId);
-        console.log({deleteRequest})
-        console.log("delete req called")
+        
         deleteRequest.onsuccess = () => resolve();
-        deleteRequest.onerror = () => reject(deleteRequest.error);
+        deleteRequest.onerror = (event) => {
+          console.error("Error deleting temporary post:", deleteRequest.error);
+          reject(deleteRequest.error);
+        };
       });
-
+  
       return { success: true, errorMessage: null, data: undefined };
     } catch (error) {
+      console.error("Exception in deleteTemporaryPost:", error);
       return {
         success: false,
-        errorMessage: "Error while deleting post",
+        errorMessage: error instanceof Error ? error.message : "Error while deleting post",
         data: undefined,
       };
     }
   }
-
+  
+  async getTemporaryPost(): Promise<LMResponseType<GetTemporaryPostResponse>> {
+    try {
+      const db = await this.openIndexedDB();
+      const transaction = db.transaction(["temporaryPosts"], "readonly");
+      const store = transaction.objectStore("temporaryPosts");
+  
+      const posts = await new Promise<TempPost[]>((resolve, reject) => {
+        const getRequest = store.getAll();
+        getRequest.onsuccess = () => resolve(getRequest.result);
+        getRequest.onerror = (event) => {
+          console.error("Error fetching temporary posts:", getRequest.error);
+          reject(getRequest.error);
+        };
+      });
+  
+      const latestPost = posts.length > 0 ? posts[posts.length - 1] : null;
+  
+      return {
+        success: true,
+        errorMessage: null,
+        data: { tempPost: latestPost },
+      };
+    } catch (error) {
+      console.error("Exception in getTemporaryPost:", error);
+      return {
+        success: false,
+        errorMessage: error instanceof Error ? error.message : "Error while fetching post",
+        data: { tempPost: null },
+      };
+    }
+  }
+  
   private async openIndexedDB(): Promise<IDBDatabase> {
     return new Promise((resolve, reject) => {
-      // Increment to version 3 to force the upgrade
-      const request = indexedDB.open("FeedDB", 3);
+      // Open database with version 4
+      const request = indexedDB.open("FeedDB", 4);
   
-      request.onerror = () => reject(request.error);
+      request.onerror = (event) => {
+        console.error("IndexedDB open error:", request.error);
+        reject(request.error);
+      };
+      
       request.onsuccess = () => resolve(request.result);
   
       request.onupgradeneeded = (event) => {
-        console.log("Running database upgrade to version", event.newVersion);
         const db = (event.target as IDBOpenDBRequest).result;
         
-        // If the store exists, delete it first
+        // Check if store exists before attempting to delete
         if (db.objectStoreNames.contains("temporaryPosts")) {
-          console.log("Deleting existing temporaryPosts store");
           db.deleteObjectStore("temporaryPosts");
         }
         
-        // Create new store with correct schema
-        console.log("Creating new temporaryPosts store with keyPath");
-        db.createObjectStore("temporaryPosts", {
-          keyPath: "id", 
-          autoIncrement: false 
-        });
+        // Create object store without keyPath - we'll use out-of-line keys
+        const store = db.createObjectStore("temporaryPosts");
+        
+        // Add transaction complete handler to log successful setup
+        if (request.transaction) {
+          request.transaction.oncomplete = () => {
+            console.log("IndexedDB setup complete for temporaryPosts store");
+          };
+        }
       };
     });
   }
