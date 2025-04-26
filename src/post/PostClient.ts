@@ -247,24 +247,31 @@ class PostClient {
     return responseData;
   }
 
-  async saveTemporaryPost(
-    request: SaveTemporaryPostRequest
-  ): Promise<LMResponseType<void>> {
+  async saveTemporaryPost(request: SaveTemporaryPostRequest): Promise<LMResponseType<void>> {
     try {
       const db = await this.openIndexedDB();
       const transaction = db.transaction(["temporaryPosts"], "readwrite");
       const store = transaction.objectStore("temporaryPosts");
   
+      // First, wait for the put operation
       await new Promise<void>((resolve, reject) => {
-        // Use put instead of add to handle both insert and update
-        console.log("save krra hu");
+        console.log("Saving temporary post with ID:", request.tempPost.post.id);
+        // Use consistent key - just the ID
         const putRequest = store.put(request.tempPost, request.tempPost.post.id);
-        console.log("save ho gya ji")
+        console.log("kar dia h save");
+        console.log(request.tempPost);
+        console.log(request.tempPost.post.id);
         putRequest.onsuccess = () => resolve();
-        putRequest.onerror = (event) => {
-          console.error("Error saving temporary post:", putRequest.error);
-          reject(putRequest.error);
+        putRequest.onerror = () => reject(putRequest.error);
+      });
+  
+      // Now wait for the transaction to complete
+      await new Promise<void>((resolve, reject) => {
+        transaction.oncomplete = () => {
+          console.log("Transaction completed successfully");
+          resolve();
         };
+        transaction.onerror = () => reject(transaction.error);
       });
   
       return { success: true, errorMessage: null, data: undefined };
@@ -341,26 +348,33 @@ class PostClient {
   
   private async openIndexedDB(): Promise<IDBDatabase> {
     return new Promise((resolve, reject) => {
-      // Open database with version 4
-      const request = indexedDB.open("FeedDB", 4);
+      // Updated to version 5
+      const request = indexedDB.open("FeedDB", 5);
   
       request.onerror = (event) => {
         console.error("IndexedDB open error:", request.error);
         reject(request.error);
       };
       
-      request.onsuccess = () => resolve(request.result);
+      request.onsuccess = (event) => {
+        const db = request.result;
+        console.log("Database opened successfully. Object stores:", 
+                  Array.from(db.objectStoreNames));
+        resolve(db);
+      };
   
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
+        const oldVersion = event.oldVersion;
+        console.log(`Database upgrade needed from ${oldVersion} to ${db.version}`);
         
-        // Check if store exists before attempting to delete
-        if (db.objectStoreNames.contains("temporaryPosts")) {
-          db.deleteObjectStore("temporaryPosts");
+        // Only create the store if it doesn't exist
+        if (!db.objectStoreNames.contains("temporaryPosts")) {
+          console.log("Creating temporaryPosts store");
+          const store = db.createObjectStore("temporaryPosts");
+        } else {
+          console.log("temporaryPosts store already exists");
         }
-        
-        // Create object store without keyPath - we'll use out-of-line keys
-        const store = db.createObjectStore("temporaryPosts");
         
         // Add transaction complete handler to log successful setup
         if (request.transaction) {
@@ -372,5 +386,4 @@ class PostClient {
     });
   }
 }
-
 export default PostClient;
