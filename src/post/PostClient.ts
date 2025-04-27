@@ -255,12 +255,8 @@ class PostClient {
   
       // First, wait for the put operation
       await new Promise<void>((resolve, reject) => {
-        console.log("Saving temporary post with ID:", request.tempPost.post.id);
         // Use consistent key - just the ID
         const putRequest = store.put(request.tempPost, request.tempPost.post.id);
-        console.log("kar dia h save");
-        console.log(request.tempPost);
-        console.log(request.tempPost.post.id);
         putRequest.onsuccess = () => resolve();
         putRequest.onerror = () => reject(putRequest.error);
       });
@@ -268,7 +264,6 @@ class PostClient {
       // Now wait for the transaction to complete
       await new Promise<void>((resolve, reject) => {
         transaction.oncomplete = () => {
-          console.log("Transaction completed successfully");
           resolve();
         };
         transaction.onerror = () => reject(transaction.error);
@@ -358,19 +353,15 @@ class PostClient {
       
       request.onsuccess = (event) => {
         const db = request.result;
-        console.log("Database opened successfully. Object stores:", 
-                  Array.from(db.objectStoreNames));
         resolve(db);
       };
   
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
         const oldVersion = event.oldVersion;
-        console.log(`Database upgrade needed from ${oldVersion} to ${db.version}`);
         
         // Only create the store if it doesn't exist
         if (!db.objectStoreNames.contains("temporaryPosts")) {
-          console.log("Creating temporaryPosts store");
           const store = db.createObjectStore("temporaryPosts");
         } else {
           console.log("temporaryPosts store already exists");
