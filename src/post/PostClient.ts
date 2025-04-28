@@ -292,7 +292,7 @@ class PostClient {
         const deleteRequest = store.delete(request.temporaryPostId);
         
         deleteRequest.onsuccess = () => resolve();
-        deleteRequest.onerror = (event) => {
+        deleteRequest.onerror = () => {
           console.error("Error deleting temporary post:", deleteRequest.error);
           reject(deleteRequest.error);
         };
@@ -318,7 +318,7 @@ class PostClient {
       const posts = await new Promise<TempPost[]>((resolve, reject) => {
         const getRequest = store.getAll();
         getRequest.onsuccess = () => resolve(getRequest.result);
-        getRequest.onerror = (event) => {
+        getRequest.onerror = () => {
           console.error("Error fetching temporary posts:", getRequest.error);
           reject(getRequest.error);
         };
@@ -346,23 +346,22 @@ class PostClient {
       // Updated to version 5
       const request = indexedDB.open("FeedDB", 5);
   
-      request.onerror = (event) => {
+      request.onerror = () => {
         console.error("IndexedDB open error:", request.error);
         reject(request.error);
       };
       
-      request.onsuccess = (event) => {
+      request.onsuccess = () => {
         const db = request.result;
         resolve(db);
       };
   
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
-        const oldVersion = event.oldVersion;
         
         // Only create the store if it doesn't exist
         if (!db.objectStoreNames.contains("temporaryPosts")) {
-          const store = db.createObjectStore("temporaryPosts");
+          db.createObjectStore("temporaryPosts");
         } else {
           console.log("temporaryPosts store already exists");
         }
@@ -377,4 +376,5 @@ class PostClient {
     });
   }
 }
+
 export default PostClient;
