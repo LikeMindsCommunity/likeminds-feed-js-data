@@ -33,7 +33,6 @@
     "dist"
   ],
   "devDependencies": {
-    "@types/jest": "^29.5.14",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@typescript-eslint/parser": "^6.8.0",
     "cross-env": "^7.0.3",
