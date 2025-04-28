@@ -280,6 +280,7 @@ class PostClient {
     }
   }
   
+  
   async deleteTemporaryPost(
     request: DeleteTemporaryPostRequest
   ): Promise<LMResponseType<void>> {
@@ -308,6 +309,7 @@ class PostClient {
       };
     }
   }
+
   
   async getTemporaryPost(): Promise<LMResponseType<GetTemporaryPostResponse>> {
     try {
@@ -340,6 +342,7 @@ class PostClient {
       };
     }
   }
+
   
   private async openIndexedDB(): Promise<IDBDatabase> {
     return new Promise((resolve, reject) => {
@@ -378,3 +381,4 @@ class PostClient {
 }
 
 export default PostClient;
+
