@@ -34,8 +34,10 @@ import { TempPost } from "../types/models/TempPost";
 import SaveTemporaryPostRequest from "./model/SaveTemporaryPostRequest";
 import DeleteTemporaryPostRequest from "./model/DeleteTemporaryPostRequest";
 import { GetTemporaryPostResponse } from "../types/api-responses/GetTemporaryPostResponse";
+import LMResponse from "../core/services/lmresponse";
 import LMResponseType from "../LMResponse";
-
+import {TemporaryPost} from "../moderation/enums/index"
+import openIndexedDB from "../utils/initDB";
 class PostClient {
   private networkLibrary: NetworkLibrary;
 
@@ -249,9 +251,9 @@ class PostClient {
 
   async saveTemporaryPost(request: SaveTemporaryPostRequest): Promise<LMResponseType<void>> {
     try {
-      const db = await this.openIndexedDB();
-      const transaction = db.transaction(["temporaryPosts"], "readwrite");
-      const store = transaction.objectStore("temporaryPosts");
+      const db = await openIndexedDB();
+      const transaction = db.transaction([TemporaryPost.TEMPORARY_POST], "readwrite");
+      const store = transaction.objectStore(TemporaryPost.TEMPORARY_POST);
   
       // First, wait for the put operation
       await new Promise<void>((resolve, reject) => {
@@ -268,15 +270,9 @@ class PostClient {
         };
         transaction.onerror = () => reject(transaction.error);
       });
-  
-      return { success: true, errorMessage: null, data: undefined };
+      return new LMResponse<void>(undefined, null, true);
     } catch (error) {
-      console.error("Exception in saveTemporaryPost:", error);
-      return {
-        success: false,
-        errorMessage: error instanceof Error ? error.message : "Error while saving post",
-        data: undefined,
-      };
+      return new LMResponse<void>(undefined, error instanceof Error ? error.message : "Error while saving post", false);
     }
   }
   
@@ -285,98 +281,54 @@ class PostClient {
     request: DeleteTemporaryPostRequest
   ): Promise<LMResponseType<void>> {
     try {
-      const db = await this.openIndexedDB();
-      const transaction = db.transaction(["temporaryPosts"], "readwrite");
-      const store = transaction.objectStore("temporaryPosts");
+      const db = await openIndexedDB();
+      const transaction = db.transaction([TemporaryPost.TEMPORARY_POST], "readwrite");
+      const store = transaction.objectStore(TemporaryPost.TEMPORARY_POST);
       
       await new Promise<void>((resolve, reject) => {
         const deleteRequest = store.delete(request.temporaryPostId);
         
         deleteRequest.onsuccess = () => resolve();
         deleteRequest.onerror = () => {
-          console.error("Error deleting temporary post:", deleteRequest.error);
           reject(deleteRequest.error);
         };
       });
-  
-      return { success: true, errorMessage: null, data: undefined };
+      return new LMResponse<void>(undefined, null, true);
     } catch (error) {
-      console.error("Exception in deleteTemporaryPost:", error);
-      return {
-        success: false,
-        errorMessage: error instanceof Error ? error.message : "Error while deleting post",
-        data: undefined,
-      };
+      return new LMResponse<void>(undefined, error instanceof Error ? error.message : "Error while deleting post", false);
     }
   }
 
   
   async getTemporaryPost(): Promise<LMResponseType<GetTemporaryPostResponse>> {
     try {
-      const db = await this.openIndexedDB();
-      const transaction = db.transaction(["temporaryPosts"], "readonly");
-      const store = transaction.objectStore("temporaryPosts");
+      const db = await openIndexedDB();
+      const transaction = db.transaction([TemporaryPost.TEMPORARY_POST], "readonly");
+      const store = transaction.objectStore(TemporaryPost.TEMPORARY_POST);
   
       const posts = await new Promise<TempPost[]>((resolve, reject) => {
         const getRequest = store.getAll();
         getRequest.onsuccess = () => resolve(getRequest.result);
         getRequest.onerror = () => {
-          console.error("Error fetching temporary posts:", getRequest.error);
           reject(getRequest.error);
         };
       });
   
       const latestPost = posts.length > 0 ? posts[posts.length - 1] : null;
   
-      return {
-        success: true,
-        errorMessage: null,
-        data: { tempPost: latestPost },
-      };
+      return new LMResponse<GetTemporaryPostResponse>(
+        { data: { tempPost: latestPost }, success: true, errorMessage: null },
+        null,
+        true
+      );
     } catch (error) {
-      console.error("Exception in getTemporaryPost:", error);
-      return {
-        success: false,
-        errorMessage: error instanceof Error ? error.message : "Error while fetching post",
-        data: { tempPost: null },
-      };
+      const errorMsg = error instanceof Error ? error.message : "Error while fetching temporary post";
+      return new LMResponse<GetTemporaryPostResponse>(
+        { data: { tempPost: null }, success: false, errorMessage: errorMsg },
+        errorMsg,
+        false
+      );
     }
-  }
-
-  
-  private async openIndexedDB(): Promise<IDBDatabase> {
-    return new Promise((resolve, reject) => {
-      // Updated to version 5
-      const request = indexedDB.open("FeedDB", 5);
-  
-      request.onerror = () => {
-        console.error("IndexedDB open error:", request.error);
-        reject(request.error);
-      };
-      
-      request.onsuccess = () => {
-        const db = request.result;
-        resolve(db);
-      };
-  
-      request.onupgradeneeded = (event) => {
-        const db = (event.target as IDBOpenDBRequest).result;
-        
-        // Only create the store if it doesn't exist
-        if (!db.objectStoreNames.contains("temporaryPosts")) {
-          db.createObjectStore("temporaryPosts");
-        } else {
-          console.log("temporaryPosts store already exists");
-        }
-        
-        // Add transaction complete handler to log successful setup
-        if (request.transaction) {
-          request.transaction.oncomplete = () => {
-            console.log("IndexedDB setup complete for temporaryPosts store");
-          };
-        }
-      };
-    });
   }
 }
 
