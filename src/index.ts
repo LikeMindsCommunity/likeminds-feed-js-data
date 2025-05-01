@@ -131,6 +131,7 @@ import { environment } from "./environment";
 import { GetTemporaryPostResponse } from "./types/api-responses/GetTemporaryPostResponse";
 import SaveTemporaryPostRequest from "./post/model/SaveTemporaryPostRequest";
 import DeleteTemporaryPostRequest from "./post/model/DeleteTemporaryPostRequest";
+import { initializeDatabase } from "./utils/initDB";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -148,6 +149,11 @@ class LMFeedClient {
   private LMSDKCallbacks: LMSDKCallbacks;
   private pollFeedClient: PollFeedClient;
   constructor() {
+    // Initialize the database as early as possible
+    initializeDatabase().catch(error => {
+      console.error("Failed to initialize database:", error);
+    });
+    
     // this.LMSDKCallbacks = new LMSDKCallbacks();
     this.networkLibrary = new NetworkLibrary(this.LMSDKCallbacks);
     this.initiateUserClient = new InitiateUserClient(this.networkLibrary);

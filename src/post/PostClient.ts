@@ -37,12 +37,17 @@ import { GetTemporaryPostResponse } from "../types/api-responses/GetTemporaryPos
 import LMResponse from "../core/services/lmresponse";
 import LMResponseType from "../LMResponse";
 import {TemporaryPost} from "../moderation/enums/index"
-import openIndexedDB from "../utils/initDB";
+import openIndexedDB, { getDBInstance } from "../utils/initDB";
+import { Nothing } from "src/pages/user/types";
+
 class PostClient {
   private networkLibrary: NetworkLibrary;
+  private dbPromise: Promise<IDBDatabase>;
 
   constructor(instance: NetworkLibrary) {
     this.networkLibrary = instance;
+    // Initialize the database connection when the PostClient is instantiated
+    this.dbPromise = getDBInstance();
   }
 
   async addPost(request: AddPostRequest) {
@@ -249,9 +254,9 @@ class PostClient {
     return responseData;
   }
 
-  async saveTemporaryPost(request: SaveTemporaryPostRequest): Promise<LMResponseType<void>> {
+  async saveTemporaryPost(request: SaveTemporaryPostRequest): Promise<LMResponse<Nothing>> {
     try {
-      const db = await openIndexedDB();
+      const db = await this.dbPromise;
       const transaction = db.transaction([TemporaryPost.TEMPORARY_POST], "readwrite");
       const store = transaction.objectStore(TemporaryPost.TEMPORARY_POST);
   
@@ -270,18 +275,18 @@ class PostClient {
         };
         transaction.onerror = () => reject(transaction.error);
       });
-      return new LMResponse<void>(undefined, null, true);
+      return new LMResponse<Nothing>("" as unknown as any, null, true);
     } catch (error) {
-      return new LMResponse<void>(undefined, error instanceof Error ? error.message : "Error while saving post", false);
+      return new LMResponse<Nothing>("" as unknown as any, error instanceof Error ? error.message : "Error while saving post", false);
     }
   }
   
   
   async deleteTemporaryPost(
     request: DeleteTemporaryPostRequest
-  ): Promise<LMResponseType<void>> {
+  ): Promise<LMResponse<Nothing>> {
     try {
-      const db = await openIndexedDB();
+      const db = await this.dbPromise;
       const transaction = db.transaction([TemporaryPost.TEMPORARY_POST], "readwrite");
       const store = transaction.objectStore(TemporaryPost.TEMPORARY_POST);
       
@@ -293,16 +298,16 @@ class PostClient {
           reject(deleteRequest.error);
         };
       });
-      return new LMResponse<void>(undefined, null, true);
+      return new LMResponse<Nothing>("" as unknown as any, null, true);
     } catch (error) {
-      return new LMResponse<void>(undefined, error instanceof Error ? error.message : "Error while deleting post", false);
+      return new LMResponse<Nothing>("" as unknown as any, error instanceof Error ? error.message : "Error while deleting post", false);
     }
   }
 
   
-  async getTemporaryPost(): Promise<LMResponseType<GetTemporaryPostResponse>> {
+  async getTemporaryPost(): Promise<LMResponse<GetTemporaryPostResponse>> {
     try {
-      const db = await openIndexedDB();
+      const db = await this.dbPromise;
       const transaction = db.transaction([TemporaryPost.TEMPORARY_POST], "readonly");
       const store = transaction.objectStore(TemporaryPost.TEMPORARY_POST);
   
@@ -333,4 +338,3 @@ class PostClient {
 }
 
 export default PostClient;
-
