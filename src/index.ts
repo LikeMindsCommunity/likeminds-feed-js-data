@@ -82,7 +82,7 @@ import { LikeComment } from "./types/api-responses/likeCommentResponse";
 import { LikePost } from "./types/api-responses/likePostResponse";
 import { EditProfile } from "./pages/user/types";
 import LMResponseType from "./LMResponse";
-import { Activity, ActivityEntityData } from "./types/models/Activity";
+import { Activity, ActivityActionType, ActivityEntityData, ActivityEntityType } from "./types/models/Activity";
 import {
   Attachment,
   AttachmentMeta,
@@ -619,6 +619,8 @@ export {
   Widget,
   FilterComment,
   Like,
+  ActivityActionType, 
+  ActivityEntityType,
   MemberRight,
   MemberRights,
   PostSeenRequest,
