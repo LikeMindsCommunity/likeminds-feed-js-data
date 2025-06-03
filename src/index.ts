@@ -148,12 +148,7 @@ class LMFeedClient {
   private helperClient: HelperClient;
   private LMSDKCallbacks: LMSDKCallbacks;
   private pollFeedClient: PollFeedClient;
-  constructor() {
-    // Initialize the database as early as possible
-    initializeDatabase().catch(error => {
-      console.error("Failed to initialize database:", error);
-    });
-    
+  constructor() {    
     // this.LMSDKCallbacks = new LMSDKCallbacks();
     this.networkLibrary = new NetworkLibrary(this.LMSDKCallbacks);
     this.initiateUserClient = new InitiateUserClient(this.networkLibrary);
@@ -273,6 +268,10 @@ class LMFeedClient {
     const initiateUserResponse =
       await this.initiateUserClient.initiateUser(initiateUserRequest);
     return initiateUserResponse;
+  }
+
+  async initializeDatabase() {
+    return await initializeDatabase();
   }
 
   async hidePost(hidePostRequest: HidePostRequest) {

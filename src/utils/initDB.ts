@@ -21,7 +21,7 @@ async function openIndexedDB(): Promise<IDBDatabase> {
 
   // Otherwise, create a new initialization promise
   dbInitializationPromise = new Promise((resolve, reject) => {
-    const request = indexedDB.open("FeedDB", 6);
+    const request = indexedDB.open("FeedDB", 1);
 
     request.onerror = () => {
       dbInitializationPromise = null;
