@@ -42,6 +42,8 @@ export interface AttachmentMeta {
   thumbnailUrl?: string; //
   widgetMeta?: WidgetMeta; //
   pageCount?: number; //
+  height?: number;
+  width?: number;
 }
 
 export interface WidgetMeta {
