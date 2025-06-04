@@ -24,6 +24,8 @@ class LMFeedPostAttachmentMeta implements AttachmentMeta {
   allowAddOption?: boolean;
   entityId?: string;
   widgetMeta?: WidgetMeta;
+  height?: number;
+  width?: number;
 
   // Public constructor to create the request object
   constructor(
@@ -47,7 +49,9 @@ class LMFeedPostAttachmentMeta implements AttachmentMeta {
     body?: string,
     thumbnailUrl?: string,
     entityId?: string,
-    widgetMeta?: WidgetMeta
+    widgetMeta?: WidgetMeta,
+    height?: number,
+    width?: number
   ) {
     this.name = name;
     this.url = url;
@@ -70,6 +74,8 @@ class LMFeedPostAttachmentMeta implements AttachmentMeta {
     this.thumbnailUrl = thumbnailUrl;
     this.entityId = entityId;
     this.widgetMeta = widgetMeta;
+    this.height = height;
+    this.width = width;
   }
 
   // Static builder method to create the request object
@@ -100,7 +106,9 @@ export class AttachmentMetaBuilder {
   isAnonymous?: boolean | undefined;
   allowAddOption?: boolean | undefined;
   entityId?: string | undefined;
-  widgetMeta?: WidgetMeta
+  widgetMeta?: WidgetMeta;
+  height?: number | undefined;
+  width?: number | undefined;
   // Add other properties as needed
 
   public setName(name: string): AttachmentMetaBuilder {
@@ -185,6 +193,16 @@ export class AttachmentMetaBuilder {
     return this;
   }
 
+  public setHeight(height: number): AttachmentMetaBuilder {
+    this.height = height;
+    return this;
+  }
+
+  public setWidth(width: number): AttachmentMetaBuilder {
+    this.width = width;
+    return this;
+  }
+
   public setMultipleSelectNumber(
     multipleSelectNumber: number
   ): AttachmentMetaBuilder {
@@ -237,7 +255,9 @@ export class AttachmentMetaBuilder {
       this.body,
       this.thumbnailUrl,
       this.entityId,
-      this.widgetMeta
+      this.widgetMeta,
+      this.height,
+      this.width
     );
   }
 }
