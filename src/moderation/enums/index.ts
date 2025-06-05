@@ -23,3 +23,7 @@ export enum ReportEntityType {
   COMMENT = "comment",
   REPLY = "reply",
 }
+
+export enum TemporaryPost {
+  TEMPORARY_POST = "temporaryPosts",
+}

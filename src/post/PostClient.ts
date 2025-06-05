@@ -30,12 +30,24 @@ import GetUserTopicsRequest from "./model/GetUserTopicsRequest";
 import { GetUserTopicsResponse } from "src/types/api-responses/getUserTopicsResponse";
 import PostSeenRequest from "./model/PostSeenRequest";
 import { PostSeen } from "../types/api-responses/postSeenResponse";
+import { TempPost } from "../types/models/TempPost";
+import SaveTemporaryPostRequest from "./model/SaveTemporaryPostRequest";
+import DeleteTemporaryPostRequest from "./model/DeleteTemporaryPostRequest";
+import { GetTemporaryPostResponse } from "../types/api-responses/GetTemporaryPostResponse";
+import LMResponse from "../core/services/lmresponse";
+import LMResponseType from "../LMResponse";
+import {TemporaryPost} from "../moderation/enums/index"
+import openIndexedDB, { getDBInstance } from "../utils/initDB";
+import { Nothing } from "src/pages/user/types";
 
 class PostClient {
   private networkLibrary: NetworkLibrary;
+  private dbPromise: Promise<IDBDatabase>;
 
   constructor(instance: NetworkLibrary) {
     this.networkLibrary = instance;
+    // Initialize the database connection when the PostClient is instantiated
+    this.dbPromise = getDBInstance();
   }
 
   async addPost(request: AddPostRequest) {
@@ -240,6 +252,88 @@ class PostClient {
       );
 
     return responseData;
+  }
+
+  async saveTemporaryPost(request: SaveTemporaryPostRequest): Promise<LMResponse<Nothing>> {
+    try {
+      const db = await this.dbPromise;
+      const transaction = db.transaction([TemporaryPost.TEMPORARY_POST], "readwrite");
+      const store = transaction.objectStore(TemporaryPost.TEMPORARY_POST);
+  
+      // First, wait for the put operation
+      await new Promise<void>((resolve, reject) => {
+        // Use consistent key - just the ID
+        const putRequest = store.put(request.tempPost, request.tempPost.post.id);
+        putRequest.onsuccess = () => resolve();
+        putRequest.onerror = () => reject(putRequest.error);
+      });
+  
+      // Now wait for the transaction to complete
+      await new Promise<void>((resolve, reject) => {
+        transaction.oncomplete = () => {
+          resolve();
+        };
+        transaction.onerror = () => reject(transaction.error);
+      });
+      return new LMResponse<Nothing>("" as unknown as any, null, true);
+    } catch (error) {
+      return new LMResponse<Nothing>("" as unknown as any, error instanceof Error ? error.message : "Error while saving post", false);
+    }
+  }
+  
+  
+  async deleteTemporaryPost(
+    request: DeleteTemporaryPostRequest
+  ): Promise<LMResponse<Nothing>> {
+    try {
+      const db = await this.dbPromise;
+      const transaction = db.transaction([TemporaryPost.TEMPORARY_POST], "readwrite");
+      const store = transaction.objectStore(TemporaryPost.TEMPORARY_POST);
+      
+      await new Promise<void>((resolve, reject) => {
+        const deleteRequest = store.delete(request.temporaryPostId);
+        
+        deleteRequest.onsuccess = () => resolve();
+        deleteRequest.onerror = () => {
+          reject(deleteRequest.error);
+        };
+      });
+      return new LMResponse<Nothing>("" as unknown as any, null, true);
+    } catch (error) {
+      return new LMResponse<Nothing>("" as unknown as any, error instanceof Error ? error.message : "Error while deleting post", false);
+    }
+  }
+
+  
+  async getTemporaryPost(): Promise<LMResponse<GetTemporaryPostResponse>> {
+    try {
+      const db = await this.dbPromise;
+      const transaction = db.transaction([TemporaryPost.TEMPORARY_POST], "readonly");
+      const store = transaction.objectStore(TemporaryPost.TEMPORARY_POST);
+  
+      const posts = await new Promise<TempPost[]>((resolve, reject) => {
+        const getRequest = store.getAll();
+        getRequest.onsuccess = () => resolve(getRequest.result);
+        getRequest.onerror = () => {
+          reject(getRequest.error);
+        };
+      });
+  
+      const latestPost = posts.length > 0 ? posts[posts.length - 1] : null;
+  
+      return new LMResponse<GetTemporaryPostResponse>(
+        { data: { tempPost: latestPost }, success: true, errorMessage: null },
+        null,
+        true
+      );
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : "Error while fetching temporary post";
+      return new LMResponse<GetTemporaryPostResponse>(
+        { data: { tempPost: null }, success: false, errorMessage: errorMsg },
+        errorMsg,
+        false
+      );
+    }
   }
 }
 

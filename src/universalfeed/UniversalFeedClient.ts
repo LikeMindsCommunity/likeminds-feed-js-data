@@ -57,7 +57,12 @@ class UniversalFeedClient {
     const url = `${API.FEED_UNIVERSAL}?${queryParams.toString()}`;
 
     const responseData =
-      await this.networkLibrary.makeAuthenticatedRequest<GetUniversalFeed>(url);
+      await this.networkLibrary.makeAuthenticatedRequest<GetUniversalFeed>(url, {
+        method: "GET",
+        headers: {
+          "x-accept-version": "v1",
+        },
+      });
 
     return responseData;
   }
