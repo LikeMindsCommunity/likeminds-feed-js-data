@@ -128,6 +128,10 @@ import {
   ReportEntityType,
 } from "./moderation/enums";
 import { environment } from "./environment";
+import { GetTemporaryPostResponse } from "./types/api-responses/GetTemporaryPostResponse";
+import SaveTemporaryPostRequest from "./post/model/SaveTemporaryPostRequest";
+import DeleteTemporaryPostRequest from "./post/model/DeleteTemporaryPostRequest";
+import { initializeDatabase } from "./utils/initDB";
 
 class LMFeedClient {
   private initiateUserClient: InitiateUserClient;
@@ -144,7 +148,7 @@ class LMFeedClient {
   private helperClient: HelperClient;
   private LMSDKCallbacks: LMSDKCallbacks;
   private pollFeedClient: PollFeedClient;
-  constructor() {
+  constructor() {    
     // this.LMSDKCallbacks = new LMSDKCallbacks();
     this.networkLibrary = new NetworkLibrary(this.LMSDKCallbacks);
     this.initiateUserClient = new InitiateUserClient(this.networkLibrary);
@@ -264,6 +268,10 @@ class LMFeedClient {
     const initiateUserResponse =
       await this.initiateUserClient.initiateUser(initiateUserRequest);
     return initiateUserResponse;
+  }
+
+  async initializeDatabase() {
+    return await initializeDatabase();
   }
 
   async hidePost(hidePostRequest: HidePostRequest) {
@@ -508,6 +516,18 @@ class LMFeedClient {
   async postSeen(request: PostSeenRequest) {
     return await this.postClient.postSeen(request);
   }
+
+  async saveTemporaryPost(request: SaveTemporaryPostRequest) {
+    return await this.postClient.saveTemporaryPost(request);
+  }
+
+  async getTemporaryPost() {
+    return await this.postClient.getTemporaryPost();
+  }
+
+  async deleteTemporaryPost(request: DeleteTemporaryPostRequest) {
+    return await this.postClient.deleteTemporaryPost(request);
+  }
 }
 
 export {
@@ -624,4 +644,7 @@ export {
   MemberRight,
   MemberRights,
   PostSeenRequest,
+  SaveTemporaryPostRequest,
+  DeleteTemporaryPostRequest,
+  GetTemporaryPostResponse,
 };
